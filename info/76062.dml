@@ -1,0 +1,103 @@
+package pt.tecnico.filesystem.domain;
+
+
+/*------------------------------------------------------------------------------*/
+/*----------------------------------MYDRIVE manager-----------------------------*/
+/*_____handles all the application processes, between user and filesistem-------*/
+/*------------------------------------------------------------------------------*/
+
+class Manager{
+
+	/*---------------ids are generated sequentially and start as zero-------------------*/
+	/*---so we make a counter that everytime a new entity is added, it will increase----*/
+	/*----------------------------generating a new id-----------------------------------*/
+	Integer _countId;
+	
+}
+
+/*------manager can contain various users-------*/
+relation ManagerContainsUsers{
+	Manager playsrole manager;
+	User playsrole user { multiplicity *;}
+	.pt.tecnico.fenixframework.DomainRoot playsRole root;
+}
+
+/*-----manager can contain various files--------*/
+relation ManagerContainsFiles{
+	Manager playsrole manager;
+	File playsRole file { multiplicity *;}	
+	.pt.tecnico.fenixframework.DomainRoot playsRole root;
+}
+
+
+--------------------------------------#---------------------------------------------
+
+class User{
+
+	/*--------username is the unique user identifier------*/
+	String _username;
+
+	String _password,_name,_origDir,_mask;
+	
+	/*---bool that indicates if it has permission to be removed----*/
+	Bool _rmPerm;
+	Bool _read,_write,_dir,_exec;
+	
+}
+
+class SuperUser extends User{
+	Bool _superPrivilege;
+}
+
+relation UserContainsFiles{
+	User playrole user;
+	File playsrole file  { multiplicity *;}
+}
+
+/*----------abstract class that represents files--------*/
+
+class File {
+	Integer _fileId;
+	String _filename;
+	String _content;
+
+	/*---Since we can only create files which belong to----*/
+	/*---Registered users, we have this bool to chek it----*/
+	Bool _isOn;
+
+	Integer _lastChange;
+	
+	/*----Access permissions-----*/
+	Bool _hasWrt, _hasRd,_hasExc, _hasRm;
+
+}
+
+relation FileBelongsToUser{
+	File playsRole file;
+	User playRole user;
+}
+
+class PlainFile;
+
+
+class Dir{
+	String _rootDir;
+	String _ownDir, _fatherDir, _otherDir;
+	Integer _dimension;
+	String _fileType;
+}
+
+relation DirContainsFiles{
+	Dir playsRole dir;
+	File playsRole file { multiplicity *; }
+}
+
+class Link;
+
+
+class App{
+	String _classMethod;
+
+}
+
+
