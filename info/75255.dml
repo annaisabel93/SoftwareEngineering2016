@@ -1,0 +1,76 @@
+package pt.tecnico.mydrive.domain;
+
+class User {
+	String _username;
+	String _password;
+	String _name;
+	String _mask;
+	String _initdir;
+
+}
+
+class File {
+	String _name;
+	Integer _id;
+	User _creator;
+	Date _lastmod;
+	String _permissions; //read write execute eliminate
+
+}
+
+class Plain_file extends File {
+	String _text;
+
+}
+
+class Dir extends File {
+	File _files;
+	String _parent;
+	String _current;
+
+}
+
+class Link extends File {
+	String _path;
+
+}
+
+class App extends File {
+	String _content;
+}
+
+relation UserhasFile {
+	User playRole user {
+		multiplicity 1;
+	}
+	File playRole file {
+		multiplicity *;
+	}
+}
+
+relation DirhasFile {
+	Dir playRole dir {
+		multiplicity 1;
+	}
+	File playRole file {
+		multiplicity *;
+	}
+}
+
+relation DirhasDir {
+	Dir playRole dir {
+		multiplicity 1;
+	}
+	Dir playRole dir2 {
+		multiplicity *;
+	}
+}
+
+relation LinkhasFile {
+	Link playRole link {
+		multiplicity 1;
+	}
+	File playRole file {
+		multiplicity 1;
+	}
+}
