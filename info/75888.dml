@@ -1,0 +1,69 @@
+package pt.tecnico.mydrive.domain;
+
+class MyDrive;
+
+class User{
+	String _userName;
+	String _password;
+	String _name;
+	String _mask;
+	String _initialDir;
+}
+
+class SuperUser extends User{
+}
+
+class File{
+	String _name;
+	integer _id;
+	integer _size;
+	String _ownerUsername;
+	Date _modDate;
+	Boolean _read;
+	Boolean _write;
+	Boolean _execute;
+	Boolean _eliminate;
+}
+
+
+class PlainFile extends File{
+	String _string;
+}
+
+class Directory extends File{
+	String _ownDir;
+	String _parentDir;
+}
+
+class Link extends PlainFile{
+	String _path;
+}
+
+class Application extends PlainFile{
+	String _methodFullname;
+}
+
+relation UserHasFiles{
+	User playsRole user;
+	File playsRole file { 
+		multiplicity *; 
+	}
+}
+
+relation DirectoryReferencesFiles{
+	Directory playsRole directory { 
+		multiplicity 1; 
+	}
+	File playsRole file { 
+		multiplicity *; 
+	}
+}
+
+
+relation DirectoryHasFiles{
+	Directory playsRole directory;
+	File playsRole file { 
+		multiplicity *; 
+	}
+}
+
