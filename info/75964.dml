@@ -1,0 +1,113 @@
+package pt.tecnico.mydrive.domain;
+
+class FileSystem{
+}
+
+class Manager{
+	Integer ids; //os id que ja foram atribuidos
+}
+
+class Entity{
+	String _name;
+	String _owner;
+	String _id;
+	LocalTime _creationTime;
+	Integer _size; //podera ser pedido o size para os outros tipos de entidade, nao apenas os diretorios
+	//Para evitar manipulacao de strings, 
+	//um atributo para cada permissao
+	Boolean _read;
+	Boolean _write;
+	Boolean _execute;
+	Boolean _delete;
+	
+class User{
+	String _name;
+	String _userName;
+	String _password;
+	String _mask;
+	Directory home_dir;
+}
+
+class SuperUser extends User{
+}
+
+class Directory extends Entity{
+
+}
+
+class File extends Entity{
+	String _content;
+}
+
+class Link extends Entity{
+	String _path;
+}
+
+class App extends Entity{
+	String _method;
+
+
+
+relation FileSystemhasManager {
+	FileSystem playsRole system {
+		multiplicity 1;
+	}
+	Manager playsRole manager {
+		multiplicity 1;
+	}
+}
+
+relation ManagerhasUser {
+	Manager playsRole manager {
+		multiplicity 1;
+	} 
+	User playsRole user {
+		multiplicity *;
+	}
+}
+
+relation UserhasDirectory {
+	User playsRole user {
+		multiplicity 1;
+	} 
+	Directory playsRole directory {
+		multiplicity *;
+	}
+} 
+
+relation DirectoryhasDirectory{
+	Directory playsRole directory {
+		multiplicity 1;
+	}
+	Directory playsRole directory{
+		multiplicity *;
+	}
+}
+
+relation DirectoryhasFile{
+	Directort playsRole directory { 
+		multiplicity 1; 
+	}
+	File playsRole file	{ 
+		multiplicity *; 
+	}
+}
+
+relation DirectoryhasLink{
+	Directory playsRole directory{
+		multiplicity 1;
+	}
+	Link playsRole link{
+		multiplicity *;
+	}
+}
+
+relation DirectoryhasApp{
+	Directory playsRole directory{
+		multiplicity 1;
+	}
+	App playsRole app{
+		multiplicity *;
+	}
+}
+
