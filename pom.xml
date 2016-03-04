@@ -61,6 +61,22 @@
           <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175964</picUrl> 
         </properties>
       </developer>
+	  <developer>
+        <id>ist175888</id> 
+	<name>filiparsc</name>
+	<email>filipa.santos.costa@tecnico.ulisboa.pt</email> 
+	<organization>es16 g16al</organization>
+	<roles>
+	  <role>Developer</role>
+	  <role>Architect</role>
+	  <role>Tester</role>
+	  <role>Integrator</role>
+	</roles>
+	<properties>
+          <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175888</picUrl> 
+        </properties>
+      </developer>
+      <developer>
     </developers>
 
     <properties>
