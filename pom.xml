@@ -144,7 +144,7 @@
               </execution>
             </executions>
             <configuration>
-    	      <mainClass>pt.tecnico.filesystem.domain.Main</mainClass> <!-- FIXME -->
+    	      <mainClass>pt.tecnico.mydrive.MyDriveApp</mainClass> <!-- FIXME -->
               <killAfter>-1</killAfter>
                 
              <names>false</names>
