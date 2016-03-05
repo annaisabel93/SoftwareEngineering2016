@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+he<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -144,11 +144,7 @@
               </execution>
             </executions>
             <configuration>
-<<<<<<< HEAD
-    	      <mainClass>pt.tecnico.mydrive.domain.Main</mainClass> <!-- FIXME -->
-=======
     	      <mainClass>pt.tecnico.mydrive.MyDriveApp</mainClass> <!-- FIXME -->
->>>>>>> 75cdceb060ebd7e32c6e18553d78544467405067
               <killAfter>-1</killAfter>
                 
              <names>false</names>
