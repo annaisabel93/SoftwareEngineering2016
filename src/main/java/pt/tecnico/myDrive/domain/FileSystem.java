@@ -1,4 +1,4 @@
-package pt.tecnico.mydrive.domain;
+package pt.tecnico.myDrive.domain;
 
 public class FileSystem extends FileSystem_Base {
     
