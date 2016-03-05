@@ -31,6 +31,51 @@
           <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175312</picUrl> 
         </properties>
       </developer>
+      <developer>
+        <id>ist175202</id> 
+  <name>github AnaPardal</name>
+  <email>ana.pardal@tecnico.ulisboa.pt</email> 
+  <organization>es16 g16al</organization>
+  <roles>
+    <role>Developer</role>
+    <role>Architect</role>
+    <role>Tester</role>
+    <role>Integrator</role>
+  </roles>
+  <properties>
+          <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175202</picUrl> 
+        </properties>
+      </developer>
+	  <developer>
+        <id>ist175964</id> 
+		<name>lmhbs</name>
+		<email>luis.barrue@tecnico.ulisboa.pt</email> 
+		<organization>es16 g16al</organization>
+		<roles>
+			<role>Developer</role>
+			<role>Architect</role>
+			<role>Tester</role>
+			<role>Integrator</role>
+		</roles>
+		<properties>
+          <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175964</picUrl> 
+        </properties>
+      </developer>
+	  <developer>
+        <id>ist175888</id> 
+	<name>filiparsc</name>
+	<email>filipa.santos.costa@tecnico.ulisboa.pt</email> 
+	<organization>es16 g16al</organization>
+	<roles>
+	  <role>Developer</role>
+	  <role>Architect</role>
+	  <role>Tester</role>
+	  <role>Integrator</role>
+	</roles>
+	<properties>
+          <picUrl>https://fenix.tecnico.ulisboa.pt/user/photo/ist175888</picUrl> 
+        </properties>
+      </developer>
     </developers>
 
     <properties>
@@ -99,7 +144,11 @@
               </execution>
             </executions>
             <configuration>
+<<<<<<< HEAD
     	      <mainClass>pt.tecnico.mydrive.domain.Main</mainClass> <!-- FIXME -->
+=======
+    	      <mainClass>pt.tecnico.mydrive.MyDriveApp</mainClass> <!-- FIXME -->
+>>>>>>> 75cdceb060ebd7e32c6e18553d78544467405067
               <killAfter>-1</killAfter>
                 
              <names>false</names>
