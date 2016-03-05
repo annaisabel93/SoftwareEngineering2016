@@ -1,48 +1,44 @@
-package pt.tecnico.filesystem.domain;
-
-class MyDrive;
+package pt.tecnico.mydrive.domain;
 
 class FileSystem;
 
-class Manager;
-
 class Entity {
-	String _name;
-	String _owner;
-	String _id;
-	Boolean _read;
-	Boolean _write;
-	Boolean _delete;
-	Boolean _execute;
+	String name;
+	String owner;
+	Long id;
+	Boolean read;
+	Boolean write;
+	Boolean delete;
+	Boolean execute;
 }
 
 
 class Directory;
 
 class User {
-	String _name;
-	String _userName;
-	String _password;
-	String _mask;
+	String name;
+	String userName;
+	String password;
+	String mask;
 }
 
 class SuperUser extends User {}
 
 class Link extends Entity {
-	String _path;
+	String path;
 }
 
 class App extends Entity {
-	String _method;
+	String content;
 }
 
 class File extends Entity;
 
-relation DomainRootHasMyDriveApplication {
+relation DomainRootHasFileSystemApplication {
   .pt.ist.fenixframework.DomainRoot playsRole root {
     multiplicity 0..1;
   }
-  MyDrive playsRole mydrive {
+  FileSystem playsRole filesystem {
     multiplicity 0..1;
   }
 }
@@ -51,12 +47,11 @@ relation DomainRootHasMyDriveApplication {
 relation ManagerhasFileSystem {
 
 	Manager playsRole manager {
-
-		multiplicity *;
+		multiplicity 1..*;
 	}
 
 	FileSystem playsRole system {
-		multiplicity *;
+		multiplicity 1..*;
 	}
 
 }
@@ -64,10 +59,10 @@ relation ManagerhasFileSystem {
 relation FileSystemhasUser {
 
 	FileSystem playsRole system {
-		multiplicity 1;
+		multiplicity 1..1;
 	} 
 	User playsRole user {
-		multiplicity *;
+		multiplicity 1..*;
 	}
 }
 
@@ -85,87 +80,36 @@ relation FileSystemhasDirectory{
 relation DirectoryhasDirectory{
 
 	Directory playsRole parent {
-
-		multiplicity 1;
-
+		multiplicity 1..1;
 	}
 
 	Directory playsRole children{
-
 		multiplicity 1..*;
-
 	}
-
 }
 
 
-
-relation DirectoryHasFile{
+relation DirectoryHasEntity{
 
 	Directory playsRole directory { 
-
-		multiplicity 1; 
-
+		multiplicity 1..1; 
 	}
 
-	File playsRole file	{ 
-
+	Entity playsRole entity	{ 
 		multiplicity 0..*; 
-
 	}
-
-}
-
-
-relation DirectoryhasLink{
-
-	Directory playsRole directory{
-
-		multiplicity 1;
-
-	}
-
-	Link playsRole link{
-
-		multiplicity *;
-
-	}
-
-}
-
-
-
-relation DirectoryhasApp{
-
-	Directory playsRole directory{
-
-		multiplicity 1;
-
-	}
-
-	App playsRole app{
-
-		multiplicity *;
-
-	}
-
 }
 
 
 relation UserhasDirectory {
 
 	User playsRole user {
-
-		multiplicity 1;
-
+		multiplicity 1..1;
 	} 
 
 	Directory playsRole directory {
-
-		multiplicity *;
-
+		multiplicity 1..*;
 	}
-
 } 
 
 
