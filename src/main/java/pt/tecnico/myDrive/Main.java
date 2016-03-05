@@ -1,4 +1,4 @@
-package pt.tecnico.mydrive;
+package pt.tecnico.myDrive;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 
-public class MyDriveApp {
+public class Main {
     static final Logger log = LogManager.getRootLogger();
 
     public static void main(String[] args) throws IOException {

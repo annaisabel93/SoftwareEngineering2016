@@ -1,4 +1,4 @@
-package pt.tecnico.mydrive.domain;
+package pt.tecnico.myDrive.domain;
 
 class FileSystem{
 	int counter;
@@ -9,7 +9,9 @@ class File {
 	String owner;
 	long id;
 	DateTime lastModified;
+	
 	/*---Booleans define the permissions----*/
+	
 	boolean read;			
 	boolean write;
 	boolean delete;
