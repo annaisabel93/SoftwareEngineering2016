@@ -9,7 +9,7 @@ class File {
 	String owner;
 	long id;
 	DateTime lastModified;
-	
+	int dimension;
 	/*---Booleans define the permissions----*/
 	
 	boolean read;			
