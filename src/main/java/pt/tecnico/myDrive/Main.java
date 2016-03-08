@@ -22,12 +22,14 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("*** Welcome to the My Drive application! ***");
-	/*try {
+	try {
+	    /*
 	    setup();
 	    for (String s: args) xmlScan(new File(s));
 		print();
-	    xmlPrint();
-	} finally { FenixFramework.shutdown(); }*/
+	    xmlPrint(); 
+	    */
+	} finally { FenixFramework.shutdown(); }
     }
 
  /*   @Atomic
