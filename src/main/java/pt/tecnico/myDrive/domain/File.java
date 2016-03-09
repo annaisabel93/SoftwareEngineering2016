@@ -21,6 +21,7 @@ public class File extends File_Base {
         setDelete(delete);
         setExecute(execute);
         setFilesystem(filesystem);
+        //FIXME do we need a path? - enunciado
     }
 
 	public File() {
