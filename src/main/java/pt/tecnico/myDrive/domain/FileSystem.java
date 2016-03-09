@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import java.util.Scanner;
 
 import pt.ist.fenixframework.FenixFramework;
+import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
 
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
@@ -60,6 +61,27 @@ public class FileSystem extends FileSystem_Base {
     private FileSystem(int counter) {
         setRoot(FenixFramework.getDomainRoot());
         setCounter(counter);
+    }
+    
+    public User getUserByUsername(String username) {
+        for (User user : getUserSet()) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+    
+    public boolean hasUser(String username){
+    	return getUserByUsername(username) != null;
+    }
+    
+    @Override
+    public void addUser(User user) throws UsernameAlreadyExistsException{
+    	if(hasUser(user.getUserName()))
+    		throw new UsernameAlreadyExistsException(user.getUserName());
+    	
+    	super.addUser(user);
     }
     
 }
