@@ -8,14 +8,15 @@ public class Directory extends Directory_Base {
 	
 	
     
-    public Directory(User user, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute) {
+    public Directory(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute) {
         super();
         setUser(user);
     }
 
-    public Directory(User user, Document xml){
+    public Directory(User user,FileSystem filesystem, Document xml){
     	xmlImport(xml);
     	setUser(user);
+    	setFilesystem(filesystem);
     }
 
 	public void addDir(Directory dir){

@@ -21,7 +21,7 @@ public class FileSystem extends FileSystem_Base {
     	DateTime date = new DateTime();
     	
     	User root = new User(this, "root", "root", "rootroot", array, "root", true);
-    	Directory rootDir = new Directory(root, "root", "root", getCounter()+1, date, 2, false, false, false, false);
+    	Directory rootDir = new Directory(root,this, "root", "root", getCounter()+1, date, 2, false, false, false, false);
     	//no momento de criacao vai ter dimensao 2: "." e ".." - as diretorias sempre presentes
     	setWorkingDir(rootDir); //define a diretoria de trabalho atual (a ser modificada conforme o user queira mudar)
     }
