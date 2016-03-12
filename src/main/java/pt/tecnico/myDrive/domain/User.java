@@ -47,18 +47,8 @@ public class User extends User_Base {
         	setName(new String(userDoc.getRootElement().getChild("name").getValue().getBytes("UTF-8")));
         	setPassword(new String(userDoc.getRootElement().getChild("password").getValue().getBytes("UTF-8")));
         	setHomeDir(new String(userDoc.getRootElement().getChild("homeDir").getValue().getBytes("UTF-8")));
-        	setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         }catch(UnsupportedEncodingException e) { System.err.println(e); }	
-        
-        Element users = userEle.getChild("contacts");
-
-        for (Element contactElement: contacts.getChildren("contact"))
-            new Contact(this, contactElement);
-
-        for (Element contactElement: contacts.getChildren("email-contact"))
-            new EmailContact(this, contactElement);
-    }
-        
+        setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         
     }
 
@@ -75,8 +65,8 @@ public class User extends User_Base {
         return document; 
     }
     
-    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, Directory father){
-    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,execute,delete, father );
+    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute){
+    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,delete,execute);
     	dirs.add(dir);
     	return dir;
     }
