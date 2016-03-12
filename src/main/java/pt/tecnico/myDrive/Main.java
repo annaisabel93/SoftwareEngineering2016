@@ -44,19 +44,19 @@ public class Main {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
     }
-/*
+
     @Atomic
     public static void print() {
         log.trace("Print: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance();
 
-        for (Person p: fs.getPersonSet()) {
-            System.out.println("The Contact book of " + p.getName() + " contains " + p.getContactSet().size() + " contacts :");
-            for (Contact c: p.getContactSet())
-            	System.out.println("\t" + c.getName() + " -> " + c.getPhoneNumber());
+        for (User usr: fs.getUserSet()) {
+            System.out.println(usr.getUserName() + usr.getName() + usr.getHomeDir());
+            /*for (Directory d: usr.get)
+            	System.out.println("\t" + ent.getFilename() + ent.getOwner());*/
         }
     }
-*/
+
     @Atomic
     public static void xmlPrint() {
         log.trace("xmlPrint: " + FenixFramework.getDomainRoot());
