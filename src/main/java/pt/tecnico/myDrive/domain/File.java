@@ -50,14 +50,14 @@ public class File extends File_Base {
 	}
 	
 	public Document xmlExport(){
-		    	Element element = new Element("File");
-		    	element.setAttribute("filename", getFilename()); 	
-		    	element.setAttribute("owner", getOwner());
+		    	Element file = new Element("File");
+		    	file.setAttribute("filename", getFilename()); 	
+		    	file.setAttribute("owner", getOwner());
 //		    	element.setAttribute("read", Boolean.toString(getRead()));
 //		    	element.setAttribute("write", Boolean.toString(getWrite()));
 //		    	element.setAttribute("delete", Boolean.toString(getDelete()));
 //		    	element.setAttribute("execute", Boolean.toString(getExecute()));
-		    	Document document = new Document(element);
+		    	Document document = new Document(file);
 				return document;    
 	}
 }

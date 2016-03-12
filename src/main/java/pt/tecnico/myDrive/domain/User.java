@@ -50,8 +50,6 @@ public class User extends User_Base {
         }catch(UnsupportedEncodingException e) { System.err.println(e); }	
         setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         
-        
-        
     }
 
     public Document xmlExport(){
@@ -67,8 +65,8 @@ public class User extends User_Base {
         return document; 
     }
     
-    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, Directory father){
-    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,execute,delete, father );
+    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute){
+    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,delete,execute);
     	dirs.add(dir);
     	return dir;
     }
