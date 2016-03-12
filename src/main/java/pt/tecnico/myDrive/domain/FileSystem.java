@@ -2,6 +2,7 @@ package pt.tecnico.myDrive.domain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
@@ -248,10 +249,8 @@ public class FileSystem extends FileSystem_Base {
     public Document xmlExport(){
     	Element element = new Element("FileSystem");
 		Document doc = new Document(element);
-		
 		for(User u: getUserSet())
-			doc.addContent(u.xmlExport().getRootElement());
-		
+			element.addContent(u.xmlExport().detachRootElement());
 		return doc;
     }
     

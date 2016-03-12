@@ -10,6 +10,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.joda.time.DateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,23 +27,43 @@ public class Main {
 	try {
 	    
 	    setup();
-	    //for (String s: args) xmlScan(new File(s));
-		//print();
+	    for (String s: args) xmlScan(new File(s));
+		print();
 	    xmlPrint(); 
 	    
 	} finally { FenixFramework.shutdown(); }
     }
-/*
+
     @Atomic
     public static void init() {
         log.trace("Init: " + FenixFramework.getDomainRoot());
         FileSystem.getInstance().cleanup();
     }
-*/
+
     @Atomic
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
+        
+        User user;
+    	Directory d;
+    	Entity f;
+    	DateTime data = new DateTime();
+    	log.trace("new FileSyste3");
+    	new Entity();
+        if (!fs.getUserSet().isEmpty()) return;
+        
+        else{
+        	log.trace("new FileSystem4");
+        	user = new User(fs, "maria","maria", "***", null, "home", true);
+        	d = new Directory(user,fs,"home","cenas",user.getUserName(), 0, data ,2, null);
+        	log.trace("new FileSystem5");
+        	f = new Entity(fs, "/home/homee","home","root",0,d.getLastModified() ,2);
+        	log.trace("new FileSystem6");
+        	new Entity();
+        	log.trace("new FileSystem7");
+        	return;
+        }
     }
 
     @Atomic
@@ -67,7 +88,7 @@ public class Main {
         } 
         catch (IOException e) { System.out.println(e); }
     }
-/*
+
     @Atomic
     public static void xmlScan(File file) {
         log.trace("xmlScan: " + FenixFramework.getDomainRoot());
@@ -75,8 +96,8 @@ public class Main {
         SAXBuilder builder = new SAXBuilder();
         try {
         	Document document = (Document)builder.build(file);
-        	fs.xmlImport(document.getRootElement());
+        	fs.xmlImport(document);
         } catch (JDOMException | IOException e) { e.printStackTrace(); }
     }
-*/
+
 }

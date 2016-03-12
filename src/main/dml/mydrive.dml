@@ -49,7 +49,7 @@ relation DomainRootHasFileSystemApplication {
 relation FileSystemhasUser {
 
 	FileSystem playsRole system {
-		multiplicity 1..1;
+		multiplicity 0..1;
 	} 
 	User playsRole user {
 		multiplicity 1..*;
@@ -58,7 +58,7 @@ relation FileSystemhasUser {
 
 relation FileSystemhasEntity{
 	FileSystem playsRole filesystem {
-		multiplicity 1..1;
+		multiplicity 0..1;
 	}
 	
 	Entity playsRole entity {
@@ -90,7 +90,7 @@ relation UserhasDirectory{
 
 relation DirectoryhasEntity{
 	Directory playsRole directory{
-		multiplicity 1..1;
+		multiplicity 0..1;
 	}
 
 	Entity playsRole entity{
