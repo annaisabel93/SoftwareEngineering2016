@@ -54,18 +54,12 @@ public class FileSystem extends FileSystem_Base {
     		
     		if(input.equals("AddUser")){//so estou a deixar adicionar um user se ninguem estiver logado
     			String username;
-    			String name;
-    			String pw;
     			if(this.logged_user != null){
     				System.out.println("Logout first");
     				continue;
     			}
     			System.out.println("Username?");
     			username = keyboardSc.next();
-    			System.out.println("Name?");
-    			name = keyboardSc.next();
-    			System.out.println("pw?");
-    			pw = keyboardSc.next();
     			addUser(username);
     			System.out.println("Created user "+username);
     			continue;
@@ -87,9 +81,20 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Directory name?");
-    			prepareDir(keyboardSc.next());
     			//chama aqui a funcao para remover
     			//atencao que so pode remover diretorias dentro da dir atual
+    			continue;
+    		}
+    		
+    		
+    		if(input.equals("Move")){ // mover entre diretorias
+    			if(logged_user == null){
+    				System.out.println("You must login first");
+    				continue;
+    			}
+    			System.out.println("Ready to move");
+    			moveDir(keyboardSc.next());
+    			System.out.println("Moved ended");
     			continue;
     		}
     		
@@ -150,7 +155,7 @@ public class FileSystem extends FileSystem_Base {
      }
      
      
-     public void prepareDir(String name){// para ser usado de outro modo mais tarde quando implementarmos as permissoes bem
+     public void prepareDir(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
     	 setCounter(getCounter()+1);
     	 Directory Dir = this.logged_user.addDir(this.logged_user,this, workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, false, false, false, false, this.workingDir);
@@ -160,7 +165,11 @@ public class FileSystem extends FileSystem_Base {
      }
     	
     	
+    public void moveDir(String directory_destiny){ //unfinished
+    	Directory destiny = null;
+    	destiny = this.workingDir.getDir("\\"+directory_destiny);
     	
+    }
     	
     
     public static FileSystem getInstance(){
@@ -198,5 +207,9 @@ public class FileSystem extends FileSystem_Base {
     	
     	super.addUser(user);
     }
+    
+    
+    
+    
     
 }
