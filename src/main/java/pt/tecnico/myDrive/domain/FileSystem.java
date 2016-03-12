@@ -2,6 +2,8 @@ package pt.tecnico.myDrive.domain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import java.util.Scanner;
@@ -212,7 +214,27 @@ public class FileSystem extends FileSystem_Base {
     	super.addUser(user);
     }
     
+    public void xmlImport(Document fsDoc){
+    	for(Element node: fsDoc.getRootElement().getChildren("User")){
+			String username = node.getAttribute("username").getValue();
+			User user = getUserByUsername(username);
+			
+			if(user == null)
+				user = new User(this, username, username, username,null, "home",false); //FIXME --argumentos
+			Document fsdoc = new Document(node);
+			user.xmlImport(fsdoc);
+		}
+    }
     
+    public Document xmlExport(){
+    	Element element = new Element("FileSystem");
+		Document doc = new Document(element);
+		
+		for(User u: getUserSet())
+			doc.addContent(u.xmlExport().getRootElement());
+		
+		return doc;
+    }
     
     
     
