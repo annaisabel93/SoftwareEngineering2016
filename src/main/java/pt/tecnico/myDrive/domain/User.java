@@ -47,9 +47,17 @@ public class User extends User_Base {
         	setName(new String(userDoc.getRootElement().getChild("name").getValue().getBytes("UTF-8")));
         	setPassword(new String(userDoc.getRootElement().getChild("password").getValue().getBytes("UTF-8")));
         	setHomeDir(new String(userDoc.getRootElement().getChild("homeDir").getValue().getBytes("UTF-8")));
+        	setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         }catch(UnsupportedEncodingException e) { System.err.println(e); }	
-        setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         
+        Element users = userEle.getChild("contacts");
+
+        for (Element contactElement: contacts.getChildren("contact"))
+            new Contact(this, contactElement);
+
+        for (Element contactElement: contacts.getChildren("email-contact"))
+            new EmailContact(this, contactElement);
+    }
         
         
     }
