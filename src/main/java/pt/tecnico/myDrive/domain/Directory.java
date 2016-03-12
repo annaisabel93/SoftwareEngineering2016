@@ -11,7 +11,7 @@ public class Directory extends Directory_Base {
 	public ArrayList<File> files = new ArrayList<File>();
 	
 	
-    public Directory(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute) {
+    public Directory(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, Directory father) {
         super();
         setUser(user);
     }
