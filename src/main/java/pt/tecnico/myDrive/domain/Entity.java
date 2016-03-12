@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 public class Entity extends Entity_Base {
     
-	public Entity(FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension) {
+	public Entity(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String path) {
         super();
         setFilename(filename);
         setOwner(owner);
@@ -16,7 +16,7 @@ public class Entity extends Entity_Base {
         setLastModified(lastModified);
         setDimension(dimension);
         setFilesystem(filesystem);
-        //FIXME do we need a path? - enunciado
+        setPath(path);
     }
 
 	public Entity() {
@@ -35,6 +35,7 @@ public class Entity extends Entity_Base {
 		try {
 			setFilename(new String(filedoc.getRootElement().getAttribute("filename").getValue().getBytes("UTF-8")));
 			setOwner(new String(filedoc.getRootElement().getAttribute("owner").getValue().getBytes("UTF-8")));
+			setPath(new String (filedoc.getRootElement().getAttribute("path").getValue().getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) {
 			System.err.println(e);
 		}
@@ -44,6 +45,7 @@ public class Entity extends Entity_Base {
 		    	Element file = new Element("File");
 		    	file.setAttribute("filename", getFilename()); 	
 		    	file.setAttribute("owner", getOwner());
+		    	file.setAttribute("path", getPath());
 		    	Document document = new Document(file);
 				return document;    
 	}
