@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
@@ -13,28 +13,19 @@ import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
     
-    
     public Directory workingDir  = null;
     public User logged_user  = null;
-    public byte[] array = {0,0,0,0}; //mask - ainda nao esta bem implementada
+    public byte[] array = {0,0,0,0};
 
-    ArrayList<File> files = new ArrayList<File>();
+    Set<File> files = new HashSet<File>();
     Scanner keyboardSc = new Scanner(System.in);
 	
     
     public FileSystem(){
     	super();
     	setCounter(0);
-    	//DateTime date = new DateTime();
-    	
-    	
-    	addUser("root", "root", "rootroot");
-    	//User root = new User(this, "root", "root", "rootroot", array, "root", true, getCounter()+1);
-    	//setCounter(get)
-    	//Directory rootDir = new Directory(root,this, "root", "root", getCounter()+1, date, 2, false, false, false, false);
-    	//setCounter(getCounter()+1);
-    	//no momento de criacao vai ter dimensao 2: "." e ".." - as diretorias sempre presentes
-    	// setWorkingDir(rootDir);
+
+    	addUser("root");
     }
     
     public void setWorkingDir(Directory dir){
@@ -46,7 +37,7 @@ public class FileSystem extends FileSystem_Base {
     }
     
   // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
-    public void testLoop(){
+    public void MainLoop(){
     	String input;
     	
     	while(true){
@@ -61,7 +52,7 @@ public class FileSystem extends FileSystem_Base {
     		
     		if(input.equals("Login")){ login(); continue; }
     		
-    		if(input.equals("AddUser")){
+    		if(input.equals("AddUser")){//so estou a deixar adicionar um user se ninguem estiver logado
     			String username;
     			String name;
     			String pw;
@@ -75,7 +66,7 @@ public class FileSystem extends FileSystem_Base {
     			name = keyboardSc.next();
     			System.out.println("pw?");
     			pw = keyboardSc.next();
-    			addUser(username, name, pw);
+    			addUser(username);
     			System.out.println("Created user "+username);
     			continue;
     		}
@@ -135,26 +126,36 @@ public class FileSystem extends FileSystem_Base {
      }
      
      
-     public void addUser(String username, String name, String pw){
+     public void addUser(String username){
     	User user = null;
     	DateTime date = new DateTime();
     	if(this.logged_user == null){//caso root - apenas ira executar 1 vez
-    		user = new User(this, "root", "root", "rootroot", array, username, true);
+    		user = new User(this, "root", "Super User", "***", array, username, true);
+    		addUser(user);
+    		//adicionar home directory e a diretoria raiz
+    		setCounter(getCounter()+1);
+    		//precisa de \\ para reconhecer \ dentro da string
+    		Directory home =	new Directory(user,this, "\\home", "root", getCounter(), date, 2, false, false, false, false, null);
+    		addFile(home);
+    		files.add(home);
     	}
     	else{
-    		user = new User(this, name, username, pw, array, username, false);
+    		user = new User(this, username, username, username, array, username, false);
+    		addUser(user);
+    		setCounter(getCounter()+1);
+    		Directory Dir =	user.addDir(user,this, this.workingDir.getFilename()+"\\"+username, username, getCounter(), date, 2, false, false, false, false, this.workingDir );
+    		files.add(Dir);
+    		addFile(Dir);
     	}
-     	setCounter(getCounter()+1);
-     	Directory Dir =	user.addDir(user,this, username, username, getCounter(), date, 2, false, false, false, false);
-     	files.add(Dir);
      }
      
      
      public void prepareDir(String name){// para ser usado de outro modo mais tarde quando implementarmos as permissoes bem
     	 DateTime date = new DateTime();
     	 setCounter(getCounter()+1);
-    	 Directory Dir =	this.logged_user.addDir(this.logged_user,this, name, this.logged_user.getUserName(), getCounter(), date, 2, false, false, false, false);
+    	 Directory Dir = this.logged_user.addDir(this.logged_user,this, workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, false, false, false, false, this.workingDir);
     	 files.add(Dir);
+    	 addFile(Dir);
     	 System.out.println("File: "+name+" created");
      }
     	
