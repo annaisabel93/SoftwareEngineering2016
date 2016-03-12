@@ -140,7 +140,7 @@ public class FileSystem extends FileSystem_Base {
     		//adicionar home directory e a diretoria raiz
     		setCounter(getCounter()+1);
     		//precisa de \\ para reconhecer \ dentro da string
-    		Directory home =	new Directory(user,this, "\\home", "root", getCounter(), date, 2, false, false, false, false, null);
+    		Directory home =	new Directory(user,this, "\\home", "root", getCounter(), date, 2, null);
     		addEntity(home);
     		files.add(home);
     	}

@@ -66,7 +66,7 @@ public class User extends User_Base {
     }
     
     public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, Directory father){
-    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,delete,execute, father);
+    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,father);
     	dirs.add(dir);
     	return dir;
     }

@@ -10,12 +10,6 @@ class Entity {
 	long id;
 	DateTime lastModified;
 	int dimension;
-	/*---Booleans define the permissions----*/
-	
-	boolean read;			
-	boolean write;
-	boolean delete;
-	boolean execute;
 }
 
 

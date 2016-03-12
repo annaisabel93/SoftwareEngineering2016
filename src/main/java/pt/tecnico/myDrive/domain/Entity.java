@@ -15,10 +15,6 @@ public class Entity extends Entity_Base {
         setId(id);
         setLastModified(lastModified);
         setDimension(dimension);
-        setRead(read);
-        setWrite(write);
-        setDelete(delete);
-        setExecute(execute);
         setFilesystem(filesystem);
         //FIXME do we need a path? - enunciado
     }
