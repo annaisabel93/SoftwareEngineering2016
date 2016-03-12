@@ -214,6 +214,11 @@ public class FileSystem extends FileSystem_Base {
     	super.addUser(user);
     }
     
+    public void cleanup() {
+        for (User u: getUserSet())
+	    u.remove();
+    }
+    
     public void xmlImport(Document fsDoc){
     	for(Element node: fsDoc.getRootElement().getChildren("User")){
 			String username = node.getAttribute("username").getValue();

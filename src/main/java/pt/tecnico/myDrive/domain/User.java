@@ -70,4 +70,11 @@ public class User extends User_Base {
     	dirs.add(dir);
     	return dir;
     }
+    
+    public void remove() { //FIXME --mexer na funcao ainda
+		// TODO Auto-generated method stub
+	        
+	        setSystem(null);
+	        deleteDomainObject();
+	}
 }
