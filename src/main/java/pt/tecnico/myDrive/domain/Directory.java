@@ -5,6 +5,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
+
 public class Directory extends Directory_Base {
 	
 	
@@ -22,10 +24,29 @@ public class Directory extends Directory_Base {
     	setFilesystem(filesystem);
     }
 
+    public Directory getDir(String name){
+    	File destiny = null;
+    	destiny = getDirByName(name);
+    	return (Directory) destiny;
+    }
+    
 	public void addDir(Directory dir){
 		files.add(dir);
+		addFile(dir);
 		setDimension(getDimension()+1);		
 	}
+	
+	public File getDirByName(String username) {
+        for (File dir : getFileSet()) {
+            if (dir.getFilename().equals(username)) {
+                return dir;
+            }
+        }
+        return null;
+    }
+	
+	
+	
 	public void xmlImport(Document directoryDoc){
 		super.xmlImport(directoryDoc);
 	}
