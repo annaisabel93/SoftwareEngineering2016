@@ -148,7 +148,7 @@ public class FileSystem extends FileSystem_Base {
     		user = new User(this, username, username, username, array, username, false);
     		addUser(user);
     		setCounter(getCounter()+1);
-    		Directory Dir =	user.addDir(user,this, this.workingDir.getFilename()+"\\"+username, username, (long)getCounter(), date, 2, false, false, false, false, this.workingDir );
+    		Directory Dir =	user.addDir(user,this, this.workingDir.getFilename()+"\\"+username, username, (long)getCounter(), date, 2, this.workingDir );
     		files.add(Dir);
     		addEntity(Dir);
     	}
@@ -158,7 +158,7 @@ public class FileSystem extends FileSystem_Base {
      public void prepareDir(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
     	 setCounter(getCounter()+1);
-    	 Directory Dir = this.logged_user.addDir(this.logged_user,this, workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, false, false, false, false, this.workingDir);
+    	 Directory Dir = this.logged_user.addDir(this.logged_user,this, workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, this.workingDir);
     	 files.add(Dir);
     	 addEntity(Dir);
     	 System.out.println("File: "+name+" created");
