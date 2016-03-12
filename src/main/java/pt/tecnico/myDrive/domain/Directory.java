@@ -13,7 +13,7 @@ public class Directory extends Directory_Base {
 	public ArrayList<Entity> files = new ArrayList<Entity>();
 	
 	
-    public Directory(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father) {
+    public Directory(User user, FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father) {
         super();
         setUser(user);
     }

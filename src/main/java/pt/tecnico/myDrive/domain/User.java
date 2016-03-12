@@ -65,8 +65,9 @@ public class User extends User_Base {
         return document; 
     }
     
-    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father){
-    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,father);
+    public Directory addDir(User user, FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father){
+    	Directory dir = new Directory(user,filesystem,path, filename,owner,id,lastModified,dimension,father);
+    	this.
     	dirs.add(dir);
     	return dir;
     }
