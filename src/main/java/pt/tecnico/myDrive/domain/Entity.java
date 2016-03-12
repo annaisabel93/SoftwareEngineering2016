@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 public class Entity extends Entity_Base {
     
-	public Entity(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute) {
+	public Entity(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension) {
         super();
         setFilename(filename);
         setOwner(owner);
@@ -35,10 +35,6 @@ public class Entity extends Entity_Base {
 		try {
 			setFilename(new String(filedoc.getRootElement().getAttribute("filename").getValue().getBytes("UTF-8")));
 			setOwner(new String(filedoc.getRootElement().getAttribute("owner").getValue().getBytes("UTF-8")));
-//			setRead(new Boolean(filedoc.getRootElement().getAttribute("read").getValue()));
-//			setWrite(new Boolean(filedoc.getRootElement().getAttribute("write").getValue()));
-//			setDelete(new Boolean(filedoc.getRootElement().getAttribute("delete").getValue()));
-//			setExecute(new Boolean(filedoc.getRootElement().getAttribute("execute").getValue()));
 		} catch (UnsupportedEncodingException e) {
 			System.err.println(e);
 		}
@@ -48,10 +44,6 @@ public class Entity extends Entity_Base {
 		    	Element file = new Element("File");
 		    	file.setAttribute("filename", getFilename()); 	
 		    	file.setAttribute("owner", getOwner());
-//		    	element.setAttribute("read", Boolean.toString(getRead()));
-//		    	element.setAttribute("write", Boolean.toString(getWrite()));
-//		    	element.setAttribute("delete", Boolean.toString(getDelete()));
-//		    	element.setAttribute("execute", Boolean.toString(getExecute()));
 		    	Document document = new Document(file);
 				return document;    
 	}

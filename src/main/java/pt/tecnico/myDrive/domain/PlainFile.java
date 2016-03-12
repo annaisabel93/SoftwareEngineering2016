@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 public class PlainFile extends PlainFile_Base {
     
-    public PlainFile(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, String content) {
+    public PlainFile(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
         setContent(content);
     }

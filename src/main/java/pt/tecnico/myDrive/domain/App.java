@@ -4,7 +4,7 @@ import org.jdom2.Document;
 import org.joda.time.DateTime;
 public class App extends App_Base {
     
-    public App(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, String content) {
+    public App(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
     }
     
