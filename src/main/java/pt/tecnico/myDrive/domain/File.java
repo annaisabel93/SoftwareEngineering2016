@@ -40,10 +40,10 @@ public class File extends File_Base {
 		try {
 			setFilename(new String(filedoc.getRootElement().getAttribute("filename").getValue().getBytes("UTF-8")));
 			setOwner(new String(filedoc.getRootElement().getAttribute("owner").getValue().getBytes("UTF-8")));
-			setRead(new Boolean(filedoc.getRootElement().getAttribute("read").getValue())); //oh booleans, what are we going to do with you
-			setWrite(new Boolean(filedoc.getRootElement().getAttribute("write").getValue()));
-			setDelete(new Boolean(filedoc.getRootElement().getAttribute("delete").getValue()));
-			setExecute(new Boolean(filedoc.getRootElement().getAttribute("execute").getValue()));
+//			setRead(new Boolean(filedoc.getRootElement().getAttribute("read").getValue()));
+//			setWrite(new Boolean(filedoc.getRootElement().getAttribute("write").getValue()));
+//			setDelete(new Boolean(filedoc.getRootElement().getAttribute("delete").getValue()));
+//			setExecute(new Boolean(filedoc.getRootElement().getAttribute("execute").getValue()));
 		} catch (UnsupportedEncodingException e) {
 			System.err.println(e);
 		}
@@ -53,7 +53,10 @@ public class File extends File_Base {
 		    	Element element = new Element("File");
 		    	element.setAttribute("filename", getFilename()); 	
 		    	element.setAttribute("owner", getOwner());
-		    	//how to add booleans if setAttribute needs strings?
+//		    	element.setAttribute("read", Boolean.toString(getRead()));
+//		    	element.setAttribute("write", Boolean.toString(getWrite()));
+//		    	element.setAttribute("delete", Boolean.toString(getDelete()));
+//		    	element.setAttribute("execute", Boolean.toString(getExecute()));
 		    	Document document = new Document(element);
 				return document;    
 	}

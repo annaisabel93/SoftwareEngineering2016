@@ -60,7 +60,7 @@ public class User extends User_Base {
     	element.setAttribute("name", getName());
     	element.setAttribute("password", getPassword());
     	element.setAttribute("homeDir", getHomeDir());
-    	element.setAttribute("mask", getMask().toString());
+    	element.setAttribute("rwxd", getMask().toString());
     	
     	Document document = new Document(element);
     	
