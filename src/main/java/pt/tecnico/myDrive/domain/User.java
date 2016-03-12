@@ -1,13 +1,18 @@
 package pt.tecnico.myDrive.domain;
 
+
+import java.util.ArrayList;
 import org.jdom2.Document;
 
 import java.io.UnsupportedEncodingException;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.joda.time.DateTime;
 
 public class User extends User_Base {
+	
+	ArrayList<Directory> dirs = new ArrayList<Directory>();
     
     public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir, boolean isRoot) {
         super();
@@ -60,5 +65,11 @@ public class User extends User_Base {
     	Document document = new Document(element);
     	
         return document; 
+    }
+    
+    public Directory addDir(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute){
+    	Directory dir = new Directory(user,filesystem,filename,owner,id,lastModified,dimension,read,write,delete,execute);
+    	dirs.add(dir);
+    	return dir;
     }
 }
