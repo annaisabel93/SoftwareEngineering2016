@@ -17,7 +17,7 @@ public class FileSystem extends FileSystem_Base {
     public User logged_user  = null;
     public byte[] array = {0,0,0,0};
 
-    Set<File> files = new HashSet<File>();
+    Set<Entity> files = new HashSet<Entity>();
     Scanner keyboardSc = new Scanner(System.in);
 	
     
@@ -136,16 +136,16 @@ public class FileSystem extends FileSystem_Base {
     		setCounter(getCounter()+1);
     		//precisa de \\ para reconhecer \ dentro da string
     		Directory home =	new Directory(user,this, "\\home", "root", getCounter(), date, 2, false, false, false, false, null);
-    		addFile(home);
+    		addEntity(home);
     		files.add(home);
     	}
     	else{
     		user = new User(this, username, username, username, array, username, false);
     		addUser(user);
     		setCounter(getCounter()+1);
-    		Directory Dir =	user.addDir(user,this, this.workingDir.getFilename()+"\\"+username, username, getCounter(), date, 2, false, false, false, false, this.workingDir );
+    		Directory Dir =	user.addDir(user,this, this.workingDir.getFilename()+"\\"+username, username, (long)getCounter(), date, 2, false, false, false, false, this.workingDir );
     		files.add(Dir);
-    		addFile(Dir);
+    		addEntity(Dir);
     	}
      }
      
@@ -155,7 +155,7 @@ public class FileSystem extends FileSystem_Base {
     	 setCounter(getCounter()+1);
     	 Directory Dir = this.logged_user.addDir(this.logged_user,this, workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, false, false, false, false, this.workingDir);
     	 files.add(Dir);
-    	 addFile(Dir);
+    	 addEntity(Dir);
     	 System.out.println("File: "+name+" created");
      }
     	

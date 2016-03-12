@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 public class Directory extends Directory_Base {
 	
 	
-	public ArrayList<File> files = new ArrayList<File>();
+	public ArrayList<Entity> files = new ArrayList<Entity>();
 	
 	
     public Directory(User user, FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, boolean read, boolean write, boolean delete, boolean execute, Directory father) {
