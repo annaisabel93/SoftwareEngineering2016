@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+import pt.tecnico.myDrive.domain.*;
 
 
 public class Main {
@@ -23,61 +24,59 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("*** Welcome to the My Drive application! ***");
 	try {
-	    /*
+	    
 	    setup();
-	    for (String s: args) xmlScan(new File(s));
-		print();
+	    //for (String s: args) xmlScan(new File(s));
+		//print();
 	    xmlPrint(); 
-	    */
+	    
 	} finally { FenixFramework.shutdown(); }
     }
-
- /*   @Atomic
-    public static void init() { // empty phonebook
-        log.trace("Init: " + FenixFramework.getDomainRoot());
-	PhoneBook.getInstance().cleanup();
-    }
-
+/*
     @Atomic
-    public static void setup() { // phonebook with debug data
-        log.trace("Setup: " + FenixFramework.getDomainRoot());
-	PhoneBook pb = PhoneBook.getInstance();
-
-        
+    public static void init() {
+        log.trace("Init: " + FenixFramework.getDomainRoot());
+        FileSystem.getInstance().cleanup();
     }
-
+*/
+    @Atomic
+    public static void setup() {
+        log.trace("Setup: " + FenixFramework.getDomainRoot());
+        FileSystem fs = FileSystem.getInstance(); 
+    }
+/*
     @Atomic
     public static void print() {
         log.trace("Print: " + FenixFramework.getDomainRoot());
-	PhoneBook pb = PhoneBook.getInstance();
+        FileSystem fs = FileSystem.getInstance();
 
-        for (Person p: pb.getPersonSet()) {
+        for (Person p: fs.getPersonSet()) {
             System.out.println("The Contact book of " + p.getName() + " contains " + p.getContactSet().size() + " contacts :");
-	    for (Contact c: p.getContactSet())
-		System.out.println("\t" + c.getName() + " -> " + c.getPhoneNumber());
-	}
+            for (Contact c: p.getContactSet())
+            	System.out.println("\t" + c.getName() + " -> " + c.getPhoneNumber());
+        }
     }
-
+*/
     @Atomic
     public static void xmlPrint() {
         log.trace("xmlPrint: " + FenixFramework.getDomainRoot());
-	Document doc = PhoneBook.getInstance().xmlExport();
-	XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-	try { xmlOutput.output(doc, new PrintStream(System.out));
-	} catch (IOException e) { System.out.println(e); }
+        Document doc = FileSystem.getInstance().xmlExport();
+        XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
+        try { 
+        	xmlOutput.output(doc, new PrintStream(System.out));
+        } 
+        catch (IOException e) { System.out.println(e); }
     }
-
+/*
     @Atomic
     public static void xmlScan(File file) {
         log.trace("xmlScan: " + FenixFramework.getDomainRoot());
-	PhoneBook pb = PhoneBook.getInstance();
-	SAXBuilder builder = new SAXBuilder();
-	try {
-	    Document document = (Document)builder.build(file);
-	    pb.xmlImport(document.getRootElement());
-	} catch (JDOMException | IOException e) {
-	    e.printStackTrace();
-	}
-    }*/
-	
+        FileSystem fs = FileSystem.getInstance();
+        SAXBuilder builder = new SAXBuilder();
+        try {
+        	Document document = (Document)builder.build(file);
+        	fs.xmlImport(document.getRootElement());
+        } catch (JDOMException | IOException e) { e.printStackTrace(); }
+    }
+*/
 }
