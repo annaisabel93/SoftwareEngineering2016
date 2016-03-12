@@ -25,19 +25,19 @@ public class Directory extends Directory_Base {
     }
 
     public Directory getDir(String name){
-    	File destiny = null;
+    	Entity destiny = null;
     	destiny = getDirByName(name);
     	return (Directory) destiny;
     }
     
 	public void addDir(Directory dir){
 		files.add(dir);
-		addFile(dir);
+		addEntity(dir);
 		setDimension(getDimension()+1);		
 	}
 	
-	public File getDirByName(String username) {
-        for (File dir : getFileSet()) {
+	public Entity getDirByName(String username) {
+        for (Entity dir : getEntitySet()) {
             if (dir.getFilename().equals(username)) {
                 return dir;
             }
