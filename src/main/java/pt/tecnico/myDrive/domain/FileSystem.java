@@ -53,6 +53,8 @@ public class FileSystem extends FileSystem_Base {
     	5-Ir para outra diretoria (usar cd <filename> ou cd .. ou cd .)
     	6-Criar Ficheiro de Texto
     	7-Remover Ficheiro de Texto
+    	8-Imprimir o conteudo do ficheiro home/README
+    	9-Imprimir o conteudo da directoria /home 
     	 */
     	
     	
@@ -120,6 +122,16 @@ public class FileSystem extends FileSystem_Base {
     			System.out.println("Logged out");
     			continue;
     		}
+    		
+    		if(input.equals("8")){
+    			printReadMe();
+    			continue;
+    		}
+    		
+    		if(input.equals("9")){
+    			printHome();
+    			continue;
+    		}
     	}
     	
     }
@@ -127,7 +139,9 @@ public class FileSystem extends FileSystem_Base {
      //fim--------------------------------------------------------------------
     
     
-     public void login(){
+
+
+	public void login(){
     	 String username;
     	 String pw;
     	 System.out.println("Username:");
@@ -168,6 +182,27 @@ public class FileSystem extends FileSystem_Base {
     		files.add(Dir);
     		addEntity(Dir);
     	}
+     }
+     
+     private void printReadMe() {
+    	 String homeDir = this.logged_user.getHomeDir();
+    	 ArrayList<Entity> homeFiles = this.logged_user.getDirectory().getDir(homeDir).files;
+    	 for (Entity entity : homeFiles) {
+    		 if(entity.getFilename().equals("README") && entity.getClass().equals(PlainFile.class)) {
+    			 PlainFile file = (PlainFile) entity;
+    			 System.out.println(file.getContent());
+    		 }	 
+    	 }
+    	 
+     }
+     
+     private void printHome() {
+    	 String homeDir = this.logged_user.getHomeDir();
+    	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
+    	 for (Entity entity : home.files) {
+    		 System.out.println(entity.getFilename());
+    	 }
+    	 
      }
      
      
@@ -252,8 +287,6 @@ public class FileSystem extends FileSystem_Base {
 		for(User u: getUserSet())
 			element.addContent(u.xmlExport().detachRootElement());
 		return doc;
-    }
-    
-    
+    }   
     
 }
