@@ -10,6 +10,7 @@ class Entity {
 	long id;
 	DateTime lastModified;
 	int dimension;
+	String path;
 }
 
 
