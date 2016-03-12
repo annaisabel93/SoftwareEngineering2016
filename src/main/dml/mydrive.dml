@@ -20,7 +20,6 @@ class User {
 	String password;
 	bytearray mask; 		 /*---FIXME---*-----done!*/
 	String homeDir;       /*---FIXME---*-----done!*/
-	boolean isRoot;
 }
 
 class Directory extends Entity  {	

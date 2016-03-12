@@ -55,7 +55,7 @@ public class Main {
         
         else{
         	log.trace("new FileSystem4");
-        	user = new User(fs, "maria","maria", "***", null, "home", true);
+        	user = new User(fs, "maria","maria", "***", null, "home");
         	d = new Directory(user,fs,"home","cenas",user.getUserName(), 0, data ,2, null);
         	log.trace("new FileSystem5");
         	f = new Entity(fs, "/home/homee","home","root",0,d.getLastModified() ,2);

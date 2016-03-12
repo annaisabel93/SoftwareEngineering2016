@@ -14,14 +14,13 @@ public class User extends User_Base {
 	
 	ArrayList<Directory> dirs = new ArrayList<Directory>();
     
-    public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir, boolean isRoot) {
+    public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir) {
         super();
         setName(name);
         setUserName(username);
         setPassword(password);
         setMask(mask);
         setHomeDir(homeDir);
-        setIsRoot(isRoot);
         setSystem(filesystem);
     }
     

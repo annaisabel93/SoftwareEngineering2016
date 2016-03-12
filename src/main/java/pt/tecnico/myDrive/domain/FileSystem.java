@@ -165,7 +165,7 @@ public class FileSystem extends FileSystem_Base {
     	User user = null;
     	DateTime date = new DateTime();
     	if(this.logged_user == null){//caso root - apenas ira executar 1 vez
-    		user = new User(this, "root", "Super User", "***", array, username, true);
+    		user = new User(this, "root", "Super User", "***", array, username);
     		addUser(user);
     		//adicionar home directory e a diretoria raiz
     		setCounter(getCounter()+1);
@@ -175,7 +175,7 @@ public class FileSystem extends FileSystem_Base {
     		files.add(home);
     	}
     	else{
-    		user = new User(this, username, username, username, array, username, false);
+    		user = new User(this, username, username, username, array, username);
     		addUser(user);
     		setCounter(getCounter()+1);
     		Directory Dir =	user.addDir(user,this,username, this.workingDir.getFilename()+"\\"+username, username, (long)getCounter(), date, 2, this.workingDir );
@@ -275,7 +275,7 @@ public class FileSystem extends FileSystem_Base {
 			User user = getUserByUsername(username);
 			
 			if(user == null)
-				user = new User(this, username, username, username,null, "home",false); //FIXME --argumentos
+				user = new User(this, username, username, username,null, "home"); //FIXME --argumentos
 			Document fsdoc = new Document(node);
 			user.xmlImport(fsdoc);
 		}
