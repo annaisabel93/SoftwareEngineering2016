@@ -94,7 +94,6 @@ public class FileSystem extends FileSystem_Base {
     			}
     			System.out.println("Ready to move");
     			moveDir(keyboardSc.next());
-    			System.out.println("Moved ended");
     			continue;
     		}
     		
@@ -168,6 +167,11 @@ public class FileSystem extends FileSystem_Base {
     public void moveDir(String directory_destiny){ //unfinished
     	Directory destiny = null;
     	destiny = this.workingDir.getDir("\\"+directory_destiny);
+    	if(destiny == null){
+    		System.out.println("Directory does not exist within this directory");
+    		return;
+    	}
+    	this.workingDir = destiny;
     	
     }
     	
