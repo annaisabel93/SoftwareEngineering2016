@@ -8,15 +8,15 @@ import org.joda.time.DateTime;
 
 public class Entity extends Entity_Base {
     
-	public Entity(FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension) {
+	public Entity(FileSystem filesystem, Directory dir, String path, String filename, String owner, long id, int dimension) {
         super();
         setFilename(filename);
         setOwner(owner);
         setId(id);
-        setLastModified(lastModified);
         setDimension(dimension);
         setFilesystem(filesystem);
         setPath(path);
+        setDirectory(dir);
     }
 
 	public Entity() {

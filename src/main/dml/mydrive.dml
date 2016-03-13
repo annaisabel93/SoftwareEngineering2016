@@ -61,7 +61,7 @@ relation FileSystemhasEntity{
 	}
 	
 	Entity playsRole entity {
-		multiplicity 1..*;     
+		multiplicity 0..*;     
 	}
 }
 

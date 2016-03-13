@@ -54,9 +54,9 @@ public class User extends User_Base {
     public Document xmlExport(){
     	Element element = new Element("User");
     	element.setAttribute("username", getUserName()); 	
-    	element.setAttribute("name", getName());
-    	element.setAttribute("password", getPassword());
-    	element.setAttribute("homeDir", getHomeDir());
+    	element.addContent(new Element("name").setText(getName()));
+    	element.addContent(new Element("password").setText(getPassword()));
+    	element.addContent(new Element("homeDir").setText(getHomeDir()));
     	//element.setAttribute("rwxd", getMask().toString());
     	
     	Document document = new Document(element);
@@ -65,7 +65,7 @@ public class User extends User_Base {
     }
     
     public Directory addDir(User user, FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father){
-    	Directory dir = new Directory(user,filesystem,path, filename,owner,id,lastModified,dimension,father);
+    	Directory dir = new Directory(user,filesystem,path, filename,owner,id,dimension,father);
     	this.
     	dirs.add(dir);
     	return dir;
