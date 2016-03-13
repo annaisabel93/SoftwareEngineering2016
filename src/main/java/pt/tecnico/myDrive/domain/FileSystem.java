@@ -277,6 +277,7 @@ public class FileSystem extends FileSystem_Base {
 			if(user == null)
 				user = new User(this, username, username, username,null, "home"); //FIXME --argumentos
 			Document fsdoc = new Document(node);
+			List content = fsdoc.getRootElement().cloneContent(); 
 			user.xmlImport(fsdoc);
 		}
     }
