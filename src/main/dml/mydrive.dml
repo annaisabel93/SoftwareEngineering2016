@@ -18,23 +18,22 @@ class User {
 	String name;
 	String userName;
 	String password;
-	bytearray mask; 		 /*---FIXME---*-----done!*/
-	String homeDir;       /*---FIXME---*-----done!*/
+	bytearray mask; 		 
+	String homeDir;      
 }
 
 class Directory extends Entity  {	
 }
 
-class PlainFile extends Entity  {	    /*--- Plain text file extends link e app----done!*/
+class PlainFile extends Entity  {	   
 	String content;
 }
 
-class Link extends PlainFile;          /*---FIXME---*-----done!*/
+class Link extends PlainFile;        
 
 
-class App extends PlainFile;           /*---FIXME---*-----done!*/
+class App extends PlainFile;          
 
-/*FIXME  tipo apanhado por instanceof, dimensao e vista pelo tamanho */
 
 relation DomainRootHasFileSystemApplication {
   .pt.ist.fenixframework.DomainRoot playsRole root {
@@ -46,7 +45,6 @@ relation DomainRootHasFileSystemApplication {
 }
 
 relation FileSystemhasUser {
-
 	FileSystem playsRole system {
 		multiplicity 0..1;
 	} 
@@ -64,18 +62,6 @@ relation FileSystemhasEntity{
 		multiplicity 0..*;     
 	}
 }
-
-/*---FileSystemhasFile - yes cuz of root----*/
-
-/* relation UserhasFile{	
-	User playsRole user {
-		multiplicity 1..1;
-	} 
-
-	File playsRole file {
-		multiplicity 1..*;
-	}
-} */
 
 relation UserhasDirectory{
 	User playsRole user{

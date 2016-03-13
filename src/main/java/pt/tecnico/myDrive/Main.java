@@ -46,8 +46,11 @@ public class Main {
         FileSystem fs = FileSystem.getInstance(); 
         
         User user;
+        User usernew;
     	Directory d;
+    	Directory dir;
     	Entity f;
+    	Entity entity;
     	DateTime data = new DateTime();
     	log.trace("new FileSyste3");
     	new Entity();
@@ -55,11 +58,19 @@ public class Main {
         
         else{
         	log.trace("new FileSystem4");
-        	user = new User(fs, "maria","maria", "***", null, "home");
-        	//user = new User(fs, "joao","joao", "***", null, "home");
+        	usernew = new User(fs, "maria","maria", "***", null, "home/maria");
+        	/*if(fs.getUserSet().contains(usernew)){
+        		log.trace("sim eu tenho a maria");
+        	}
+        	else{
+        		log.trace("eu nao tenho a maria");
+        	}*/
+        	user = new User(fs, "joao","joao", "***", null, "home");
         	d = new Directory(user,fs,"home","cenas",user.getUserName(), 0 ,2, null);
+        	dir = new Directory(usernew,fs,"home","cenas",usernew.getUserName(), 0 ,2, null);
         	log.trace("new FileSystem5");
         	f = new Entity(fs, d, "/home/homee","home","root",0, 2);
+        	entity = new Entity(fs, dir, "/home/homee","home","root",0, 2);
         	log.trace("new FileSystem6");
         	new Entity();
         	log.trace("new FileSystem7");
