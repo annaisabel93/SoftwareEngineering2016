@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ArrayList;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -283,7 +284,7 @@ public class FileSystem extends FileSystem_Base {
 			if(user == null)
 				user = new User(this, username, username, username,null, "home"); //FIXME --argumentos
 			Document fsdoc = new Document(node);
-			List content = fsdoc.getRootElement().cloneContent(); 
+			List Content = fsdoc.getRootElement().cloneContent(); 
 			user.xmlImport(fsdoc);
 		}
     }
