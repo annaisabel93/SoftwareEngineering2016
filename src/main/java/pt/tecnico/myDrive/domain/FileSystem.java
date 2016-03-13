@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ArrayList;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -340,15 +341,16 @@ public class FileSystem extends FileSystem_Base {
     }
     
     public void xmlImport(Document fsDoc){
-    	for(Element node: fsDoc.getRootElement().getChildren("User")){
-			String username = node.getAttribute("username").getValue();
-			User user = getUserByUsername(username);
-			
-			if(user == null)
-				user = new User(this, username, username, username,null, "home"); //FIXME --argumentos
-			Document fsdoc = new Document(node);
-			user.xmlImport(fsdoc);
-		}
+    	List<Element> elList = fsDoc.getRootElement().getChildren();
+    	
+    	for(int i=0; i<elList.size(); i++){
+    		Element user = elList.get(i);
+    		//System.out.println("Lista: " + elList.get(i));
+    		String username = user.getAttribute("username").getValue();
+    		String name = user.getChild("name").getValue();
+    		String password = user.getChild("password").getValue();
+    		String homeDir = user.getChild("homeDir").getValue();
+    	}
     }
     
     public Document xmlExport(){
