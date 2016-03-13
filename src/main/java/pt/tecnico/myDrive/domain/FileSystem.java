@@ -203,7 +203,7 @@ public class FileSystem extends FileSystem_Base {
     		
     		Directory home_dir = (Directory) getDirectoryHome("home");
 
-    		System.out.println("ver se é null"+home_dir != null);
+    		System.out.println("ver se e null"+home_dir != null);
 
     		Directory dir = new Directory(this, home_dir, "/home/"+username, username, username, getCounter(), 2);
     		dir.setLastModified(date);
@@ -355,7 +355,7 @@ public class FileSystem extends FileSystem_Base {
     		String homeDir = user.getChild("homeDir").getValue();
     	
     	
-    	//vai dar asneira
+    	//vai dar asneira vai
     	
 //    	User newUser = getUserByUsername(username);
 //    	if (newUser == null)
