@@ -14,7 +14,11 @@ import javax.print.Doc;
 
 import java.util.HashSet;
 import java.util.List;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.io.BufferedReader;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
@@ -47,6 +51,18 @@ public class FileSystem extends FileSystem_Base {
     	return this.workingDir;
     }
     
+    public String Input() {
+    	String input = "1";
+    	
+    	InputStreamReader sr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(sr);
+		try {
+			input = br.readLine();
+		} catch(IOException e) { System.out.println("BufferedReader: " + e); }
+    	
+    	return input;
+    }
+    
   // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
     public void MainLoop(){
     	setCounter(0);
@@ -69,12 +85,25 @@ public class FileSystem extends FileSystem_Base {
     	while(true){
     		if(logged_user != null){
     			System.out.println("Currently logged with:"+this.logged_user.getUserName());
-    			System.out.println("Working dir:"+workingDir.getFilename());
+    			//System.out.println("Working dir:"+workingDir.getFilename());
     		}
     		System.out.println("Chose one:\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
     				+ "5-Ir para outra Diretoria\n6-Criar Ficheiro de texto\n7-Remover ficheiro de texto\n8-Imprimir conteudo de um ficheiro na diretoria atual\n9-Imprimir o conteudo da directoria\n10-Logout");
     		
-    		input =  System.console().readLine();
+    	/*
+    		InputStreamReader sr =new InputStreamReader(System.in);
+    		BufferedReader br = new BufferedReader(sr);
+    		try {
+    			input = br.readLine();
+    		} catch(IOException e) { System.out.println("BufferedReader: " + e); }
+    		
+    		Console c = System.console();
+    		while( (input = c.readLine()) == null) {
+    			
+    		}*/
+    		input = Input();
+    		
+    		
     		if(input.equals("0")){break;} //verificar se .next() , do scanner, tambem consome o \n ou nao
     		
     		if(input.equals("1")){ login(); continue; }
@@ -86,7 +115,8 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Username?");
-    			username =  System.console().readLine();
+    			username = Input();
+    			//username =  System.console().readLine();
     			adicionaUser(username);
     			continue;
     		}
@@ -97,7 +127,8 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Directory name?");
-    			AddDirtoCurrent( System.console().readLine());
+    			AddDirtoCurrent( Input());
+    			//AddDirtoCurrent( System.console().readLine());
     			continue;
     		}
     		
@@ -119,7 +150,8 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Ready to move");
-    			moveDir( System.console().readLine());
+    			moveDir( Input());
+    			//moveDir( System.console().readLine());
     			continue;
     		}
     		
@@ -155,13 +187,17 @@ public class FileSystem extends FileSystem_Base {
     	 String username;
     	 String pw;
     	 System.out.println("Username:");
-    	 username =  System.console().readLine();
+    	 username = Input();
+    	 //username =  System.console().readLine();
     	 User user = getUserByUsername(username);
     	 if (user == null){
     		 System.out.println("Username doesn't exist");
     		 return;
     	 }
-    	 pw =  System.console().readLine();
+    	 pw = Input();
+    	 System.out.println("Password dada: " + pw);
+    	 System.out.println("Password do utilizador: " + user.getPassword());
+    	 //pw =  System.console().readLine();
     	 if (pw.equals(user.getPassword()) == false){
     		 System.out.println("Wrong pw");
     		 return;
@@ -169,6 +205,9 @@ public class FileSystem extends FileSystem_Base {
     	 this.logged_user = user;
     	 
     	 this.workingDir = getUserDir(user.getUserName());
+    	 System.out.println("Nome do utilizador: " + user.getUserName());
+    	 //System.out.println("" + getUserDir(user.getUserName())));
+    	 System.out.println("Working Directory: " + this.workingDir);
      }
      
      
@@ -227,6 +266,7 @@ public class FileSystem extends FileSystem_Base {
      
      private void printHome() {
     	 String homeDir = this.logged_user.getHomeDir();
+    	 
     	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
     	 for (Entity entity : home.files) {
     		 System.out.println(entity.getFilename());
@@ -238,7 +278,7 @@ public class FileSystem extends FileSystem_Base {
      public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
     	 setCounter(getCounter()+1);
-    	 Directory dir = new Directory(this,workingDir,  workingDir.getFilename()+"\\"+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    	 Directory dir = new Directory(this,workingDir,  workingDir.getFilename()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
     	 this.workingDir.addDir(dir);
     	 dir.setLastModified(date);
     	 files.add(dir);
@@ -308,12 +348,13 @@ public class FileSystem extends FileSystem_Base {
     public Directory getUserDir(String username){ //devolve o diretorio base do user
     	System.out.println(getEntitySet().isEmpty());
     	for (Entity entity : getEntitySet()) {
-    		System.out.println(entity.getFilename());
+    		System.out.println("getUserDir: entity.getFilename(): " + entity.getFilename());
             if ((entity.getFilename().equals(username))) {
-            	System.out.println("vai comprar: "+entity.getDirectory().getPath()+" e "+ this.workingDir.getPath());
-            	if((entity.getDirectory().getPath()).equals(this.workingDir.getPath())){
+            	System.out.println("vai comprar: "+entity.getPath()+" e + this.getPath()");
+            	/*if((entity.getDirectory().getPath()).equals(this.workingDir.getPath())){
                 return (Directory) entity;
-            	}
+            	}*/
+            	return entity.getDirectory();
             }
         }
         System.out.println("Vai retornar null");
