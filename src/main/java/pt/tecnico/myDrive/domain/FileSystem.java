@@ -8,7 +8,9 @@ import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import java.util.Scanner;
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
@@ -21,7 +23,7 @@ public class FileSystem extends FileSystem_Base {
     public byte[] array = {0,0,0,0};
 
     Set<Entity> files = new HashSet<Entity>();
-    Scanner keyboardSc = new Scanner(System.in);
+    
 	
     /*
     public FileSystem(){
@@ -42,8 +44,9 @@ public class FileSystem extends FileSystem_Base {
     
   // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
     public void MainLoop(){
+    	setCounter(0);
+    	addUser("root");
     	String input;
-    	
     	/*
     	0-Sair
     	1-Login
@@ -64,9 +67,10 @@ public class FileSystem extends FileSystem_Base {
     			System.out.println("Working dir:"+this.workingDir.getFilename());
     		}
     		else{ System.out.println("Chose one:\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
-    				+ "5-Ir para outra Diretoria\n6-Logout\n"); }
+    				+ "5-Ir para outra Diretoria\n6-Logout\n");
     		
-    		input = keyboardSc.next();
+    		}
+    		input =  System.console().readLine();
     		if(input.equals("0")){break;} //verificar se .next() , do scanner, tambem consome o \n ou nao
     		
     		if(input.equals("1")){ login(); continue; }
@@ -78,7 +82,7 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Username?");
-    			username = keyboardSc.next();
+    			username =  System.console().readLine();
     			addUser(username);
     			System.out.println("Created user "+username);
     			continue;
@@ -90,7 +94,7 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Directory name?");
-    			prepareDir(keyboardSc.next());
+    			prepareDir( System.console().readLine());
     			continue;
     		}
     		
@@ -112,7 +116,7 @@ public class FileSystem extends FileSystem_Base {
     				continue;
     			}
     			System.out.println("Ready to move");
-    			moveDir(keyboardSc.next());
+    			moveDir( System.console().readLine());
     			continue;
     		}
     		
@@ -145,13 +149,13 @@ public class FileSystem extends FileSystem_Base {
     	 String username;
     	 String pw;
     	 System.out.println("Username:");
-    	 username = keyboardSc.next();
-    	 User user = getUserByUsername(username);
+    	 username =  System.console().readLine();
+    	 User user = getUserByUsername("root");
     	 if (user == null){
     		 System.out.println("Username doesn't exist");
     		 return;
     	 }
-    	 pw = keyboardSc.next();
+    	 pw =  System.console().readLine();
     	 if (pw.equals(user.getPassword()) == false){
     		 System.out.println("Wrong pw");
     		 return;
@@ -228,19 +232,21 @@ public class FileSystem extends FileSystem_Base {
     }
     	
     
-    public static FileSystem getInstance(){
+    public static FileSystem getInstance(){ //esta sempre a inicar um novo
     	FileSystem fs = FenixFramework.getDomainRoot().getFilesystem();
-    	if(fs != null)
-    		return fs;
+    	if(fs != null){
+    		System.out.println("\n\n\n\nefefefefefefe\n\n\n\n\n\n\n");
+    		return fs;}
     	else{
     		log.trace("new FileSystem");
+    		System.out.println("\n\n\n\nererererererererereree\n\n\n\n\n\n\n");
     		return new FileSystem();
     	}
     }
     
     private FileSystem() {
         setRoot(FenixFramework.getDomainRoot());
-        setCounter(0);
+        
     }
     
     public User getUserByUsername(String username) {
