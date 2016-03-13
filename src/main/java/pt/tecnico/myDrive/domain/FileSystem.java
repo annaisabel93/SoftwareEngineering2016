@@ -9,6 +9,9 @@ import org.joda.time.DateTime;
 
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.print.Doc;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -286,6 +289,16 @@ public class FileSystem extends FileSystem_Base {
     		String name = user.getChild("name").getValue();
     		String password = user.getChild("password").getValue();
     		String homeDir = user.getChild("homeDir").getValue();
+    	
+    	
+    	//vai dar asneira
+    	
+//    	User newUser = getUserByUsername(username);
+//    	if (newUser == null)
+//    		newUser = new User(this, name, username, password, null, homeDir);
+//    	Element el = user.detach();
+//    	Document doc = new Document(el);
+//    	newUser.xmlImport(doc);
     	}
     }
     
