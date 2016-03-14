@@ -173,8 +173,14 @@ public class FileSystem extends FileSystem_Base {
     			continue;
     		}
     		
-    		if(input.equals("6")){
-    			
+    		if(input.equals("6")){ //Criar ficheiro de texto
+    			if(logged_user == null){
+    				System.out.println("You must login first");
+    				continue;
+    			}
+			System.out.println("TextFile name?");
+			CreateTextFile(Input());
+			continue;
     		}
     	}
     }
@@ -257,7 +263,7 @@ public class FileSystem extends FileSystem_Base {
      
      private void printReadMe() {
     	 String homeDir = this.logged_user.getHomeDir();
-    	 ArrayList<Entity> homeFiles = this.logged_user.getDirectory().getDir(homeDir).files;
+    	 ArrayList<Directory> homeFiles = this.logged_user.getDirectory().getDir(homeDir).diretorias;
     	 for (Entity entity : homeFiles) {
     		 if(entity.getFilename().equals("README") && entity.getClass().equals(PlainFile.class)) {
     			 PlainFile file = (PlainFile) entity;
@@ -268,11 +274,19 @@ public class FileSystem extends FileSystem_Base {
      }
      
      private void printHome() {
-    	 System.out.println("Vai imprimir as diretorias");
-    	 for (Entity entity : this.workingDir.files) {
-    		 System.out.println(entity.getFilename());
+    	 System.out.println(".\n..");
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 System.out.println(dir.getFilename());
     	 }
-    	 System.out.println("acabou de imprimir as diretorias");
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 System.out.println(plain.getFilename());
+    	 }
+    	 for (Link link : this.workingDir.links) {
+    		 System.out.println(link.getFilename());
+    	 }
+    	 for (App app : this.workingDir.apps) {
+    		 System.out.println(app.getFilename());
+    	 }
 
     	 //parte do zé aqui---------------Print complexo----
     	 //System.out.println("Working directory: " + workingDir.getPath());
@@ -281,26 +295,46 @@ public class FileSystem extends FileSystem_Base {
      
      
      public void RemoveDir(String dir_name){
-    	 if(this.workingDir.getDirByName(dir_name)== null){//verifica se existe ou nao
-    		 System.out.println("Diretoria nao existe, dentro da diretoria de trabalho!");
-    		 return;
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 if(dir.getFilename().equals(dir_name)){
+    			 this.workingDir.DeleteEntity(dir_name);
+    			 return;
+    		 }
     	 }
-    	 this.workingDir.DeleteEntity(dir_name);
-    	 System.out.println("Directory: "+dir_name+" Removed!");
+    	 System.out.println("Diretoria nao existe, dentro da diretoria de trabalho!");
+
      }
      
      public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
-    	 if(this.workingDir.getDirByName(name) != null){//verifica se ja existe
-    		 System.out.println("Diretoria ja existe, dentro da diretoria de trabalho!");
-    		 return;
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 if(dir.getFilename().equals(name)){
+    			 System.out.println("Directoria ja existe na diretoria atual");
+    			 return;
+    		 }
     	 }
     	 setCounter(getCounter()+1);
     	 Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
     	 this.workingDir.addDir(dir);
     	 dir.setLastModified(date);
     	 files.add(dir);
-    	 System.out.println("File: "+name+" created");
+     }
+     
+     
+     public void CreateTextFile(String file_name){
+    	 DateTime date = new DateTime();
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(file_name)){
+    			 System.out.println("PlainFile ja existe na diretoria atual");
+    			 return;
+    		 }
+    	 }
+    	 setCounter(getCounter()+1);
+    	 PlainFile textfile = new PlainFile(this,file_name,this.logged_user.getUserName(), getCounter(), date, 2, "");
+    	 this.workingDir.addPlainFile(textfile);
+    	 textfile.setLastModified(date);
+    	 //getEntitySet().add(textfile);
+    	 files.add(textfile);
      }
     	
     	

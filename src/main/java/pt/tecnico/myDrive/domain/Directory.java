@@ -10,7 +10,11 @@ import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
 public class Directory extends Directory_Base {
 	
 	
-	public ArrayList<Entity> files = new ArrayList<Entity>();
+	public ArrayList<Directory> diretorias = new ArrayList<Directory>();
+	public ArrayList<PlainFile> plains = new ArrayList<PlainFile>();
+	public ArrayList<Link> links = new ArrayList<Link>();
+	public ArrayList<App> apps = new ArrayList<App>();
+	
 	
 	
     public Directory(FileSystem filesystem, Directory dir, String path, String filename, String owner, long id, int dimension) {
@@ -39,29 +43,55 @@ public class Directory extends Directory_Base {
     }
     
 	public void addDir(Directory dir){
-		files.add(dir);
+		diretorias.add(dir);
 		addEntity(dir);
 		setDimension(getDimension()+1);		
 	}
 	
+	public void addPlainFile(PlainFile text){
+		plains.add(text);
+		addEntity(text);
+		setDimension(getDimension()+1);		
+	}
+	
+	
 	public void DeleteEntity(String entity_name){ //remove uma entidade dentro da diretoria (check feito previamente)
 		Entity entity = getDirByName(entity_name);
-		files.remove(entity);
-		removeEntity(entity);
+		if(entity instanceof Directory){
+			diretorias.remove(entity);
+			removeEntity(entity);
+		}
+		else if(entity instanceof PlainFile){
+			plains.remove(entity);
+			removeEntity(entity);
+		}
+		else if(entity instanceof Link){
+			links.remove(entity);
+			removeEntity(entity);
+		}
+		else if(entity instanceof App){
+			apps.remove(entity);
+			removeEntity(entity);
+		}
 	}
 
 	
 	public Entity getDirByName(String dir_name) {
-        for (Entity dir : getEntitySet()) {
+        for (Directory dir : diretorias) {
             if (dir.getFilename().equals(dir_name)) {
                 return dir;
+            }
+        }
+        for (PlainFile plain : plains) {
+            if (plain.getFilename().equals(dir_name)) {
+                return plain;
             }
         }
         return null;
     }
 	
 	public void printDir() {
-		for(Entity entity: this.files) {
+		for(Entity entity: this.diretorias) {
 			String type = "unknown";
 			//String[] parts = entity.getClass().toString().split("\\."); //detect type FIX?
 			//type = parts[4];
