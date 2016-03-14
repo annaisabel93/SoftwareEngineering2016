@@ -265,12 +265,14 @@ public class FileSystem extends FileSystem_Base {
      }
      
      private void printHome() {
-    	 String homeDir = this.logged_user.getHomeDir();
+    	 System.out.println("Working directory: " + workingDir.getPath());
+    	 this.workingDir.printDir();
+    	 /*String homeDir = this.logged_user.getHomeDir();
     	 
     	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
     	 for (Entity entity : home.files) {
     		 System.out.println(entity.getFilename());
-    	 }
+    	 }*/
     	 
      }
      
