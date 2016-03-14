@@ -42,12 +42,16 @@ public class Entity extends Entity_Base {
 	}
 	
 	public Document xmlExport(){
-		    	Element file = new Element("File");
-		    	file.setAttribute("filename", getFilename()); 	
-		    	file.setAttribute("owner", getOwner());
-		    	file.setAttribute("path", getPath());
-		    	Document document = new Document(file);
-				return document;    
+			Element element = new Element("Entity");	
+    		String str = String.format ("%d", getId());
+    		//FIXME procurar forma decente++
+    		element.setAttribute("id", str); 	    	
+    		element.addContent(new Element ("filename").setText(getFilename())); 	
+    		element.addContent(new Element ("owner").setText(getOwner()));
+    		element.addContent(new Element("path").setText(getPath()));
+    	
+    		Document entityDoc = new Document(element);
+			return entityDoc;    
 	}
     
 }

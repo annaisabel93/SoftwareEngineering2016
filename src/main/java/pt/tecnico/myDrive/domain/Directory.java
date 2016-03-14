@@ -52,7 +52,11 @@ public class Directory extends Directory_Base {
 	}
 	
 	public Document xmlExport(){
-		Document directoryDoc = super.xmlExport();
+    	Element element = new Element("Directory");
+    	
+    	Document directoryDoc = new Document(element);
+    	directoryDoc = super.xmlExport();
+
 		return directoryDoc;
 	}
 }

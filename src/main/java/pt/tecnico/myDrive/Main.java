@@ -47,8 +47,10 @@ public class Main {
         
         User user;
         User usernew;
+        User userana;
     	Directory d;
     	Directory dir;
+    	Directory dirana;
     	Entity f;
     	Entity entity;
     	DateTime data = new DateTime();
@@ -66,11 +68,14 @@ public class Main {
         		log.trace("eu nao tenho a maria");
         	}*/
         	user = new User(fs, "joao","joao", "***", null, "home");
+        	userana = new User(fs, "ana", "ana", "***", null, "home");
+        	System.out.println("ola sou a ana");
         	d = new Directory(user,fs,"home","cenas",user.getUserName(), 0 ,2, null);
         	dir = new Directory(usernew,fs,"home","cenas",usernew.getUserName(), 0 ,2, null);
+        	dirana = new Directory(userana, fs, "home", "cenas", userana.getUserName(), 0, 2, null);
         	log.trace("new FileSystem5");
         	f = new Entity(fs, d, "/home/homee","home","root",0, 2);
-        	entity = new Entity(fs, dir, "/home/homee","home","root",0, 2);
+        	entity = new Entity(fs, dir, "/home/homerun","home","root",0, 2);
         	log.trace("new FileSystem6");
         	new Entity();
         	log.trace("new FileSystem7");
