@@ -17,19 +17,19 @@ public class PlainFile extends PlainFile_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PlainFile(FileSystem filesystem, Document xml){
+	public PlainFile(FileSystem filesystem, Element xml){
 		xmlImport(xml);
 		setFilesystem(filesystem);
 	}
 	
-	public void xmlImport(Document PlainFileDoc){
+	public void xmlImport(Element PlainFileDoc){
 		super.xmlImport(PlainFileDoc);
-		try{
-			setContent(new String(PlainFileDoc.getRootElement().getChild("content").getValue().getBytes("UTF-8")));
-		} catch (UnsupportedEncodingException e) { System.err.println(e); }
+		
+			setContent(new String(PlainFileDoc.getChild("content").getValue()));
+		
 	}
 	
-	public Document xmlExport(){
+	public Element xmlExport(){
 //		Element element = new Element("PlainFile");
 //		element.setAttribute("content", getContent());
 //		Document PlainFileDoc = new Document(element);
@@ -43,6 +43,6 @@ public class PlainFile extends PlainFile_Base {
 		element.addContent(new Element("path").setText(getPath()));
 		Document PlainFileDoc = new Document(element);
 		
-		return PlainFileDoc;
+		return element;
 	}
 }

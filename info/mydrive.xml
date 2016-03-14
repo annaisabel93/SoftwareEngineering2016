@@ -24,5 +24,15 @@
       <name>Cla</name>
       <password>1994</password>
       <homeDir>home/Clara</homeDir>
-  </User>
+</User>
+<Directory>
+  <filename>bubbles</filename>
+  <owner>Clara</owner>
+  <path>home/Clara/bubbles</path>
+</Directory>
+<Directory>
+<filename>cenas</filename>
+  <owner>Afonso</owner>
+  <path>home/Afonso/cenas</path>
+</Directory>  
 </Filesystem>

@@ -1,6 +1,7 @@
 package pt.tecnico.myDrive.domain;
 
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.joda.time.DateTime;
 public class App extends App_Base {
     
@@ -8,17 +9,17 @@ public class App extends App_Base {
         super();
     }
     
-    public App(FileSystem filesystem, Document xml){
+    public App(FileSystem filesystem, Element xml){
     	xmlImport(xml);
     	setFilesystem(filesystem);
     }
     
-    public void xmlImport(Document appDoc){
+    public void xmlImport(Element appDoc){
     	super.xmlImport(appDoc);
     }
     
-    public Document xmlExport(){
-    	Document appDoc = super.xmlExport();
-    	return appDoc;
+    public Element xmlExport(){
+    	return super.xmlExport();
+    	
     }
 }

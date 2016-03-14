@@ -1,6 +1,7 @@
 package pt.tecnico.myDrive.domain;
 
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 public class Link extends Link_Base {
@@ -9,17 +10,17 @@ public class Link extends Link_Base {
         super();
     }
     
-    public Link(FileSystem filesystem, Document xml){
+    public Link(FileSystem filesystem, Element xml){
     	xmlImport(xml);
     	setFilesystem(filesystem);
     }
     
-    public void xmlImport(Document linkDoc){
+    public void xmlImport(Element linkDoc){
     	super.xmlImport(linkDoc);
     }
     
-    public Document xmlExport(){
-    	Document linkDoc = super.xmlExport();
-    	return linkDoc;
+    public Element xmlExport(){
+    	return super.xmlExport();
+    
     }
 }

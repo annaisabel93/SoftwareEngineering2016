@@ -278,9 +278,19 @@ public class FileSystem extends FileSystem_Base {
     
   
     public void xmlImport(Document fsDoc){
-    	Element rootElement = fsDoc.getRootElement().clone();
+    	Element rootElement = fsDoc.getRootElement();
+    	System.out.println("ROOT_ELEMENT: " + fsDoc.getRootElement());
     	List<Element> listElement = rootElement.getChildren("User");
+    	List<Element> listDir = rootElement.getChildren("Directory");
+    	/*List<Element> listPlainFile = rootElement.getChildren("PlainFile");
+    	List<Element> listApp = rootElement.getChildren("App");
+    	List<Element> listLink = rootElement.getChildren("Link");*/
+    	
     	int size = listElement.size();
+    	int sizeDir = listDir.size();
+    	/*int sizePlainFile = listPlainFile.size();
+    	int sizeApp = listApp.size();
+    	int sizeLink = listLink.size();*/
     	
     	for(int i=0; i<size;i++){
     		Element node = listElement.get(i);
@@ -292,17 +302,67 @@ public class FileSystem extends FileSystem_Base {
     		if(user == null){
     			user = new User(this, name, username, password, null, homeDir);
     		}
-    		Element el = node.clone();
-    		Document userDoc = new Document(el.detach());
-    		user.xmlImport(userDoc);
+    		//Element el = node.clone();
+    		//Document userDoc = new Document(el.detach());
+    		user.xmlImport(node);
     	}
+    	for(int i=0; i<sizeDir ; i++){
+    		Element node = listDir.get(i);
+    		String filename = node.getChild("filename").getText();
+    		String owner = node.getChild("owner").getText();
+    		String path = node.getChild("path").getText();
+    		
+    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
+    		dir.xmlImport(node);
+    	}
+    	/*
+    	for(int i=0; i<sizeDir ; i++){
+    		Element node = listPlainFile.get(i);
+    		String filename = node.getChild("filename").getText();
+    		String owner = node.getChild("owner").getText();
+    		String path = node.getChild("path").getText();
+    		
+    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
+    		dir.xmlImport(node);
+    	}
+    	
+    	for(int i=0; i<sizeDir ; i++){
+    		Element node = listDir.get(i);
+    		String filename = node.getChild("filename").getText();
+    		String owner = node.getChild("owner").getText();
+    		String path = node.getChild("path").getText();
+    		
+    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
+    		dir.xmlImport(node);
+    	}
+    	
+    	for(int i=0; i<sizeDir ; i++){
+    		Element node = listDir.get(i);
+    		String filename = node.getChild("filename").getText();
+    		String owner = node.getChild("owner").getText();
+    		String path = node.getChild("path").getText();
+    		
+    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
+    		dir.xmlImport(node);
+    	}*/
+    	
+    	
     }
     
     public Document xmlExport(){
+    	
     	Element element = new Element("FileSystem");
 		Document doc = new Document(element);
-		for(User u: getUserSet())
+		
+		for(User u: getUserSet()){
 			element.addContent(u.xmlExport().detachRootElement());
+		//System.out.println(u.xmlExport().detachRootElement());
+		}
+		/*
+		for(Entity e: getEntitySet()){
+			if(e instanceof Directory)
+			element.addContent(e.xmlExport().getChild());
+		}*/
 		return doc;
     }   
     

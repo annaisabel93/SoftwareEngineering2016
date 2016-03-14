@@ -31,17 +31,14 @@ public class Entity extends Entity_Base {
 		}
 	}
 	
-	public void xmlImport(Document filedoc){
-		try {
-			setFilename(new String(filedoc.getRootElement().getAttribute("filename").getValue().getBytes("UTF-8")));
-			setOwner(new String(filedoc.getRootElement().getAttribute("owner").getValue().getBytes("UTF-8")));
-			setPath(new String (filedoc.getRootElement().getAttribute("path").getValue().getBytes("UTF-8")));
-		} catch (UnsupportedEncodingException e) {
-			System.err.println(e);
-		}
+	public void xmlImport(Element filedoc){
+			setFilename(new String(filedoc.getChild("filename").getValue()));
+			setOwner(new String(filedoc.getChild("owner").getValue()));
+			setPath(new String (filedoc.getChild("path").getValue()));
+			return;
 	}
 	
-	public Document xmlExport(){	
+	public Element xmlExport(){	
 			Element element = new Element("Entity");
 //    		String str = String.format ("%d", getId());
 //    		element.setAttribute("id", str); 	    	
@@ -49,8 +46,8 @@ public class Entity extends Entity_Base {
 //    		element.addContent(new Element ("owner").setText(getOwner()));
 //    		element.addContent(new Element("path").setText(getPath()));
     	
-    		Document entityDoc = new Document(element);
-			return entityDoc;    
+    		//Document entityDoc = new Document(element);
+			return element;    
 	}
     
 }

@@ -24,7 +24,7 @@ public class User extends User_Base {
         setSystem(filesystem);
     }
     
-    public User(FileSystem filesystem, Document xml){
+    public User(FileSystem filesystem, Element xml){
     	super();
     	xmlImport(xml);
     	setSystem(filesystem);
@@ -39,12 +39,11 @@ public class User extends User_Base {
     	}
     }
     
-    public void xmlImport(Document userDoc){
-        	setUserName(new String(userDoc.getRootElement().getAttribute("username").getValue()));
-        	setName(new String(userDoc.getRootElement().getChild("name").getValue()));
-        	setPassword(new String(userDoc.getRootElement().getChild("password").getValue()));
-        	setHomeDir(new String(userDoc.getRootElement().getChild("homeDir").getValue()));
-       	
+    public void xmlImport(Element userEl){
+        	setUserName(new String(userEl.getAttribute("username").getValue()));
+        	setName(new String(userEl.getChild("name").getValue()));
+        	setPassword(new String(userEl.getChild("password").getValue()));
+        	setHomeDir(new String(userEl.getChild("homeDir").getValue()));
         //setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         return;
         
@@ -58,7 +57,7 @@ public class User extends User_Base {
     	element.addContent(new Element("homeDir").setText(getHomeDir()));
     	//element.setAttribute("rwxd", getMask().toString());
     	for(Directory d: getDirectorySet())
-			element.addContent(d.xmlExport().detachRootElement());
+			element.addContent(d.xmlExport().detach());
     	
     	Document document = new Document(element);
     	
