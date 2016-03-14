@@ -38,7 +38,7 @@ public class Directory extends Directory_Base {
 
     public Directory getDir(String name){
     	Entity destiny = null;
-    	destiny = getDirByName(name);
+    	destiny = getDirByName(name,"directory");
     	return (Directory) destiny;
     }
     
@@ -55,37 +55,61 @@ public class Directory extends Directory_Base {
 	}
 	
 	
-	public void DeleteEntity(String entity_name){ //remove uma entidade dentro da diretoria (check feito previamente)
-		Entity entity = getDirByName(entity_name);
-		if(entity instanceof Directory){
+	public void DeleteEntity(String entity_name, String type){ //remove uma entidade dentro da diretoria (check feito previamente)
+		
+		if(type.equals("Directory")){
+			Entity entity = getDirByName(entity_name, "directory");
 			diretorias.remove(entity);
 			removeEntity(entity);
 		}
-		else if(entity instanceof PlainFile){
+		else if(type.equals("Plain_File")){
+			Entity entity = getDirByName(entity_name,"plainfile");
 			plains.remove(entity);
 			removeEntity(entity);
 		}
-		else if(entity instanceof Link){
+		else if(type.equals("Link")){
+			Entity entity = getDirByName(entity_name,"link");
 			links.remove(entity);
 			removeEntity(entity);
 		}
-		else if(entity instanceof App){
+		else if(type.equals("App")){
+			Entity entity = getDirByName(entity_name,"app");
 			apps.remove(entity);
 			removeEntity(entity);
 		}
 	}
 
 	
-	public Entity getDirByName(String dir_name) {
-        for (Directory dir : diretorias) {
-            if (dir.getFilename().equals(dir_name)) {
-                return dir;
-            }
+	public Entity getDirByName(String dir_name, String type) {
+        if(type.equals("directory")){
+        	for (Directory dir : diretorias) {
+        		if (dir.getFilename().equals(dir_name)) {
+        			return dir;
+        		}
+        	}
         }
-        for (PlainFile plain : plains) {
-            if (plain.getFilename().equals(dir_name)) {
-                return plain;
-            }
+        if(type.equals("plainfile")){
+        	for (PlainFile plain : plains) {
+        		if (plain.getFilename().equals(dir_name)) {
+        			return plain;
+        		}
+        	}
+        }
+        
+        if(type.equals("link")){
+        	for (Link link : links) {
+        		if (link.getFilename().equals(dir_name)) {
+        			return link;
+        		}
+        	}
+        }
+        
+        if(type.equals("app")){
+        	for (App app : apps) {
+        		if (app.getFilename().equals(dir_name)) {
+        			return app;
+        		}
+        	}
         }
         return null;
     }

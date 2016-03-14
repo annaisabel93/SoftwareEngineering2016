@@ -182,6 +182,18 @@ public class FileSystem extends FileSystem_Base {
 			CreateTextFile(Input());
 			continue;
     		}
+    		
+    		if(input.equals("7")){ //Remove diretoria
+    			if(logged_user == null){
+    				System.out.println("You must login first");
+    				continue;
+    			}
+    			System.out.println("File name?");
+    			RemoveFile( Input());
+    			//chama aqui a funcao para remover
+    			//atencao que so pode remover ficheiros dentro da dir atual
+    			continue;
+    		}
     	}
     }
 	
@@ -297,13 +309,24 @@ public class FileSystem extends FileSystem_Base {
      public void RemoveDir(String dir_name){
     	 for (Directory dir : this.workingDir.diretorias) {
     		 if(dir.getFilename().equals(dir_name)){
-    			 this.workingDir.DeleteEntity(dir_name);
+    			 this.workingDir.DeleteEntity(dir_name, "Directory");
     			 return;
     		 }
     	 }
-    	 System.out.println("Diretoria nao existe, dentro da diretoria de trabalho!");
+    	 System.out.println("Diretoria nao existe dentro da diretoria de trabalho!");
 
      }
+     
+     public void RemoveFile(String file_name){
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(file_name)){
+    			 this.workingDir.DeleteEntity(file_name, "Plain_File");
+    			 return;
+    		 }
+    	 }	 
+       	 System.out.println("Plain File nao existe dentro da diretoria de trabalho!");
+        }
+     
      
      public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
