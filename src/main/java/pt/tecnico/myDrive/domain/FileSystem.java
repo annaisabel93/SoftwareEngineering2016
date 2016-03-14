@@ -252,20 +252,25 @@ public class FileSystem extends FileSystem_Base {
 	            }
 		 }
     	
-    	if(check1 == 0){//caso root - apenas ira executar 1 vez
-    		user = new User(this, "SuperUser","root", "***", array, username);
-    		
- 
-    		Directory home =	new Directory(this, null, "/home", "home",  "root", getCounter(), 2);
-    		files.add(home);
-    		getEntitySet().add(home);
-    		setCounter(getCounter()+1);
-    		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
-    		files.add(home_root);
-    		home.addDir(home_root);
-    		getEntitySet().add(home_root);
-    		check1 = 1;
-    	}
+    	 if(check1 == 0){//caso root - apenas ira executar 1 vez
+     		setCounter(0);
+     		user = new User(this, "SuperUser","root", "***", array, username);
+     		
+     		Directory raiz =	new Directory(this, null, "/", "/",  "root", getCounter(), 2);
+     		files.add(raiz);
+     		getEntitySet().add(raiz);
+     		setCounter(getCounter()+1);
+     		Directory home =	new Directory(this, raiz, "/home", "home",  "root", getCounter(), 2);
+     		files.add(home);
+     		getEntitySet().add(home);
+     		raiz.addDir(home);
+     		setCounter(getCounter()+1);
+     		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
+     		files.add(home_root);
+     		home.addDir(home_root);
+     		getEntitySet().add(home_root);
+     		check1 = 1;
+     	}
     	else{
     		
     		
@@ -359,10 +364,18 @@ public class FileSystem extends FileSystem_Base {
     		 }
     	 }
     	 setCounter(getCounter()+1);
-    	 Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
-    	 this.workingDir.addDir(dir);
-    	 dir.setLastModified(date);
-    	 files.add(dir);
+    	 if (this.workingDir.getFilename().equals("/")){
+    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    		this.workingDir.addDir(dir);
+    		dir.setLastModified(date);
+       	 	files.add(dir);
+    	 }
+    	 else{
+    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
+     		this.workingDir.addDir(dir);
+     		dir.setLastModified(date);
+        	files.add(dir);
+    	 }
      }
      
      
@@ -388,7 +401,7 @@ public class FileSystem extends FileSystem_Base {
     		return;
     	}
     	if(directory_destiny.equals("..")){ //voltar atras
-    		if(this.workingDir.getPath().equals("/home")){
+    		if(this.workingDir.getPath().equals("/")){
     			return;
     		}
     		this.workingDir = this.workingDir.getDirectory();
@@ -433,7 +446,7 @@ public class FileSystem extends FileSystem_Base {
     	for (Entity entity : getEntitySet()) {
     		Entity dir = (Directory) entity;
             if ((entity.getFilename().equals(dir_name))) {
-            	if(entity.getDirectory() == null){
+            	if(entity.getDirectory().getFilename().equals("/")){
                 return entity;
             	}
             }
