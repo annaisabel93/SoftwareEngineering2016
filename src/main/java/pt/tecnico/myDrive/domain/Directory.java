@@ -44,9 +44,11 @@ public class Directory extends Directory_Base {
 		setDimension(getDimension()+1);		
 	}
 	
-	public Entity getDirByName(String username) {
+
+	
+	public Entity getDirByName(String dir_name) {
         for (Entity dir : getEntitySet()) {
-            if (dir.getFilename().equals(username)) {
+            if (dir.getFilename().equals(dir_name)) {
                 return dir;
             }
         }

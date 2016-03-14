@@ -230,6 +230,7 @@ public class FileSystem extends FileSystem_Base {
     		setCounter(getCounter()+1);
     		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
     		files.add(home_root);
+    		home.addDir(home_root);
     		getEntitySet().add(home_root);
     		check1 = 1;
     	}
@@ -247,8 +248,9 @@ public class FileSystem extends FileSystem_Base {
     		Directory dir = new Directory(this, home_dir, "/home/"+username, username, username, getCounter(), 2);
     		dir.setLastModified(date);
     		Directory Dir =	user.addDir(dir);
-    		files.add(Dir);
-    		getEntitySet().add(Dir);
+    		files.add(dir);
+    		home_dir.addDir(dir);
+    		getEntitySet().add(dir);
     	}
      }
      
@@ -265,12 +267,11 @@ public class FileSystem extends FileSystem_Base {
      }
      
      private void printHome() {
-    	 String homeDir = this.logged_user.getHomeDir();
-    	 
-    	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
-    	 for (Entity entity : home.files) {
+    	 System.out.println("Vai imprimir as diretorias");
+    	 for (Entity entity : this.workingDir.files) {
     		 System.out.println(entity.getFilename());
     	 }
+    	 System.out.println("acabou de imprimir as diretorias");
     	 
      }
      
@@ -278,7 +279,11 @@ public class FileSystem extends FileSystem_Base {
      public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
     	 setCounter(getCounter()+1);
-    	 Directory dir = new Directory(this,workingDir,  workingDir.getFilename()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    	 if(this.workingDir.getDirByName(name) != null){//verifica se ja existe
+    		 System.out.println("Diretoria ja existe, dentro da diretoria de trabalho!");
+    		 return;
+    	 }
+    	 Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
     	 this.workingDir.addDir(dir);
     	 dir.setLastModified(date);
     	 files.add(dir);
@@ -287,8 +292,18 @@ public class FileSystem extends FileSystem_Base {
     	
     	
     public void moveDir(String directory_destiny){ //unfinished
+    	if(directory_destiny.equals(".")){//ficar na propria diretoria
+    		return;
+    	}
+    	if(directory_destiny.equals("..")){ //voltar atras
+    		if(this.workingDir.getPath().equals("/home")){
+    			return;
+    		}
+    		this.workingDir = this.workingDir.getDirectory();
+    		return;
+    	}
     	Directory destiny = null;
-    	destiny = this.workingDir.getDir("\\"+directory_destiny);
+    	destiny = this.workingDir.getDir(directory_destiny);
     	if(destiny == null){
     		System.out.println("Directory does not exist within this directory");
     		return;
