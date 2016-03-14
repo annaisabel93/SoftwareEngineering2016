@@ -176,7 +176,8 @@ public class FileSystem extends FileSystem_Base {
     		}
     		
     		if(input.equals("8")){
-    			printReadMe();
+    			System.out.println("Qual o ficheiro que quer ler?");
+    			printReadMe(Input());
     			continue;
     		}
     		
@@ -285,18 +286,15 @@ public class FileSystem extends FileSystem_Base {
     	}
      }
      
-     private void printReadMe() {
-    	 String homeDir = this.logged_user.getHomeDir();
-    	 ArrayList<Directory> homeFiles = this.logged_user.getDirectory().getDir(homeDir).diretorias;
-    	 for (Entity entity : homeFiles) {
-    		 if(entity.getFilename().equals("README") && entity.getClass().equals(PlainFile.class)) {
-    			 PlainFile file = (PlainFile) entity;
-    			 System.out.println(file.getContent());
+     private void printReadMe(String name) {
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(name) ) {
+    			 System.out.println(plain.getContent());
     		 }	 
     	 }
     	 
      }
-     
+          
      private void WriteOnFile(String name){
     	 for (PlainFile plain : this.workingDir.plains) {
     		 if(plain.getFilename().equals(name)){
