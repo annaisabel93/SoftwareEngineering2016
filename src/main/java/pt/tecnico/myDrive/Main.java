@@ -28,8 +28,8 @@ public class Main {
 	    
 	    setup();
 	    for (String s: args) xmlScan(new File(s));
-		print();
-	    xmlPrint(); 
+	    	print();
+	    	xmlPrint(); 
 	    
 	} finally { FenixFramework.shutdown(); }
     }
@@ -44,45 +44,40 @@ public class Main {
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
-        
-        User user;
-        User usernew;
         User userana;
-    	Directory d;
-    	Directory dir;
     	Directory dirana;
-    	Entity f;
-    	Entity entity;
-    	DateTime data = new DateTime();
-    	log.trace("new FileSyste3");
-    	new Entity();
-        if (!fs.getUserSet().isEmpty()) return;
+    	
+    	userana = new User(fs, "ana", "ana", "***", null, "home");
+    
+    	dirana = new Directory(fs, null, "home", "cenas", userana.getUserName(), 0, 2);
+       //---------------------------------------------------------------------------------------------
+      
+        fs.adicionaUser("root");
+        fs.adicionaUser("luis");
+        fs.login("luis");
+        fs.moveDir("..");
+        fs.CreateTextFile("README");
+        fs.WriteOnFile("README","lista de utilizadores");
+        fs.moveDir("..");
+        fs.AddDirtoCurrent("usr");
+        fs.moveDir("usr");
+        fs.AddDirtoCurrent("local");
+        fs.moveDir("local");
+        fs.AddDirtoCurrent("bin");
+        fs.moveDir("..");
+        fs.moveDir("..");
+        fs.moveDir("home");
+        fs.printReadMe("README");
+        fs.moveDir("..");
+        fs.moveDir("usr");
+        fs.moveDir("local");
+        fs.RemoveDir("bin");
+        fs.moveDir("..");
+        fs.moveDir("..");
+        fs.moveDir("home");
+        fs.RemoveFile("README");
+        fs.printHome();
         
-        else{
-        	log.trace("new FileSystem4");
-        	
-        	//usernew = new User(fs, "maria","maria", "***", null, "home/maria");
-        	/*if(fs.getUserSet().contains(usernew)){
-        		log.trace("sim eu tenho a maria");
-        	}
-        	else{
-        		log.trace("eu nao tenho a maria");
-        	}*/
-        	//user = new User(fs, "joao","joao", "***", null, "home");
-        	//userana = new User(fs, "ana", "ana", "***", null, "home");
-        	
-        	//d = new Directory(user,fs,"home","cenas",user.getUserName(), 0 ,2, null);
-        	//dir = new Directory(usernew,fs,"home","cenas",usernew.getUserName(), 0 ,2, null);
-        	//dirana = new Directory(userana, fs, "home", "cenas", userana.getUserName(), 0, 2, null);
-        	log.trace("new FileSystem5");
-        	//f = new Entity(fs, d, "/home/homee","home","root",0, 2);
-        	//entity = new Entity(fs, dirana, "/home/homerun","home","root",0, 2);
-        	
-        	log.trace("new FileSystem6");
-        	new Entity();
-        	log.trace("new FileSystem7");
-        	return;
-        }
     }
 
     @Atomic

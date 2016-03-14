@@ -56,17 +56,15 @@ public class User extends User_Base {
     	element.addContent(new Element("password").setText(getPassword()));
     	element.addContent(new Element("homeDir").setText(getHomeDir()));
     	//element.setAttribute("rwxd", getMask().toString());
-    	for(Directory d: getDirectorySet())
-			element.addContent(d.xmlExport().detach());
-    	
+//    	for(Directory d: getDirectorySet())
+//			element.addContent(d.xmlExport().detach());
+//    	
     	Document document = new Document(element);
     	
         return document; 
     }
     
-    public Directory addDir(User user, FileSystem filesystem, String path, String filename, String owner, long id, DateTime lastModified, int dimension, Directory father){
-    	Directory dir = new Directory(user,filesystem,path, filename,owner,id,dimension,father);
-    	this.
+    public Directory addDir(Directory dir){
     	dirs.add(dir);
     	return dir;
     }

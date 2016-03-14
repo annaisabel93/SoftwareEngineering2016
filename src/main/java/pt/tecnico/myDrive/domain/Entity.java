@@ -18,6 +18,7 @@ public class Entity extends Entity_Base {
         setPath(path);
         setDirectory(dir);
     }
+	
 
 	public Entity() {
 		// TODO Auto-generated constructor stub

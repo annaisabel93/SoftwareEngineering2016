@@ -9,9 +9,16 @@ import org.joda.time.DateTime;
 
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.print.Doc;
+
 import java.util.HashSet;
 import java.util.List;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.io.BufferedReader;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
@@ -22,6 +29,7 @@ public class FileSystem extends FileSystem_Base {
     public Directory workingDir  = null;
     public User logged_user  = null;
     public byte[] array = {0,0,0,0};
+    public int check1 = 0;
 
     Set<Entity> files = new HashSet<Entity>();
     
@@ -42,188 +50,198 @@ public class FileSystem extends FileSystem_Base {
     public Directory getWorkDir(){
     	return this.workingDir;
     }
-  /*  
-  // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
-    public void MainLoop(){
-    	setCounter(0);
-    	addUser("root");
-    	String input;
-    	
-    	0-Sair
-    	1-Login
-    	2-Adicionar utilizador
-    	3-Adicionar Diretoria
-    	4-Remover Diretoria
-    	5-Ir para outra diretoria (usar cd <filename> ou cd .. ou cd .)
-    	6-Criar Ficheiro de Texto
-    	7-Remover Ficheiro de Texto
-    	8-Imprimir o conteudo do ficheiro home/README
-    	9-Imprimir o conteudo da directoria /home 
-    	 
-    	
-    	
-    	while(true){
-    		if(logged_user != null){
-    			System.out.println("Currently loged with:"+this.logged_user.getUserName());
-    			System.out.println("Working dir:"+this.workingDir.getFilename());
-    		}
-    		else{ System.out.println("Chose one:\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
-    				+ "5-Ir para outra Diretoria\n6-Logout\n");
-    		
-    		}
-    		input =  System.console().readLine();
-    		if(input.equals("0")){break;} //verificar se .next() , do scanner, tambem consome o \n ou nao
-    		
-    		if(input.equals("1")){ login(); continue; }
-    		
-    		if(input.equals("2")){//so estou a deixar adicionar um user se ninguem estiver logado
-    			String username;
-    			if(this.logged_user != null){
-    				System.out.println("Logout first");
-    				continue;
-    			}
-    			System.out.println("Username?");
-    			username =  System.console().readLine();
-    			addUser(username);
-    			System.out.println("Created user "+username);
-    			continue;
-    		}
-    		
-    		if(input.equals("3")){
-    			if(logged_user == null){
-    				System.out.println("You must login first");
-    				continue;
-    			}
-    			System.out.println("Directory name?");
-    			prepareDir( System.console().readLine());
-    			continue;
-    		}
-    		
-    		if(input.equals("4")){ //Nao implementado
-    			if(logged_user == null){
-    				System.out.println("You must login first");
-    				continue;
-    			}
-    			System.out.println("Directory name?");
-    			//chama aqui a funcao para remover
-    			//atencao que so pode remover diretorias dentro da dir atual
-    			continue;
-    		}
-    		
-    		
-    		if(input.equals("5")){ // mover entre diretorias
-    			if(logged_user == null){
-    				System.out.println("You must login first");
-    				continue;
-    			}
-    			System.out.println("Ready to move");
-    			moveDir( System.console().readLine());
-    			continue;
-    		}
-    		
-    		if(input.equals("6")){
-    			this.logged_user = null;
-    			this.workingDir  = null;
-    			System.out.println("Logged out");
-    			continue;
-    		}
-    		
-    		if(input.equals("8")){
-    			printReadMe();
-    			continue;
-    		}
-    		
-    		if(input.equals("9")){
-    			printHome();
-    			continue;
-    		}
-    	}
-    	
-    }
-	
-     //fim--------------------------------------------------------------------
-    
-    */
 
 
-	public void login(){
-    	 String username;
+
+	public void login(String username){
     	 String pw;
-    	 System.out.println("Username:");
-    	 username =  System.console().readLine();
-    	 User user = getUserByUsername("root");
+    	 //username =  System.console().readLine();
+    	 User user = getUserByUsername(username);
     	 if (user == null){
     		 System.out.println("Username doesn't exist");
     		 return;
     	 }
-    	 pw =  System.console().readLine();
+    	 pw = username;
+    	 //System.out.println("Password dada: " + pw);
+    	 //System.out.println("Password do utilizador: " + user.getPassword());
+    	 //pw =  System.console().readLine();
     	 if (pw.equals(user.getPassword()) == false){
     		 System.out.println("Wrong pw");
     		 return;
     	 }
-    	 //this.logged_user = user;
-    	// this.workingDir = user.getDirectory();
+    	 this.logged_user = user;
+    	 
+    	 this.workingDir = getUserDir(user.getUserName());
+
      }
      
      
-     public void addUser(String username){
+     public void adicionaUser(String username){
     	User user = null;
     	DateTime date = new DateTime();
-    	if(this.logged_user == null){//caso root - apenas ira executar 1 vez
-    		user = new User(this, "root", "Super User", "***", array, username);
-    		addUser(user);
-    		//adicionar home directory e a diretoria raiz
-    		setCounter(getCounter()+1);
-    		//precisa de \\ para reconhecer \ dentro da string
-    		Directory home =	new Directory(user,this, "\\home", "home",  "root", getCounter(), 2, null);
-    		addEntity(home);
-    		files.add(home);
-    	}
+    	
+    	 for (User user1 : getUserSet()) {
+	            if ((user1.getUserName().equals(username))) { 
+	            	System.out.println("Username already exists!\n");
+	            	return;
+	            }
+		 }
+    	
+    	 if(check1 == 0){//caso root - apenas ira executar 1 vez
+     		setCounter(0);
+     		user = new User(this, "SuperUser","root", "***", array, username);
+     		
+     		Directory raiz =	new Directory(this, null, "/", "/",  "root", getCounter(), 2);
+     		files.add(raiz);
+     		getEntitySet().add(raiz);
+     		setCounter(getCounter()+1);
+     		Directory home =	new Directory(this, raiz, "/home", "home",  "root", getCounter(), 2);
+     		files.add(home);
+     		getEntitySet().add(home);
+     		raiz.addDir(home);
+     		setCounter(getCounter()+1);
+     		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
+     		files.add(home_root);
+     		home.addDir(home_root);
+     		getEntitySet().add(home_root);
+     		check1 = 1;
+     	}
     	else{
+    		
+    		
     		user = new User(this, username, username, username, array, username);
-    		addUser(user);
+
+
     		setCounter(getCounter()+1);
-    		Directory Dir =	user.addDir(user,this,username, this.workingDir.getFilename()+"\\"+username, username, (long)getCounter(), date, 2, this.workingDir );
-    		files.add(Dir);
-    		addEntity(Dir);
+    		
+    		Directory home_dir = (Directory) getDirectoryHome("home");
+
+
+    		Directory dir = new Directory(this, home_dir, "/home/"+username, username, username, getCounter(), 2);
+    		dir.setLastModified(date);
+    		Directory Dir =	user.addDir(dir);
+    		files.add(dir);
+    		home_dir.addDir(dir);
+    		getEntitySet().add(dir);
     	}
      }
-     /*
-     private void printReadMe() {
-    	 String homeDir = this.logged_user.getHomeDir();
-    	 ArrayList<Entity> homeFiles = this.logged_user.getDirectory().getDir(homeDir).files;
-    	 for (Entity entity : homeFiles) {
-    		 if(entity.getFilename().equals("README") && entity.getClass().equals(PlainFile.class)) {
-    			 PlainFile file = (PlainFile) entity;
-    			 System.out.println(file.getContent());
+     
+     public void printReadMe(String name) {
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(name) ) {
+    			 System.out.println(plain.getContent());
     		 }	 
     	 }
     	 
-     }*/
-     /*
-     private void printHome() {
-    	 String homeDir = this.logged_user.getHomeDir();
-    	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
-    	 for (Entity entity : home.files) {
-    		 System.out.println(entity.getFilename());
+     }
+          
+     public void WriteOnFile(String name , String content){
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(name)){
+    			 plain.addContent(content);
+    			 return;
+    		 }
     	 }
-    	 
-     }*/
+    	 System.out.println("Text file does not exist");
+     }
+     
+     public void printHome() {
+    	 System.out.println(".\n..");
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 System.out.println(dir.getFilename());
+    	 }
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 System.out.println(plain.getFilename());
+    	 }
+    	 for (Link link : this.workingDir.links) {
+    		 System.out.println(link.getFilename());
+    	 }
+    	 for (App app : this.workingDir.apps) {
+    		 System.out.println(app.getFilename());
+    	 }
+
+    	 //parte do zé aqui---------------Print complexo----
+    	 //System.out.println("Working directory: " + workingDir.getPath());
+    	 //this.workingDir.printDir();    	 
+     }
      
      
-     public void prepareDir(String name){// para ser usado de outro modo mais tarde 
+     public void RemoveDir(String dir_name){
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 if(dir.getFilename().equals(dir_name)){
+    			 this.workingDir.DeleteEntity(dir_name, "Directory");
+    			 return;
+    		 }
+    	 }
+    	 System.out.println("Diretoria nao existe dentro da diretoria de trabalho!");
+
+     }
+
+     public void RemoveFile(String file_name){
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(file_name)){
+    			 this.workingDir.DeleteEntity(file_name, "Plain_File");
+    			 return;
+    		 }
+    	 }	 
+       	 System.out.println("Plain File nao existe dentro da diretoria de trabalho!");
+        }
+     
+     
+     public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
+    	 for (Directory dir : this.workingDir.diretorias) {
+    		 if(dir.getFilename().equals(name)){
+    			 System.out.println("Directoria ja existe na diretoria atual");
+    			 return;
+    		 }
+    	 }
     	 setCounter(getCounter()+1);
-    	 Directory Dir = this.logged_user.addDir(this.logged_user,this,name,  workingDir.getFilename()+"\\"+name, this.logged_user.getUserName(), getCounter(), date, 2, this.workingDir);
-    	 files.add(Dir);
-    	 addEntity(Dir);
-    	 System.out.println("File: "+name+" created");
+    	 if (this.workingDir.getFilename().equals("/")){
+    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    		this.workingDir.addDir(dir);
+    		dir.setLastModified(date);
+       	 	files.add(dir);
+    	 }
+    	 else{
+    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
+     		this.workingDir.addDir(dir);
+     		dir.setLastModified(date);
+        	files.add(dir);
+    	 }
+     }
+     
+     
+     public void CreateTextFile(String file_name){
+    	 DateTime date = new DateTime();
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(file_name)){
+    			 System.out.println("PlainFile ja existe na diretoria atual");
+    			 return;
+    		 }
+    	 }
+    	 setCounter(getCounter()+1);
+    	 PlainFile textfile = new PlainFile(this,file_name,this.logged_user.getUserName(), getCounter(), date, 2, "");
+    	 this.workingDir.addPlainFile(textfile);
+    	 textfile.setLastModified(date);
+    	 //getEntitySet().add(textfile);
+    	 files.add(textfile);
      }
     	
     	
     public void moveDir(String directory_destiny){ //unfinished
+    	if(directory_destiny.equals(".")){//ficar na propria diretoria
+    		return;
+    	}
+    	if(directory_destiny.equals("..")){ //voltar atras
+    		if(this.workingDir.getPath().equals("/")){
+    			return;
+    		}
+    		this.workingDir = this.workingDir.getDirectory();
+    		return;
+    	}
     	Directory destiny = null;
-    	destiny = this.workingDir.getDir("\\"+directory_destiny);
+    	destiny = this.workingDir.getDir(directory_destiny);
     	if(destiny == null){
     		System.out.println("Directory does not exist within this directory");
     		return;
@@ -236,11 +254,9 @@ public class FileSystem extends FileSystem_Base {
     public static FileSystem getInstance(){ //esta sempre a inicar um novo
     	FileSystem fs = FenixFramework.getDomainRoot().getFilesystem();
     	if(fs != null){
-    		//System.out.println("\n\n\n\nefefefefefefe\n\n\n\n\n\n\n");
     		return fs;}
     	else{
     		log.trace("new FileSystem");
-    		//System.out.println("\n\n\n\nererererererererereree\n\n\n\n\n\n\n");
     		return new FileSystem();
     	}
     }
@@ -252,25 +268,55 @@ public class FileSystem extends FileSystem_Base {
     
     public User getUserByUsername(String username) {
         for (User user : getUserSet()) {
-            if (user.getUserName().equals(username)) {
+            if ((user.getUserName().equals(username))) {
                 return user;
             }
         }
         return null;
     }
     
+    public Entity getDirectoryHome(String dir_name){ //devolve uma entity no meio de todas criadas no file sistem
+    	for (Entity entity : getEntitySet()) {
+    		Entity dir = (Directory) entity;
+            if ((entity.getFilename().equals(dir_name))) {
+            	if(entity.getDirectory().getFilename().equals("/")){
+                return entity;
+            	}
+            }
+        }
+        return null;
+    }
+    
+    public Entity getEntityfromDir(String name){//inacabado, deve devolver uma entidade dentro de uma diretoria predefinida apenas
+    	return null;
+    }
+    
+    public Directory getUserDir(String username){ //devolve o diretorio base do user
+    	String test = "/home/"+username;
+    	for (Entity entity : getEntitySet()) {
+    		if(entity.getPath().equals(test)){
+    		return (Directory) entity;
+    		}
+        }
+        return null;
+    }
+    
+    
+    
     public boolean hasUser(String username){
+    	//System.out.println("vai ver se "+username+" existe");
     	return getUserByUsername(username) != null;
     }
     
     @Override
-    public void addUser(User user) throws UsernameAlreadyExistsException{
-    	if(hasUser(user.getUserName()))
-    		throw new UsernameAlreadyExistsException(user.getUserName());
-    	
-    	super.addUser(user);
+    public void addUser(User user){
+    	/*if(hasUser(user.getUserName())){
+    		System.out.println("entro na funcao add user e verico que o user existe");
+    		throw new UsernameAlreadyExistsException(user.getUserName());}
+    	else{
+    	*/	
+    		super.addUser(user);
     }
-    
     public void cleanup() {
         for (User u: getUserSet())
 	    u.remove();
@@ -305,6 +351,7 @@ public class FileSystem extends FileSystem_Base {
     		//Element el = node.clone();
     		//Document userDoc = new Document(el.detach());
     		user.xmlImport(node);
+
     	}
     	for(int i=0; i<sizeDir ; i++){
     		Element node = listDir.get(i);
@@ -312,7 +359,7 @@ public class FileSystem extends FileSystem_Base {
     		String owner = node.getChild("owner").getText();
     		String path = node.getChild("path").getText();
     		
-    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
+    		Directory dir = new Directory(this, null, path, filename,owner,1000,2);
     		dir.xmlImport(node);
     	}
     	/*

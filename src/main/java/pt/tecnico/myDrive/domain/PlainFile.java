@@ -11,6 +11,13 @@ public class PlainFile extends PlainFile_Base {
     public PlainFile(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
         setContent(content);
+        setFilesystem(filesystem);
+        setFilename(filename);
+        setOwner(owner);
+        setId(id);
+        setLastModified(lastModified);
+        setDimension(dimension);
+        
     }
 
 	public PlainFile() {
@@ -21,7 +28,12 @@ public class PlainFile extends PlainFile_Base {
 		xmlImport(xml);
 		setFilesystem(filesystem);
 	}
+	public void addContent(String content){
+		setContent(getContent()+content);
+	}
 	
+
+
 	public void xmlImport(Element PlainFileDoc){
 		super.xmlImport(PlainFileDoc);
 		
