@@ -272,7 +272,9 @@ public class FileSystem extends FileSystem_Base {
     		 System.out.println(entity.getFilename());
     	 }
     	 System.out.println("acabou de imprimir as diretorias");
-    	 
+
+    	 //System.out.println("Working directory: " + workingDir.getPath());
+    	 //this.workingDir.printDir();    	 
      }
      
      

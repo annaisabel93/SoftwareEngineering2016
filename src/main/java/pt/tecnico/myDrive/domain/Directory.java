@@ -55,7 +55,18 @@ public class Directory extends Directory_Base {
         return null;
     }
 	
-	
+	public void printDir() {
+		for(Entity entity: this.files) {
+			String type = "unknown";
+			//String[] parts = entity.getClass().toString().split("\\."); //detect type FIX?
+			//type = parts[4];
+			if(entity instanceof Directory) { type = "Directory"; }
+			else if(entity instanceof App){ type = "App"; }
+			else if(entity instanceof Link){ type = "Link"; }
+			else if(entity instanceof PlainFile){ type = "PlainFile"; }
+			System.out.println(type + " " + "permissions" + " " + entity.getDimension() + " " + entity.getOwner() + " " + entity.getId() + " " + entity.getLastModified() + " " + entity.getFilename()); //FIXME: add permissions
+		}
+	}
 	
 	public void xmlImport(Document directoryDoc){
 		super.xmlImport(directoryDoc);
