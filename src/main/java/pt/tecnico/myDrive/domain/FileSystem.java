@@ -402,7 +402,10 @@ public class FileSystem extends FileSystem_Base {
 		Document doc = new Document(element);
 		
 		for(User u: getUserSet()){
-			element.addContent(u.xmlExport().detachRootElement());
+			element.addContent(u.xmlExport().detach());
+			for(Entity e: getEntitySet()){
+				element.addContent(e.xmlExport().detach());
+			}
 		//System.out.println(u.xmlExport().detachRootElement());
 		}
 		/*

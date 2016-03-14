@@ -49,7 +49,7 @@ public class User extends User_Base {
         
     }
 
-    public Document xmlExport(){
+    public Element xmlExport(){
     	Element element = new Element("User");
     	element.setAttribute("username", getUserName()); 	
     	element.addContent(new Element("name").setText(getName()));
@@ -61,7 +61,7 @@ public class User extends User_Base {
 //    	
     	Document document = new Document(element);
     	
-        return document; 
+        return element; 
     }
     
     public Directory addDir(Directory dir){
