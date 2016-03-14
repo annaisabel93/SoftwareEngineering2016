@@ -84,11 +84,11 @@ public class FileSystem extends FileSystem_Base {
     	
     	while(true){
     		if(logged_user != null){
-    			System.out.println("Currently logged with:"+this.logged_user.getUserName());
-    			//System.out.println("Working dir:"+workingDir.getFilename());
+    			System.out.println("\nCurrently logged with:"+this.logged_user.getUserName());
+    			System.out.println("Working dir:"+workingDir.getPath());
     		}
-    		System.out.println("Chose one:\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
-    				+ "5-Ir para outra Diretoria\n6-Criar Ficheiro de texto\n7-Remover ficheiro de texto\n8-Imprimir conteudo de um ficheiro na diretoria atual\n9-Imprimir o conteudo da directoria\n10-Logout");
+    		System.out.println("\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
+    				+ "5-Ir para outra Diretoria\n6-Criar Ficheiro de texto\n7-Remover ficheiro de texto\n8-Imprimir conteudo de um ficheiro na diretoria atual\n9-Imprimir o conteudo da directoria\n10-Logout\n");
     		
     	/*
     		InputStreamReader sr =new InputStreamReader(System.in);
@@ -194,9 +194,10 @@ public class FileSystem extends FileSystem_Base {
     		 System.out.println("Username doesn't exist");
     		 return;
     	 }
+    	 System.out.println("pw:");
     	 pw = Input();
-    	 System.out.println("Password dada: " + pw);
-    	 System.out.println("Password do utilizador: " + user.getPassword());
+    	 //System.out.println("Password dada: " + pw);
+    	 //System.out.println("Password do utilizador: " + user.getPassword());
     	 //pw =  System.console().readLine();
     	 if (pw.equals(user.getPassword()) == false){
     		 System.out.println("Wrong pw");
@@ -205,9 +206,6 @@ public class FileSystem extends FileSystem_Base {
     	 this.logged_user = user;
     	 
     	 this.workingDir = getUserDir(user.getUserName());
-    	 System.out.println("Nome do utilizador: " + user.getUserName());
-    	 //System.out.println("" + getUserDir(user.getUserName())));
-    	 System.out.println("Working Directory: " + this.workingDir);
      }
      
      
@@ -227,9 +225,12 @@ public class FileSystem extends FileSystem_Base {
     		
  
     		Directory home =	new Directory(this, null, "/home", "home",  "root", getCounter(), 2);
-    		System.out.println(home.getFilename());
     		files.add(home);
     		getEntitySet().add(home);
+    		setCounter(getCounter()+1);
+    		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
+    		files.add(home_root);
+    		getEntitySet().add(home_root);
     		check1 = 1;
     	}
     	else{
@@ -242,7 +243,6 @@ public class FileSystem extends FileSystem_Base {
     		
     		Directory home_dir = (Directory) getDirectoryHome("home");
 
-    		System.out.println("ver se e null"+home_dir != null);
 
     		Directory dir = new Directory(this, home_dir, "/home/"+username, username, username, getCounter(), 2);
     		dir.setLastModified(date);
@@ -315,29 +315,22 @@ public class FileSystem extends FileSystem_Base {
     
     public User getUserByUsername(String username) {
         for (User user : getUserSet()) {
-        	//System.out.println("\n\n\n\n\n\n\n"+user.getUserName()+"------"+username+"------\n\n\n\n");
             if ((user.getUserName().equals(username))) {
-            	//System.out.println("Vai retornar o user");
                 return user;
             }
         }
-        //System.out.println("Vai retornar null");
         return null;
     }
     
     public Entity getDirectoryHome(String dir_name){ //devolve uma entity no meio de todas criadas no file sistem
-    	System.out.println("chega aqui11 -----"+getEntitySet().isEmpty()+" \n\n");
     	for (Entity entity : getEntitySet()) {
     		Entity dir = (Directory) entity;
-    		System.out.println(dir.getFilename());
             if ((entity.getFilename().equals(dir_name))) {
-            	System.out.println("chega aqui33 \n\n");
             	if(entity.getDirectory() == null){
                 return entity;
             	}
-            }System.out.println("chega aqui444 \n\n");
+            }
         }
-        //System.out.println("Vai retornar null");
         return null;
     }
     
@@ -346,18 +339,12 @@ public class FileSystem extends FileSystem_Base {
     }
     
     public Directory getUserDir(String username){ //devolve o diretorio base do user
-    	System.out.println(getEntitySet().isEmpty());
+    	String test = "/home/"+username;
     	for (Entity entity : getEntitySet()) {
-    		System.out.println("getUserDir: entity.getFilename(): " + entity.getFilename());
-            if ((entity.getFilename().equals(username))) {
-            	System.out.println("vai comprar: "+entity.getPath()+" e + this.getPath()");
-            	/*if((entity.getDirectory().getPath()).equals(this.workingDir.getPath())){
-                return (Directory) entity;
-            	}*/
-            	return entity.getDirectory();
-            }
+    		if(entity.getPath().equals(test)){
+    		return (Directory) entity;
+    		}
         }
-        System.out.println("Vai retornar null");
         return null;
     }
     
@@ -370,14 +357,12 @@ public class FileSystem extends FileSystem_Base {
     
     @Override
     public void addUser(User user){
-    	System.out.println("Vai adicionar "+user.getUserName());
     	/*if(hasUser(user.getUserName())){
     		System.out.println("entro na funcao add user e verico que o user existe");
     		throw new UsernameAlreadyExistsException(user.getUserName());}
     	else{
     	*/	
     		super.addUser(user);
-    		System.out.println("eu adicionei o "+user.getUserName());
     }
     public void cleanup() {
         for (User u: getUserSet())
