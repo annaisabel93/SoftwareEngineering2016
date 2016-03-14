@@ -55,7 +55,7 @@ public class User extends User_Base {
     	element.addContent(new Element("name").setText(getName()));
     	element.addContent(new Element("password").setText(getPassword()));
     	element.addContent(new Element("homeDir").setText(getHomeDir()));
-    	//element.setAttribute("rwxd", getMask().toString());
+    	//element.addContent("rwxd", getMask().toString());
 //    	for(Directory d: getDirectorySet())
 //			element.addContent(d.xmlExport().detach());
 //    	

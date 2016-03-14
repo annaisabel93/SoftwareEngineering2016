@@ -158,7 +158,7 @@ public class FileSystem extends FileSystem_Base {
     		 System.out.println(app.getFilename());
     	 }
 
-    	 //parte do zé aqui---------------Print complexo----
+    	 //---------------Print complexo----
     	 //System.out.println("Working directory: " + workingDir.getPath());
     	 //this.workingDir.printDir();    	 
      }
