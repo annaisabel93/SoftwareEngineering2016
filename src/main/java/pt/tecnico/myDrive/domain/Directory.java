@@ -129,14 +129,6 @@ public class Directory extends Directory_Base {
 	}
 	
 	public Element xmlExport(){
-    	
-    	
-    	//metodo com heranca: not working
-    	
-//    	Document directoryDoc = super.xmlExport();
-//    	Element element = new Element("Directory");
-//    	directoryDoc.getRootElement().addContent(element); 
-//		return directoryDoc;
 		Element element = new Element("Directory");
 		String str = String.format ("%d", getId());
 		element.setAttribute("id", str); 	    	

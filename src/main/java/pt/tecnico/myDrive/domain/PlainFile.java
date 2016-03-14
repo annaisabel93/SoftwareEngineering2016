@@ -42,10 +42,6 @@ public class PlainFile extends PlainFile_Base {
 	}
 	
 	public Element xmlExport(){
-//		Element element = new Element("PlainFile");
-//		element.setAttribute("content", getContent());
-//		Document PlainFileDoc = new Document(element);
-//		PlainFileDoc = super.xmlExport();
 		Element element = new Element("PlainFile");
 		element.setAttribute("content", getContent());
 		String str = String.format ("%d", getId());
