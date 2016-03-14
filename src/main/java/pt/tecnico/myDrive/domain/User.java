@@ -57,6 +57,8 @@ public class User extends User_Base {
     	element.addContent(new Element("password").setText(getPassword()));
     	element.addContent(new Element("homeDir").setText(getHomeDir()));
     	//element.setAttribute("rwxd", getMask().toString());
+    	for(Directory d: getDirectorySet())
+			element.addContent(d.xmlExport().detachRootElement());
     	
     	Document document = new Document(element);
     	
