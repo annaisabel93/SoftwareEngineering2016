@@ -51,7 +51,7 @@ public class FileSystem extends FileSystem_Base {
     	return this.workingDir;
     }
     
-    public String Input() {
+    /*public String Input() {
     	String input = "1";
     	
     	InputStreamReader sr = new InputStreamReader(System.in);
@@ -61,14 +61,14 @@ public class FileSystem extends FileSystem_Base {
 		} catch(IOException e) { System.out.println("BufferedReader: " + e); }
     	
     	return input;
-    }
+    }*/
     
   // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
-    public void MainLoop(){
+   /* public void MainLoop(){
     	setCounter(0);
     	//addUser("root");
     	String input;
-    	/*
+    	
     	0-Sair
     	1-Login
     	2-Adicionar utilizador
@@ -79,7 +79,7 @@ public class FileSystem extends FileSystem_Base {
     	7-Remover Ficheiro de Texto
     	8-Imprimir o conteudo de um ficheiro na diretoria atual
     	9-Imprimir o conteudo da directoria 
-    	 */
+    	 
     	
     	
     	while(true){
@@ -100,7 +100,7 @@ public class FileSystem extends FileSystem_Base {
     		Console c = System.console();
     		while( (input = c.readLine()) == null) {
     			
-    		}*/
+    		}
     		input = Input();
     		
     		
@@ -208,26 +208,22 @@ public class FileSystem extends FileSystem_Base {
     			continue;
     		}
     	}
-    }
+    }*/
 	
      //fim--------------------------------------------------------------------
     
     
 
 
-	public void login(){
-    	 String username;
+	public void login(String username){
     	 String pw;
-    	 System.out.println("Username:");
-    	 username = Input();
     	 //username =  System.console().readLine();
     	 User user = getUserByUsername(username);
     	 if (user == null){
     		 System.out.println("Username doesn't exist");
     		 return;
     	 }
-    	 System.out.println("pw:");
-    	 pw = Input();
+    	 pw = username;
     	 //System.out.println("Password dada: " + pw);
     	 //System.out.println("Password do utilizador: " + user.getPassword());
     	 //pw =  System.console().readLine();
@@ -291,7 +287,7 @@ public class FileSystem extends FileSystem_Base {
     	}
      }
      
-     private void printReadMe(String name) {
+     public void printReadMe(String name) {
     	 for (PlainFile plain : this.workingDir.plains) {
     		 if(plain.getFilename().equals(name) ) {
     			 System.out.println(plain.getContent());
@@ -300,11 +296,9 @@ public class FileSystem extends FileSystem_Base {
     	 
      }
           
-     private void WriteOnFile(String name){
+     public void WriteOnFile(String name , String content){
     	 for (PlainFile plain : this.workingDir.plains) {
     		 if(plain.getFilename().equals(name)){
-    			 System.out.println("Content to add:");
-    			 String content = Input();
     			 plain.addContent(content);
     			 return;
     		 }
@@ -312,7 +306,7 @@ public class FileSystem extends FileSystem_Base {
     	 System.out.println("Text file does not exist");
      }
      
-     private void printHome() {
+     public void printHome() {
     	 System.out.println(".\n..");
     	 for (Directory dir : this.workingDir.diretorias) {
     		 System.out.println(dir.getFilename());

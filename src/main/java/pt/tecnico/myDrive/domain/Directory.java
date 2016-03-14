@@ -32,7 +32,7 @@ public class Directory extends Directory_Base {
 
     public Directory(User user,FileSystem filesystem, Document xml){
     	xmlImport(xml);
-    	setUser(user);
+    	//setUser(user);
     	setFilesystem(filesystem);
     }
 

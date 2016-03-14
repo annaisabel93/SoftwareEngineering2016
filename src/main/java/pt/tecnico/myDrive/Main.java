@@ -27,9 +27,9 @@ public class Main {
 	try {
 	    
 	    setup();
-	    for (String s: args) xmlScan(new File(s));
-		print();
-	    xmlPrint(); 
+	    //for (String s: args) xmlScan(new File(s));
+		//print();
+	    //xmlPrint(); 
 	    
 	} finally { FenixFramework.shutdown(); }
     }
@@ -44,8 +44,38 @@ public class Main {
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
-        fs.MainLoop();
-        User user;
+       //---------------------------------------------------------------------------------------------
+      
+        fs.adicionaUser("root");
+        fs.adicionaUser("luis");
+        fs.login("luis");
+        fs.moveDir("..");
+        fs.CreateTextFile("README");
+        fs.WriteOnFile("README","lista de utilizadores");
+        fs.moveDir("..");
+        fs.AddDirtoCurrent("usr");
+        fs.moveDir("usr");
+        fs.AddDirtoCurrent("local");
+        fs.moveDir("local");
+        fs.AddDirtoCurrent("bin");
+        fs.moveDir("..");
+        fs.moveDir("..");
+        fs.moveDir("home");
+        fs.printReadMe("README");
+        fs.moveDir("..");
+        fs.moveDir("usr");
+        fs.moveDir("local");
+        fs.RemoveDir("bin");
+        fs.moveDir("..");
+        fs.moveDir("..");
+        fs.moveDir("home");
+        fs.RemoveFile("README");
+        fs.printHome();
+        
+        System.out.println("END----------------");
+        
+        //---------------------------------------------------------------------------------------------
+        /*User user;
     	Directory d;
     	Entity f;
     	DateTime data = new DateTime();
@@ -66,6 +96,7 @@ public class Main {
         	log.trace("new FileSystem7");
         	return;
         }
+    }*/
     }
 
     @Atomic
