@@ -40,14 +40,13 @@ public class User extends User_Base {
     }
     
     public void xmlImport(Document userDoc){
-    	
-        try{
-        	setUserName(new String(userDoc.getRootElement().getAttribute("username").getValue().getBytes("UTF-8")));
-        	setName(new String(userDoc.getRootElement().getChild("name").getValue().getBytes("UTF-8")));
-        	setPassword(new String(userDoc.getRootElement().getChild("password").getValue().getBytes("UTF-8")));
-        	setHomeDir(new String(userDoc.getRootElement().getChild("homeDir").getValue().getBytes("UTF-8")));
-        }catch(UnsupportedEncodingException e) { System.err.println(e); }	
-        setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
+        	setUserName(new String(userDoc.getRootElement().getAttribute("username").getValue()));
+        	setName(new String(userDoc.getRootElement().getChild("name").getValue()));
+        	setPassword(new String(userDoc.getRootElement().getChild("password").getValue()));
+        	setHomeDir(new String(userDoc.getRootElement().getChild("homeDir").getValue()));
+       	
+        //setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
+        return;
         
     }
 

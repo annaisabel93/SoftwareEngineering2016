@@ -42,13 +42,13 @@ public class FileSystem extends FileSystem_Base {
     public Directory getWorkDir(){
     	return this.workingDir;
     }
-    
+  /*  
   // funcao para teste ler comandos de input e chamar funcoes a partir dai------------------------------------------------------------
     public void MainLoop(){
     	setCounter(0);
     	addUser("root");
     	String input;
-    	/*
+    	
     	0-Sair
     	1-Login
     	2-Adicionar utilizador
@@ -59,7 +59,7 @@ public class FileSystem extends FileSystem_Base {
     	7-Remover Ficheiro de Texto
     	8-Imprimir o conteudo do ficheiro home/README
     	9-Imprimir o conteudo da directoria /home 
-    	 */
+    	 
     	
     	
     	while(true){
@@ -143,7 +143,7 @@ public class FileSystem extends FileSystem_Base {
 	
      //fim--------------------------------------------------------------------
     
-    
+    */
 
 
 	public void login(){
@@ -161,8 +161,8 @@ public class FileSystem extends FileSystem_Base {
     		 System.out.println("Wrong pw");
     		 return;
     	 }
-    	 this.logged_user = user;
-    	 this.workingDir = user.getDirectory();
+    	 //this.logged_user = user;
+    	// this.workingDir = user.getDirectory();
      }
      
      
@@ -188,7 +188,7 @@ public class FileSystem extends FileSystem_Base {
     		addEntity(Dir);
     	}
      }
-     
+     /*
      private void printReadMe() {
     	 String homeDir = this.logged_user.getHomeDir();
     	 ArrayList<Entity> homeFiles = this.logged_user.getDirectory().getDir(homeDir).files;
@@ -199,8 +199,8 @@ public class FileSystem extends FileSystem_Base {
     		 }	 
     	 }
     	 
-     }
-     
+     }*/
+     /*
      private void printHome() {
     	 String homeDir = this.logged_user.getHomeDir();
     	 Directory home = this.logged_user.getDirectory().getDir(homeDir);
@@ -208,7 +208,7 @@ public class FileSystem extends FileSystem_Base {
     		 System.out.println(entity.getFilename());
     	 }
     	 
-     }
+     }*/
      
      
      public void prepareDir(String name){// para ser usado de outro modo mais tarde 
@@ -276,16 +276,25 @@ public class FileSystem extends FileSystem_Base {
 	    u.remove();
     }
     
+  
     public void xmlImport(Document fsDoc){
-    	List<Element> elList = fsDoc.getRootElement().getChildren();
+    	Element rootElement = fsDoc.getRootElement().clone();
+    	List<Element> listElement = rootElement.getChildren("User");
+    	int size = listElement.size();
     	
-    	for(int i=0; i<elList.size(); i++){
-    		Element user = elList.get(i);
-    		//System.out.println("Lista: " + elList.get(i));
-    		String username = user.getAttribute("username").getValue();
-    		String name = user.getChild("name").getValue();
-    		String password = user.getChild("password").getValue();
-    		String homeDir = user.getChild("homeDir").getValue();
+    	for(int i=0; i<size;i++){
+    		Element node = listElement.get(i);
+    		String username = node.getAttribute("username").getValue();
+    		String name = node.getChild("name").getValue();
+    		String password = node.getChild("password").getValue();
+    		String homeDir = node.getChild("homeDir").getValue();
+    		User user = getUserByUsername(username);
+    		if(user == null){
+    			user = new User(this, name, username, password, null, homeDir);
+    		}
+    		Element el = node.clone();
+    		Document userDoc = new Document(el.detach());
+    		user.xmlImport(userDoc);
     	}
     }
     

@@ -49,7 +49,7 @@ relation FileSystemhasUser {
 		multiplicity 0..1;
 	} 
 	User playsRole user {
-		multiplicity 1..*;
+		multiplicity 0..*;
 	}
 }
 
@@ -69,7 +69,7 @@ relation UserhasDirectory{
 	}
 
 	Directory playsRole directory{
-		multiplicity 1..1;
+		multiplicity *;
 	}
 }
 

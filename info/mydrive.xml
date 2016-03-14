@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <Filesystem>
+  <User username="Francisco">
+      <name>Francisco</name>
+      <password>cenas</password>
+      <homeDir>home/Francisco</homeDir>
+  </User>
+  <User username="Benedita">
+      <name>Be</name>
+      <password>bene</password>
+      <homeDir>home/Benedita</homeDir>
+  </User>
+  <User username="Afonso">
+      <name>Afonso</name>
+      <password>1994</password>
+      <homeDir>home/Afonso</homeDir>
+  </User>
+  <User username="Maria">
+      <name>Maria</name>
+      <password>1994</password>
+      <homeDir>home/Maria</homeDir>
+  </User>
+  <User username="Clara">
+      <name>Cla</name>
+      <password>1994</password>
+      <homeDir>home/Clara</homeDir>
+  </User>
+</Filesystem>
