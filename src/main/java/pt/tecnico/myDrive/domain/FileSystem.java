@@ -17,11 +17,12 @@ import java.util.List;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
+import pt.tecnico.myDrive.exception.*;
 
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
@@ -53,21 +54,19 @@ public class FileSystem extends FileSystem_Base {
 
 
 
-	public void login(String username){
+	public void login(String username) throws UsernameDoesntExistException, WrongPasswordException{
     	 String pw;
     	 //username =  System.console().readLine();
     	 User user = getUserByUsername(username);
     	 if (user == null){
-    		 System.out.println("Username doesn't exist");
-    		 return;
+    		 throw new UsernameDoesntExistException(username);
     	 }
     	 pw = username;
     	 //System.out.println("Password dada: " + pw);
     	 //System.out.println("Password do utilizador: " + user.getPassword());
     	 //pw =  System.console().readLine();
     	 if (pw.equals(user.getPassword()) == false){
-    		 System.out.println("Wrong pw");
-    		 return;
+    		 throw new WrongPasswordException();
     	 }
     	 this.logged_user = user;
     	 
@@ -76,14 +75,13 @@ public class FileSystem extends FileSystem_Base {
      }
      
      
-     public void adicionaUser(String username){
+     public void adicionaUser(String username) throws UsernameAlreadyExistsException{
     	User user = null;
     	DateTime date = new DateTime();
     	
     	 for (User user1 : getUserSet()) {
 	            if ((user1.getUserName().equals(username))) { 
-	            	System.out.println("Username already exists!\n");
-	            	return;
+	            	throw new UsernameAlreadyExistsException(username);
 	            }
 		 }
     	
@@ -188,12 +186,11 @@ public class FileSystem extends FileSystem_Base {
         }
      
      
-     public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
+     public void AddDirtoCurrent(String name) throws DirectoryAlreadyExistsInsideWorkingDirException{// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
     	 for (Directory dir : this.workingDir.diretorias) {
     		 if(dir.getFilename().equals(name)){
-    			 System.out.println("Directoria ja existe na diretoria atual");
-    			 return;
+    			 throw new DirectoryAlreadyExistsInsideWorkingDirException();
     		 }
     	 }
     	 setCounter(getCounter()+1);
@@ -229,7 +226,7 @@ public class FileSystem extends FileSystem_Base {
      }
     	
     	
-    public void moveDir(String directory_destiny){ //unfinished
+    public void moveDir(String directory_destiny) throws DirectoryDoesNotExistInsideWorkingDirException{ //unfinished
     	if(directory_destiny.equals(".")){//ficar na propria diretoria
     		return;
     	}
@@ -243,8 +240,7 @@ public class FileSystem extends FileSystem_Base {
     	Directory destiny = null;
     	destiny = this.workingDir.getDir(directory_destiny);
     	if(destiny == null){
-    		System.out.println("Directory does not exist within this directory");
-    		return;
+    		throw new DirectoryDoesNotExistInsideWorkingDirException(directory_destiny);
     	}
     	this.workingDir = destiny;
     	

@@ -4,16 +4,8 @@ public class NotLoggedOnException extends MyDriveException {
 		
 		private static final long serialVersionUID = 1L;
 		
-		private String username;
 
-		public NotLoggedOnException(String username) {
-			this.username = username;
-		}
-
-
-		//e suposto apanhar se ele nao estiver logado
-		public String getLoggedUSer(){
-			return username;
+		public NotLoggedOnException() {
 		}
 
 		@Override

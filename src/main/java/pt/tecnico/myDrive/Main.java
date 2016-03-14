@@ -86,7 +86,7 @@ public class Main {
         FileSystem fs = FileSystem.getInstance();
 
         for (User usr: fs.getUserSet()) {
-            System.out.println(usr.getUserName() + usr.getName() + usr.getHomeDir());
+           // System.out.println(usr.getUserName() + usr.getName() + usr.getHomeDir());
             /*for (Directory d: usr.get)
             	System.out.println("\t" + ent.getFilename() + ent.getOwner());*/
         }
