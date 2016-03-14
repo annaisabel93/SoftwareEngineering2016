@@ -88,7 +88,7 @@ public class FileSystem extends FileSystem_Base {
     			System.out.println("Working dir:"+workingDir.getPath());
     		}
     		System.out.println("\n0-Sair\n1-Login\n2-Adicionar utilizador\n3-Adicionar Diretoria\n4-Remover Diretoria\n"
-    				+ "5-Ir para outra Diretoria\n6-Criar Ficheiro de texto\n7-Remover ficheiro de texto\n8-Imprimir conteudo de um ficheiro na diretoria atual\n9-Imprimir o conteudo da directoria\n10-Logout\n");
+    				+ "5-Ir para outra Diretoria\n6-Criar Ficheiro de texto\n7-Remover ficheiro de texto\n8-Imprimir conteudo de um ficheiro na diretoria atual\n9-Imprimir o conteudo da directoria\n10-Escrever em ficheiro de texto\n11-Logout\n");
     		
     	/*
     		InputStreamReader sr =new InputStreamReader(System.in);
@@ -156,7 +156,19 @@ public class FileSystem extends FileSystem_Base {
     			continue;
     		}
     		
-    		if(input.equals("10")){
+    		if(input.equals("10")){ // escrever em ficheiro de texto
+    			if(logged_user == null){
+    				System.out.println("You must login first");
+    				continue;
+    			}
+    			
+    			System.out.println("File to write on?");
+    			WriteOnFile( Input());
+    			//moveDir( System.console().readLine());
+    			continue;
+    		}
+    		
+    		if(input.equals("11")){//loggout
     			this.logged_user = null;
     			this.workingDir  = null;
     			System.out.println("Logged out");
@@ -283,6 +295,18 @@ public class FileSystem extends FileSystem_Base {
     		 }	 
     	 }
     	 
+     }
+     
+     private void WriteOnFile(String name){
+    	 for (PlainFile plain : this.workingDir.plains) {
+    		 if(plain.getFilename().equals(name)){
+    			 System.out.println("Content to add:");
+    			 String content = Input();
+    			 plain.addContent(content);
+    			 return;
+    		 }
+    	 }
+    	 System.out.println("Text file does not exist");
      }
      
      private void printHome() {
