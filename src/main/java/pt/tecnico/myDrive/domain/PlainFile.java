@@ -30,10 +30,18 @@ public class PlainFile extends PlainFile_Base {
 	}
 	
 	public Document xmlExport(){
+//		Element element = new Element("PlainFile");
+//		element.setAttribute("content", getContent());
+//		Document PlainFileDoc = new Document(element);
+//		PlainFileDoc = super.xmlExport();
 		Element element = new Element("PlainFile");
 		element.setAttribute("content", getContent());
+		String str = String.format ("%d", getId());
+		element.setAttribute("id", str); 	    	
+		element.addContent(new Element ("filename").setText(getFilename())); 	
+		element.addContent(new Element ("owner").setText(getOwner()));
+		element.addContent(new Element("path").setText(getPath()));
 		Document PlainFileDoc = new Document(element);
-		PlainFileDoc = super.xmlExport();
 		
 		return PlainFileDoc;
 	}

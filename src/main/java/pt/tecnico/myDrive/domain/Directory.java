@@ -52,11 +52,22 @@ public class Directory extends Directory_Base {
 	}
 	
 	public Document xmlExport(){
-    	Element element = new Element("Directory");
     	
-    	Document directoryDoc = new Document(element);
-    	directoryDoc = super.xmlExport();
-
+    	
+    	//metodo com heranca: not working
+    	
+//    	Document directoryDoc = super.xmlExport();
+//    	Element element = new Element("Directory");
+//    	directoryDoc.getRootElement().addContent(element); 
+//		return directoryDoc;
+		Element element = new Element("Directory");
+		String str = String.format ("%d", getId());
+		element.setAttribute("id", str); 	    	
+		element.addContent(new Element ("filename").setText(getFilename())); 	
+		element.addContent(new Element ("owner").setText(getOwner()));
+		element.addContent(new Element("path").setText(getPath()));
+		Document directoryDoc = new Document(element);
 		return directoryDoc;
 	}
+	
 }

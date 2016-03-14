@@ -60,6 +60,7 @@ public class Main {
         
         else{
         	log.trace("new FileSystem4");
+        	
         	usernew = new User(fs, "maria","maria", "***", null, "home/maria");
         	/*if(fs.getUserSet().contains(usernew)){
         		log.trace("sim eu tenho a maria");
@@ -69,13 +70,14 @@ public class Main {
         	}*/
         	user = new User(fs, "joao","joao", "***", null, "home");
         	userana = new User(fs, "ana", "ana", "***", null, "home");
-        	System.out.println("ola sou a ana");
+        	
         	d = new Directory(user,fs,"home","cenas",user.getUserName(), 0 ,2, null);
         	dir = new Directory(usernew,fs,"home","cenas",usernew.getUserName(), 0 ,2, null);
         	dirana = new Directory(userana, fs, "home", "cenas", userana.getUserName(), 0, 2, null);
         	log.trace("new FileSystem5");
         	f = new Entity(fs, d, "/home/homee","home","root",0, 2);
-        	entity = new Entity(fs, dir, "/home/homerun","home","root",0, 2);
+        	entity = new Entity(fs, dirana, "/home/homerun","home","root",0, 2);
+        	
         	log.trace("new FileSystem6");
         	new Entity();
         	log.trace("new FileSystem7");
