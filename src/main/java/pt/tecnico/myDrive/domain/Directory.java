@@ -44,6 +44,11 @@ public class Directory extends Directory_Base {
 		setDimension(getDimension()+1);		
 	}
 	
+	public void DeleteEntity(String entity_name){ //remove uma entidade dentro da diretoria (check feito previamente)
+		Entity entity = getDirByName(entity_name);
+		files.remove(entity);
+		removeEntity(entity);
+	}
 
 	
 	public Entity getDirByName(String dir_name) {

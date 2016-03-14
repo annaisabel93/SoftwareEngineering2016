@@ -132,12 +132,13 @@ public class FileSystem extends FileSystem_Base {
     			continue;
     		}
     		
-    		if(input.equals("4")){ //Nao implementado
+    		if(input.equals("4")){ //Remove diretoria
     			if(logged_user == null){
     				System.out.println("You must login first");
     				continue;
     			}
     			System.out.println("Directory name?");
+    			RemoveDir( Input());
     			//chama aqui a funcao para remover
     			//atencao que so pode remover diretorias dentro da dir atual
     			continue;
@@ -273,18 +274,28 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 System.out.println("acabou de imprimir as diretorias");
 
+    	 //parte do zé aqui---------------Print complexo----
     	 //System.out.println("Working directory: " + workingDir.getPath());
     	 //this.workingDir.printDir();    	 
      }
      
      
+     public void RemoveDir(String dir_name){
+    	 if(this.workingDir.getDirByName(dir_name)== null){//verifica se existe ou nao
+    		 System.out.println("Diretoria nao existe, dentro da diretoria de trabalho!");
+    		 return;
+    	 }
+    	 this.workingDir.DeleteEntity(dir_name);
+    	 System.out.println("Directory: "+dir_name+" Removed!");
+     }
+     
      public void AddDirtoCurrent(String name){// para ser usado de outro modo mais tarde 
     	 DateTime date = new DateTime();
-    	 setCounter(getCounter()+1);
     	 if(this.workingDir.getDirByName(name) != null){//verifica se ja existe
     		 System.out.println("Diretoria ja existe, dentro da diretoria de trabalho!");
     		 return;
     	 }
+    	 setCounter(getCounter()+1);
     	 Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
     	 this.workingDir.addDir(dir);
     	 dir.setLastModified(date);
