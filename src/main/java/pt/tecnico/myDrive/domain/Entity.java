@@ -6,19 +6,24 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
-public class Entity extends Entity_Base {
+public abstract class Entity extends Entity_Base {
     
+	//take filesystem off
+	//add user in
 	public Entity(FileSystem filesystem, Directory dir, String path, String filename, String owner, long id, int dimension) {
-        super();
-        setFilename(filename);
-        setOwner(owner);
-        setId(id);
-        setDimension(dimension);
-        setFilesystem(filesystem);
-        setPath(path);
-        setDirectory(dir);
-    }
+        	super();
+		this.init(filesystem,path,filename,owner,id,dimension);
+		setDirectory(dir);
+	    }
 	
+	protected void init(FileSystem filesystem,String path, String filename, String owner, long id, int dimension){
+		setFilesystem(filesystem);
+		setPath(path);
+		setFilename(filename);
+		setOwner(owner);
+		setId(id);
+		setDimension(dimension);
+	}
 
 	public Entity() {
 		// TODO Auto-generated constructor stub

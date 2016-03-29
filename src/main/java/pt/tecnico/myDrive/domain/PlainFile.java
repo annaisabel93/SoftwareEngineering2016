@@ -10,15 +10,16 @@ public class PlainFile extends PlainFile_Base {
     
     public PlainFile(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
-        setContent(content);
-        setFilesystem(filesystem);
-        setFilename(filename);
-        setOwner(owner);
-        setId(id);
-        setLastModified(lastModified);
-        setDimension(dimension);
+        this.initPlainFile(filesystem,filename,owner,id,lastModified,dimension,content);
         
     }
+
+	public void initPlainFile(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content){
+		init(filesystem,null,filename,owner,id,dimension);
+		setContent(content);
+		setLastModified(lastModified);
+	}
+
 
 	public PlainFile() {
 		// TODO Auto-generated constructor stub

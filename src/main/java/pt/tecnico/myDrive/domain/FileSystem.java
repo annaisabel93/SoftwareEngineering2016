@@ -53,6 +53,27 @@ public class FileSystem extends FileSystem_Base {
     }
 
 
+    	public Entity createFile(FileSystem fs,Directory dir,String path, String filename, String owner, long id, int dimension,String content, int type,DateTime lastModified){
+		Entity file;
+		switch(type){
+			case 0:
+				file = new Directory(fs,dir,path,filename,owner,id,dimension);
+				//file.setParent(fatherDir);
+				return file;
+			case 1:
+				file = new PlainFile(fs,filename,owner,id,lastModified,dimension,content);
+				return file;
+			case 2:
+				file = new Link(fs,filename,owner,id,lastModified,dimension,content);
+				return file;
+			case 3:
+				file = new App(fs,filename,owner,id,lastModified,dimension,content);
+				return file;
+			default:
+				return null;
+		}
+	}
+
 
 	public void login(String username) throws UsernameDoesntExistException, WrongPasswordException{
     	 String pw;
@@ -89,16 +110,16 @@ public class FileSystem extends FileSystem_Base {
      		setCounter(0);
      		user = new User(this, "SuperUser","root", "***", array, username);
      		
-     		Directory raiz =	new Directory(this, null, "/", "/",  "root", getCounter(), 2);
+     		Directory raiz =(Directory)this.createFile(this, null, "/", "/",  "root", getCounter(), 2,null,0,null);
      		files.add(raiz);
      		getEntitySet().add(raiz);
      		setCounter(getCounter()+1);
-     		Directory home =	new Directory(this, raiz, "/home", "home",  "root", getCounter(), 2);
+     		Directory home =(Directory)this.createFile(this, raiz, "/home", "home",  "root", getCounter(), 2,null,0,null);
      		files.add(home);
      		getEntitySet().add(home);
      		raiz.addDir(home);
      		setCounter(getCounter()+1);
-     		Directory home_root =	new Directory(this, home, "/home/root", "root",  "root", getCounter(), 2);
+     		Directory home_root =(Directory)this.createFile(this, home, "/home/root", "root",  "root", getCounter(), 2,null,0,null);
      		files.add(home_root);
      		home.addDir(home_root);
      		getEntitySet().add(home_root);
@@ -115,7 +136,7 @@ public class FileSystem extends FileSystem_Base {
     		Directory home_dir = (Directory) getDirectoryHome("home");
 
 
-    		Directory dir = new Directory(this, home_dir, "/home/"+username, username, username, getCounter(), 2);
+    		Directory dir = (Directory)this.createFile(this, home_dir, "/home/"+username, username, username, getCounter(), 2,null,0,null);
     		dir.setLastModified(date);
     		Directory Dir =	user.addDir(dir);
     		files.add(dir);
@@ -195,13 +216,13 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
-    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user.getUserName(), getCounter(), 2,null,0,null);
     		this.workingDir.addDir(dir);
     		dir.setLastModified(date);
        	 	files.add(dir);
     	 }
     	 else{
-    		Directory dir = new Directory(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2,null,0,null);
      		this.workingDir.addDir(dir);
      		dir.setLastModified(date);
         	files.add(dir);
@@ -355,7 +376,7 @@ public class FileSystem extends FileSystem_Base {
     		String owner = node.getChild("owner").getText();
     		String path = node.getChild("path").getText();
     		
-    		Directory dir = new Directory(this, null, path, filename,owner,1000,2);
+    		Directory dir = (Directory)this.createFile(this, null, path, filename,owner,1000,2,null,0,null);
     		dir.xmlImport(node);
     	}
     	/*

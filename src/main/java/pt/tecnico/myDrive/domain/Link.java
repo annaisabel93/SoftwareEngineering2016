@@ -8,6 +8,7 @@ public class Link extends Link_Base {
     
     public Link(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
+	initPlainFile(filesystem,filename,owner,id,lastModified,dimension,content);
     }
     
     public Link(FileSystem filesystem, Element xml){

@@ -7,6 +7,7 @@ public class App extends App_Base {
     
     public App(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
         super();
+	initPlainFile(filesystem,filename,owner,id,lastModified,dimension,content);
     }
     
     public App(FileSystem filesystem, Element xml){
