@@ -6,9 +6,9 @@ import org.joda.time.DateTime;
 
 public class Link extends Link_Base {
     
-    public Link(FileSystem filesystem, String filename, String owner, long id, DateTime lastModified, int dimension, String content) {
+    public Link(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content) {
         super();
-	initPlainFile(filesystem,filename,owner,id,lastModified,dimension,content);
+	initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
     }
     
     public Link(FileSystem filesystem, Element xml){

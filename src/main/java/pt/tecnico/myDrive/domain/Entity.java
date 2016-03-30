@@ -10,17 +10,17 @@ public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
 	//add user in
-	public Entity(FileSystem filesystem, Directory dir, String path, String filename, String owner, long id, int dimension) {
+	public Entity(FileSystem filesystem, Directory dir, String path, String filename,User user, long id, int dimension) {
         	super();
-		this.init(filesystem,path,filename,owner,id,dimension);
+		this.init(filesystem,path,filename,user,id,dimension);
 		setDirectory(dir);
 	    }
 	
-	protected void init(FileSystem filesystem,String path, String filename, String owner, long id, int dimension){
+	protected void init(FileSystem filesystem,String path, String filename, User user, long id, int dimension){
 		setFilesystem(filesystem);
 		setPath(path);
 		setFilename(filename);
-		setOwner(owner);
+		setUser(user);
 		setId(id);
 		setDimension(dimension);
 	}

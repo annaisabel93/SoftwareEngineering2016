@@ -49,7 +49,7 @@ public class Main {
     	
     	userana = new User(fs, "ana", "ana", "***", null, "home");
     
-    	dirana = new Directory(fs, null, "home", "cenas", userana.getUserName(), 0, 2);
+    	dirana = new Directory(fs, null, "home", "cenas", userana, 0, 2);
        //---------------------------------------------------------------------------------------------
       
         fs.adicionaUser("root");

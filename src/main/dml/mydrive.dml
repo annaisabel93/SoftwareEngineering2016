@@ -63,15 +63,15 @@ relation FileSystemhasEntity{
 	}
 }
 
-/*relation UserhasDirectory{
+relation UserhasEntity{
 	User playsRole user{
 		multiplicity 1..1;
 	}
 
-	Directory playsRole directory{
+	Entity playsRole entity{
 		multiplicity *;
-	}*/
-
+	}
+}
 relation DirectoryhasEntity{
 	Directory playsRole directory{
 		multiplicity 0..1;

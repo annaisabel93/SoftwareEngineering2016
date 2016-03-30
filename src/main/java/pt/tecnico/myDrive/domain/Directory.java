@@ -15,15 +15,10 @@ public class Directory extends Directory_Base {
 	public ArrayList<App> apps = new ArrayList<App>();
 	
 	
-    public Directory(FileSystem filesystem, Directory dir, String path, String filename, String owner, long id, int dimension) {
+    public Directory(FileSystem filesystem, Directory dir, String path, String filename, User user, long id, int dimension) {
         super();
-        setFilename(filename);
-        setDimension(dimension);
-        setDirectory(dir);
-        setFilesystem(filesystem);
-        setPath(path);
-        setOwner(owner);
-        setId(id);
+        init(filesystem,path,filename,user,id,dimension);
+	setDirectory(dir);
         
 
     }

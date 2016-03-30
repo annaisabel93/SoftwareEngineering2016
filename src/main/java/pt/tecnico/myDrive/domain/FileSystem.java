@@ -53,7 +53,7 @@ public class FileSystem extends FileSystem_Base {
     }
 
 
-    	public Entity createFile(FileSystem fs,Directory dir,String path, String filename, String owner, long id, int dimension,String content, int type,DateTime lastModified){
+    	public Entity createFile(FileSystem fs,Directory dir,String path, String filename, User owner, long id, int dimension,String content, int type,DateTime lastModified){
 		Entity file;
 		switch(type){
 			case 0:
@@ -110,16 +110,16 @@ public class FileSystem extends FileSystem_Base {
      		setCounter(0);
      		user = new User(this, "SuperUser","root", "***", array, username);
      		
-     		Directory raiz =(Directory)this.createFile(this, null, "/", "/",  "root", getCounter(), 2,null,0,null);
+     		Directory raiz =(Directory)this.createFile(this, null, "/", "/",  user, getCounter(), 2,null,0,null);
      		files.add(raiz);
      		getEntitySet().add(raiz);
      		setCounter(getCounter()+1);
-     		Directory home =(Directory)this.createFile(this, raiz, "/home", "home",  "root", getCounter(), 2,null,0,null);
+     		Directory home =(Directory)this.createFile(this, raiz, "/home", "home",  user, getCounter(), 2,null,0,null);
      		files.add(home);
      		getEntitySet().add(home);
      		raiz.addDir(home);
      		setCounter(getCounter()+1);
-     		Directory home_root =(Directory)this.createFile(this, home, "/home/root", "root",  "root", getCounter(), 2,null,0,null);
+     		Directory home_root =(Directory)this.createFile(this, home, "/home/root", "root", user, getCounter(), 2,null,0,null);
      		files.add(home_root);
      		home.addDir(home_root);
      		getEntitySet().add(home_root);
@@ -136,7 +136,7 @@ public class FileSystem extends FileSystem_Base {
     		Directory home_dir = (Directory) getDirectoryHome("home");
 
 
-    		Directory dir = (Directory)this.createFile(this, home_dir, "/home/"+username, username, username, getCounter(), 2,null,0,null);
+    		Directory dir = (Directory)this.createFile(this, home_dir, "/home/"+username, username, user, getCounter(), 2,null,0,null);
     		dir.setLastModified(date);
     		Directory Dir =	user.addDir(dir);
     		files.add(dir);
@@ -216,13 +216,13 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
-    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user.getUserName(), getCounter(), 2,null,0,null);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user, getCounter(), 2,null,0,null);
     		this.workingDir.addDir(dir);
     		dir.setLastModified(date);
        	 	files.add(dir);
     	 }
     	 else{
-    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user.getUserName(), getCounter(), 2,null,0,null);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user, getCounter(), 2,null,0,null);
      		this.workingDir.addDir(dir);
      		dir.setLastModified(date);
         	files.add(dir);
@@ -239,7 +239,7 @@ public class FileSystem extends FileSystem_Base {
     		 }
     	 }
     	 setCounter(getCounter()+1);
-    	 PlainFile textfile = new PlainFile(this,file_name,this.logged_user.getUserName(), getCounter(), date, 2, "");
+    	 PlainFile textfile = new PlainFile(this,file_name,this.logged_user, getCounter(), date, 2, "");
     	 this.workingDir.addPlainFile(textfile);
     	 textfile.setLastModified(date);
     	 //getEntitySet().add(textfile);
@@ -373,10 +373,10 @@ public class FileSystem extends FileSystem_Base {
     	for(int i=0; i<sizeDir ; i++){
     		Element node = listDir.get(i);
     		String filename = node.getChild("filename").getText();
-    		String owner = node.getChild("owner").getText();
-    		String path = node.getChild("path").getText();
-    		
-    		Directory dir = (Directory)this.createFile(this, null, path, filename,owner,1000,2,null,0,null);
+    		//String owner = node.getChild("owner");
+    		String path = node.getChild("path").getText();	
+		//FIX TODO owner is now a user
+    		Directory dir = (Directory)this.createFile(this, null, path, filename,null,1000,2,null,0,null);
     		dir.xmlImport(node);
     	}
     	/*
