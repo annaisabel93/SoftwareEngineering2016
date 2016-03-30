@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive;
+package pt.tecnico.mydrive;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.tecnico.myDrive.domain.*;
+import pt.tecnico.mydrive.domain.*;
 
 
 public class Main {
@@ -50,7 +50,7 @@ public class Main {
 
     	userana = new User(fs, "ana", "ana", "***", null, "home");
     	//FIX TODO last null arg should be date
-    	dirana = new Directory(fs, null, "home", "cenas", userana, 0, 2,date);
+    	dirana = new Directory(fs, null,  "cenas", userana, 0, date);
        //---------------------------------------------------------------------------------------------
       
         fs.adicionaUser("root");

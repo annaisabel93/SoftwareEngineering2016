@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive.exception;
+package pt.tecnico.mydrive.exception;
 
 public class NotLoggedOnException extends MyDriveException {
 		

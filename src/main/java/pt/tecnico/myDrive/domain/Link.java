@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -6,9 +6,9 @@ import org.joda.time.DateTime;
 
 public class Link extends Link_Base {
     
-    public Link(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content) {
+    public Link(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
         super();
-	initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
+	initPlainFile(filesystem, dir, filename,user,id,lastModified,content);
     }
 
 
@@ -16,9 +16,9 @@ public class Link extends Link_Base {
 	return "Link";
     }
 
-    public Link(FileSystem filesystem, Element xml){
+    public Link(User owner, Element xml){
     	xmlImport(xml);
-    	setFilesystem(filesystem);
+    	setOwner(owner);
     }
     
     public void xmlImport(Element linkDoc){

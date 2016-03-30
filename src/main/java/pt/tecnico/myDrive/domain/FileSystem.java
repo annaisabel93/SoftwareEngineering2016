@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.tecnico.myDrive.exception.*;
+import pt.tecnico.mydrive.exception.*;
 
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
@@ -53,21 +53,21 @@ public class FileSystem extends FileSystem_Base {
     }
 
 
-    	public Entity createFile(FileSystem fs,Directory dir,String path, String filename, User owner, long id, int dimension,String content, int type,DateTime lastModified){
+    	public Entity createFile(FileSystem fs,Directory dir, String filename, User owner, long id,String content, int type,DateTime lastModified){
 		Entity file;
 		switch(type){
 			case 0:
-				file = new Directory(fs,dir,path,filename,owner,id,dimension,lastModified);
+				file = new Directory(fs,dir,filename,owner,id,lastModified);
 				//file.setParent(fatherDir);
 				return file;
 			case 1:
-				file = new PlainFile(fs,filename,owner,id,lastModified,dimension,content);
+				file = new PlainFile(fs,dir, filename,owner,id,lastModified,content);
 				return file;
 			case 2:
-				file = new Link(fs,filename,owner,id,lastModified,dimension,content);
+				file = new Link(fs,dir, filename,owner,id,lastModified,content);
 				return file;
 			case 3:
-				file = new App(fs,filename,owner,id,lastModified,dimension,content);
+				file = new App(fs, dir, filename,owner,id,lastModified,content);
 				return file;
 			default:
 				return null;
@@ -110,19 +110,18 @@ public class FileSystem extends FileSystem_Base {
      		setCounter(0);
      		user = new User(this, "SuperUser","root", "***", array, username);
      		
-     		Directory raiz =(Directory)this.createFile(this, null, "/", "/",  user, getCounter(), 2,null,0,date);
+     		Directory raiz =(Directory)this.createFile(this, null, "/",  user, getCounter(), null,0,date);
      		files.add(raiz);
-     		getEntitySet().add(raiz);
      		setCounter(getCounter()+1);
-     		Directory home =(Directory)this.createFile(this, raiz, "/home", "home",  user, getCounter(), 2,null,0,date);
+     		Directory home =(Directory)this.createFile(this, raiz, "home",  user, getCounter(),null,0,date);
      		files.add(home);
-     		getEntitySet().add(home);
+     		//getEntitySet().add(home);
      		raiz.addDir(home);
      		setCounter(getCounter()+1);
-     		Directory home_root =(Directory)this.createFile(this, home, "/home/root", "root", user, getCounter(), 2,null,0,date);
+     		Directory home_root =(Directory)this.createFile(this, home,  "root", user, getCounter(),null,0,date);
      		files.add(home_root);
      		home.addDir(home_root);
-     		getEntitySet().add(home_root);
+     		//getEntitySet().add(home_root);
      		check1 = 1;
      	}
     	else{
@@ -133,15 +132,15 @@ public class FileSystem extends FileSystem_Base {
 
     		setCounter(getCounter()+1);
     		
-    		Directory home_dir = (Directory) getDirectoryHome("home");
+    		Directory home_dir = (Directory) getDirectoryHome("root");
 
 
-    		Directory dir = (Directory)this.createFile(this, home_dir, "/home/"+username, username, user, getCounter(), 2,null,0,date);
+    		Directory dir = (Directory)this.createFile(this, home_dir,  username, user, getCounter(), null,0,date);
     		dir.setLastModified(date);
     		Directory Dir =	user.addDir(dir);
     		files.add(dir);
     		home_dir.addDir(dir);
-    		getEntitySet().add(dir);
+    		//getEntitySet().add(dir);
     	}
      }
      
@@ -216,13 +215,13 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
-    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+name, name, this.logged_user, getCounter(), 2,null,0,date);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir, name, this.logged_user, getCounter(),null,0,date);
     		this.workingDir.addDir(dir);
     		dir.setLastModified(date);
        	 	files.add(dir);
     	 }
     	 else{
-    		Directory dir = (Directory)this.createFile(this,this.workingDir,  workingDir.getPath()+"/"+name, name, this.logged_user, getCounter(), 2,null,0,date);
+    		Directory dir = (Directory)this.createFile(this,this.workingDir,  name, this.logged_user, getCounter(), null,0,date);
      		this.workingDir.addDir(dir);
      		dir.setLastModified(date);
         	files.add(dir);
@@ -239,7 +238,7 @@ public class FileSystem extends FileSystem_Base {
     		 }
     	 }
     	 setCounter(getCounter()+1);
-    	 PlainFile textfile = new PlainFile(this,file_name,this.logged_user, getCounter(), date, 2, "");
+    	 PlainFile textfile = new PlainFile(this, this.workingDir, file_name, this.logged_user, getCounter(), date,  "");
     	 this.workingDir.addPlainFile(textfile);
     	 textfile.setLastModified(date);
     	 //getEntitySet().add(textfile);
@@ -252,10 +251,10 @@ public class FileSystem extends FileSystem_Base {
     		return;
     	}
     	if(directory_destiny.equals("..")){ //voltar atras
-    		if(this.workingDir.getPath().equals("/")){
+    		if(this.workingDir.getPath("").equals("/")){
     			return;
     		}
-    		this.workingDir = this.workingDir.getDirectory();
+    		this.workingDir = this.workingDir.getParent();
     		return;
     	}
     	Directory destiny = null;
@@ -293,28 +292,19 @@ public class FileSystem extends FileSystem_Base {
     }
     
     public Entity getDirectoryHome(String dir_name){ //devolve uma entity no meio de todas criadas no file sistem
-    	for (Entity entity : getEntitySet()) {
-    		Entity dir = (Directory) entity;
-            if ((entity.getFilename().equals(dir_name))) {
-            	if(entity.getDirectory().getFilename().equals("/")){
-                return entity;
+    	for (User user : getUserSet()) {
+    		if(user.getUserName().equals("SuperUser")){
+    			return user.getHome();
             	}
             }
-        }
         return null;
     }
     
-    public Entity getEntityfromDir(String name){//inacabado, deve devolver uma entidade dentro de uma diretoria predefinida apenas
-    	return null;
-    }
     
     public Directory getUserDir(String username){ //devolve o diretorio base do user
-    	String test = "/home/"+username;
-    	for (Entity entity : getEntitySet()) {
-		if ( (entity.getMyType()).equals("Directory")){
-    			if(((Directory)entity).getPath().equals(test)){
-    				return (Directory) entity;
-    			}
+    	for (User user : getUserSet()) {
+		if ( (user.getUserName().equals(username))){
+    			return user.getHome();
 	        }
         }
         return null;
@@ -379,8 +369,8 @@ public class FileSystem extends FileSystem_Base {
     		String path = node.getChild("path").getText();	
 		//FIX TODO owner is now a user
 		//LAST MODIFIED was added to dir
-    		Directory dir = (Directory)this.createFile(this, null, path, filename,null,1000,2,null,0,null);
-    		dir.xmlImport(node);
+    		//Directory dir = (Directory)this.createFile(this, null,  filename,null,1000,2,null,0,null);
+    		//dir.xmlImport(node);
     	}
     	/*
     	for(int i=0; i<sizeDir ; i++){
@@ -423,8 +413,8 @@ public class FileSystem extends FileSystem_Base {
 		
 		for(User u: getUserSet()){
 			element.addContent(u.xmlExport().detach());
-			for(Entity e: getEntitySet()){
-				element.addContent(e.xmlExport().detach());
+				for(Entity e: u.getFileSet()){
+					element.addContent(e.xmlExport().detach());
 			}
 		//System.out.println(u.xmlExport().detachRootElement());
 		}

@@ -1,13 +1,13 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 public class App extends App_Base {
     
-    public App(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content) {
+    public App(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
         super();
-	initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
+	initPlainFile(filesystem,dir, filename,user,id,lastModified,content);
     }
 
 	    
@@ -15,9 +15,9 @@ public class App extends App_Base {
 		return "App";
 	}
 
-    public App(FileSystem filesystem, Element xml){
+    public App(User owner, Element xml){
     	xmlImport(xml);
-    	setFilesystem(filesystem);
+    	setOwner(owner);
     }
     
     public void xmlImport(Element appDoc){

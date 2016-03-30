@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 import java.io.UnsupportedEncodingException;
 
@@ -8,14 +8,14 @@ import org.joda.time.DateTime;
 
 public class PlainFile extends PlainFile_Base {
     
-    public PlainFile(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content) {
+    public PlainFile(FileSystem filesystem, Directory parent,String filename, User user, long id, DateTime lastModified,  String content) {
         super();
-        this.initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
+        this.initPlainFile(filesystem,parent, filename,user,id,lastModified,content);
         
     }
 
-	public void initPlainFile(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content){
-		init(filesystem,null,filename,user,id,dimension,lastModified);
+	public void initPlainFile(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content){
+		init(filesystem,null,filename,user,id,lastModified);
 		setContent(content);
 	}
 
@@ -28,9 +28,9 @@ public class PlainFile extends PlainFile_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PlainFile(FileSystem filesystem, Element xml){
+	public PlainFile(User owner, Element xml){
 		xmlImport(xml);
-		setFilesystem(filesystem);
+		setOwner(owner);
 	}
 	public void addContent(String content){
 		setContent(getContent()+content);
@@ -51,8 +51,8 @@ public class PlainFile extends PlainFile_Base {
 		String str = String.format ("%d", getId());
 		element.setAttribute("id", str); 	    	
 		element.addContent(new Element ("filename").setText(getFilename())); 	
-		element.addContent(new Element ("owner").setText(getOwner()));
-		element.addContent(new Element("path").setText(getPath()));
+		//element.addContent(new Element ("owner").setText(getOwner()));
+		//element.addContent(new Element("path").setText(getPath()));
 		Document PlainFileDoc = new Document(element);
 		
 		return element;

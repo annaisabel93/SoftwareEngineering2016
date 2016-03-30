@@ -1,4 +1,4 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
@@ -22,6 +22,10 @@ public class User extends User_Base {
         setMask(mask);
         setHomeDir(homeDir);
         setSystem(filesystem);
+    }
+    
+    protected User(){
+    	
     }
     
     public User(FileSystem filesystem, Element xml){

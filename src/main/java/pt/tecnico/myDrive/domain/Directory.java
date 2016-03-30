@@ -1,11 +1,11 @@
-package pt.tecnico.myDrive.domain;
+package pt.tecnico.mydrive.domain;
 
 import java.util.ArrayList;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
-import pt.tecnico.myDrive.exception.UsernameAlreadyExistsException;
+import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 
 public class Directory extends Directory_Base {
 	
@@ -15,10 +15,11 @@ public class Directory extends Directory_Base {
 	public ArrayList<App> apps = new ArrayList<App>();
 	
 	
-    public Directory(FileSystem filesystem, Directory dir, String path, String filename, User user, long id, int dimension, DateTime lastModified) {
+    public Directory(FileSystem filesystem, Directory dir, String filename, User user, long id,  DateTime lastModified) {
         super();
-        init(filesystem,path,filename,user,id,dimension,lastModified);
-	setDirectory(dir);
+        init(filesystem, dir, filename,user,id,lastModified);
+        setParent(dir);
+
         
 
     }
@@ -28,10 +29,10 @@ public class Directory extends Directory_Base {
 	return "Directory";
     }
 
-    public Directory(User user,FileSystem filesystem, Element xml){
+    public Directory(User owner, Element xml){
     	xmlImport(xml);
     	//setUser(user);
-    	setFilesystem(filesystem);
+    	setOwner(owner);
     }
 
     public Directory getDir(String name){
@@ -42,14 +43,12 @@ public class Directory extends Directory_Base {
     
 	public void addDir(Directory dir){
 		diretorias.add(dir);
-		addEntity(dir);
-		setDimension(getDimension()+1);		
+		addFile(dir);
 	}
 	
 	public void addPlainFile(PlainFile text){
 		plains.add(text);
-		addEntity(text);
-		setDimension(getDimension()+1);		
+		addFile(text);
 	}
 	
 	
@@ -58,22 +57,22 @@ public class Directory extends Directory_Base {
 		if(type.equals("Directory")){
 			Entity entity = getDirByName(entity_name, "directory");
 			diretorias.remove(entity);
-			removeEntity(entity);
+			removeFile(entity);
 		}
 		else if(type.equals("Plain_File")){
 			Entity entity = getDirByName(entity_name,"plainfile");
 			plains.remove(entity);
-			removeEntity(entity);
+			removeFile(entity);
 		}
 		else if(type.equals("Link")){
 			Entity entity = getDirByName(entity_name,"link");
 			links.remove(entity);
-			removeEntity(entity);
+			removeFile(entity);
 		}
 		else if(type.equals("App")){
 			Entity entity = getDirByName(entity_name,"app");
 			apps.remove(entity);
-			removeEntity(entity);
+			removeFile(entity);
 		}
 	}
 
@@ -120,7 +119,7 @@ public class Directory extends Directory_Base {
 			else if(entity instanceof App){ type = "App"; }
 			else if(entity instanceof Link){ type = "Link"; }
 			else if(entity instanceof PlainFile){ type = "PlainFile"; }
-			System.out.println(type + " " + "permissions" + " " + entity.getDimension() + " " + entity.getOwner() + " " + entity.getId() + " " + entity.getLastModified() + " " + entity.getFilename()); //FIXME: add permissions
+			System.out.println(type + " " + "permissions" + " " + entity.getOwner() + " " + entity.getId() + " " + entity.getLastModified() + " " + entity.getFilename()); //FIXME: add permissions
 		}
 	}
 	
@@ -133,8 +132,8 @@ public class Directory extends Directory_Base {
 		String str = String.format ("%d", getId());
 		element.setAttribute("id", str); 	    	
 		element.addContent(new Element ("filename").setText(getFilename())); 	
-		element.addContent(new Element ("owner").setText(getOwner()));
-		element.addContent(new Element("path").setText(getPath()));
+		//element.addContent(new Element ("owner").setText(getOwner()));
+		//element.addContent(new Element("path").setText(getPath()));
 		Document directoryDoc = new Document(element);
 		return element;
 	}
