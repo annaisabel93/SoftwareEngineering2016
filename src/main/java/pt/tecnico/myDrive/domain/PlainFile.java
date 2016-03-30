@@ -15,9 +15,8 @@ public class PlainFile extends PlainFile_Base {
     }
 
 	public void initPlainFile(FileSystem filesystem, String filename, User user, long id, DateTime lastModified, int dimension, String content){
-		init(filesystem,null,filename,user,id,dimension);
+		init(filesystem,null,filename,user,id,dimension,lastModified);
 		setContent(content);
-		setLastModified(lastModified);
 	}
 
 	

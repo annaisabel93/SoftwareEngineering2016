@@ -10,19 +10,20 @@ public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
 	//add user in
-	public Entity(FileSystem filesystem, Directory dir, String path, String filename,User user, long id, int dimension) {
+	public Entity(FileSystem filesystem, Directory dir, String path, String filename,User user, long id, int dimension,DateTime lastModified) {
         	super();
-		this.init(filesystem,path,filename,user,id,dimension);
+		this.init(filesystem,path,filename,user,id,dimension,lastModified);
 		setDirectory(dir);
 	    }
 	
-	protected void init(FileSystem filesystem,String path, String filename, User user, long id, int dimension){
+	protected void init(FileSystem filesystem,String path, String filename, User user, long id, int dimension,DateTime lastModified){
 		setFilesystem(filesystem);
 		setPath(path);
 		setFilename(filename);
 		setUser(user);
 		setId(id);
 		setDimension(dimension);
+		setLastModified(lastModified);
 	}
 
 	public Entity() {

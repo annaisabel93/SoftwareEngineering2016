@@ -15,9 +15,9 @@ public class Directory extends Directory_Base {
 	public ArrayList<App> apps = new ArrayList<App>();
 	
 	
-    public Directory(FileSystem filesystem, Directory dir, String path, String filename, User user, long id, int dimension) {
+    public Directory(FileSystem filesystem, Directory dir, String path, String filename, User user, long id, int dimension, DateTime lastModified) {
         super();
-        init(filesystem,path,filename,user,id,dimension);
+        init(filesystem,path,filename,user,id,dimension,lastModified);
 	setDirectory(dir);
         
 

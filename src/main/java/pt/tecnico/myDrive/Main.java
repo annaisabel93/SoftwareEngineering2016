@@ -46,10 +46,11 @@ public class Main {
         FileSystem fs = FileSystem.getInstance(); 
         User userana;
     	Directory dirana;
-    	
+    	DateTime date = new DateTime();
+
     	userana = new User(fs, "ana", "ana", "***", null, "home");
-    
-    	dirana = new Directory(fs, null, "home", "cenas", userana, 0, 2);
+    	//FIX TODO last null arg should be date
+    	dirana = new Directory(fs, null, "home", "cenas", userana, 0, 2,date);
        //---------------------------------------------------------------------------------------------
       
         fs.adicionaUser("root");
