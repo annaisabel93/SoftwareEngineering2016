@@ -1,28 +1,21 @@
 package pt.tecnico.mydrive.domain;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
-import java.util.Scanner;
-import java.util.Set;
-
-import javax.print.Doc;
-
-import java.util.HashSet;
-import java.util.List;
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.invoke.WrongMethodTypeException;
-import java.util.ArrayList;
-import java.io.BufferedReader;
-
 import pt.ist.fenixframework.FenixFramework;
-import pt.tecnico.mydrive.exception.*;
+import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
+import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;
+import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
+import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
+import pt.tecnico.mydrive.exception.WrongPasswordException;
 
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();

@@ -2,13 +2,8 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
-import org.jdom2.Document;
 
-import java.io.UnsupportedEncodingException;
-
-import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.joda.time.DateTime;
 
 public class User extends User_Base {
 	
@@ -63,7 +58,6 @@ public class User extends User_Base {
 //    	for(Directory d: getDirectorySet())
 //			element.addContent(d.xmlExport().detach());
 //    	
-    	Document document = new Document(element);
     	
         return element; 
     }

@@ -1,6 +1,5 @@
 package pt.tecnico.mydrive.domain;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 

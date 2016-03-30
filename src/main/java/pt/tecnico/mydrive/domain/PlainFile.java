@@ -1,8 +1,5 @@
 package pt.tecnico.mydrive.domain;
 
-import java.io.UnsupportedEncodingException;
-
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -53,7 +50,6 @@ public class PlainFile extends PlainFile_Base {
 		element.addContent(new Element ("filename").setText(getFilename())); 	
 		//element.addContent(new Element ("owner").setText(getOwner()));
 		//element.addContent(new Element("path").setText(getPath()));
-		Document PlainFileDoc = new Document(element);
 		
 		return element;
 	}

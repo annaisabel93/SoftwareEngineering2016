@@ -1,8 +1,5 @@
 package pt.tecnico.mydrive.domain;
 
-import java.io.UnsupportedEncodingException;
-
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -25,8 +22,6 @@ public abstract class Entity extends Entity_Base {
 	public Entity() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public abstract String getMyType();
 
 	
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 

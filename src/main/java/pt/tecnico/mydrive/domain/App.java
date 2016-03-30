@@ -1,6 +1,5 @@
 package pt.tecnico.mydrive.domain;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 public class App extends App_Base {
@@ -9,11 +8,6 @@ public class App extends App_Base {
         super();
 	initPlainFile(filesystem,dir, filename,user,id,lastModified,content);
     }
-
-	    
-	public String getMyType(){
-		return "App";
-	}
 
     public App(User owner, Element xml){
     	xmlImport(xml);

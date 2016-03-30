@@ -1,11 +1,9 @@
 package pt.tecnico.mydrive.domain;
 
 import java.util.ArrayList;
-import org.jdom2.Document;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
-
-import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 
 public class Directory extends Directory_Base {
 	
@@ -25,10 +23,6 @@ public class Directory extends Directory_Base {
     }
 
 	
-    public String getMyType(){
-	return "Directory";
-    }
-
     public Directory(User owner, Element xml){
     	xmlImport(xml);
     	//setUser(user);
@@ -134,7 +128,6 @@ public class Directory extends Directory_Base {
 		element.addContent(new Element ("filename").setText(getFilename())); 	
 		//element.addContent(new Element ("owner").setText(getOwner()));
 		//element.addContent(new Element("path").setText(getPath()));
-		Document directoryDoc = new Document(element);
 		return element;
 	}
 	
