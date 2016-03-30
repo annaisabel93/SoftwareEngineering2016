@@ -28,6 +28,9 @@ public abstract class Entity extends Entity_Base {
 	public Entity() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public abstract String getMyType();
+
 	@Override
 	public void setFilesystem(FileSystem fs){
 		if(fs == null)

@@ -10,7 +10,12 @@ public class Link extends Link_Base {
         super();
 	initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
     }
-    
+
+
+    public String getMyType(){
+	return "Link";
+    }
+
     public Link(FileSystem filesystem, Element xml){
     	xmlImport(xml);
     	setFilesystem(filesystem);

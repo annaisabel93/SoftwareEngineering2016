@@ -23,6 +23,11 @@ public class Directory extends Directory_Base {
 
     }
 
+	
+    public String getMyType(){
+	return "Directory";
+    }
+
     public Directory(User user,FileSystem filesystem, Element xml){
     	xmlImport(xml);
     	//setUser(user);

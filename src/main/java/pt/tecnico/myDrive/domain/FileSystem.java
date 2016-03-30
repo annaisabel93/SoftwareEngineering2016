@@ -311,9 +311,11 @@ public class FileSystem extends FileSystem_Base {
     public Directory getUserDir(String username){ //devolve o diretorio base do user
     	String test = "/home/"+username;
     	for (Entity entity : getEntitySet()) {
-    		if(entity.getPath().equals(test)){
-    		return (Directory) entity;
-    		}
+		if ( (entity.getMyType()).equals("Directory")){
+    			if(((Directory)entity).getPath().equals(test)){
+    				return (Directory) entity;
+    			}
+	        }
         }
         return null;
     }

@@ -20,6 +20,10 @@ public class PlainFile extends PlainFile_Base {
 		setLastModified(lastModified);
 	}
 
+	
+	public String getMyType(){
+		return "PlainFile";
+	}
 
 	public PlainFile() {
 		// TODO Auto-generated constructor stub

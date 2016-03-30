@@ -9,7 +9,12 @@ public class App extends App_Base {
         super();
 	initPlainFile(filesystem,filename,user,id,lastModified,dimension,content);
     }
-    
+
+	    
+	public String getMyType(){
+		return "App";
+	}
+
     public App(FileSystem filesystem, Element xml){
     	xmlImport(xml);
     	setFilesystem(filesystem);
