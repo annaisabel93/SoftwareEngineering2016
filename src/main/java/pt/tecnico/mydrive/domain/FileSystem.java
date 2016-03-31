@@ -103,17 +103,23 @@ public class FileSystem extends FileSystem_Base {
      		setCounter(0);
      		user = new User(this, "SuperUser","root", "***", array, username);
      		
-     		Directory raiz =(Directory)this.createFile(this, null, "/",  user, getCounter(), null,0,date);
+     		Directory raiz =new Directory (this, null, "/",  user, getCounter(),date);
+     		user.addFile(raiz);
      		files.add(raiz);
      		setCounter(getCounter()+1);
-     		Directory home =(Directory)this.createFile(this, raiz, "home",  user, getCounter(),null,0,date);
+     		Directory home = new Directory(this, raiz, "home",  user, getCounter(),date);
      		files.add(home);
+     		user.addFile(home);
+     		raiz.addFile(home);
      		//getEntitySet().add(home);
      		raiz.addDir(home);
      		setCounter(getCounter()+1);
-     		Directory home_root =(Directory)this.createFile(this, home,  "root", user, getCounter(),null,0,date);
+     		Directory home_root = new Directory(this, home,  "root", user, getCounter(),date);
      		files.add(home_root);
+     		user.addFile(home_root);
+     		user.setHome(home_root);
      		home.addDir(home_root);
+     		home.addFile(home_root);
      		//getEntitySet().add(home_root);
      		check1 = 1;
      	}
@@ -130,8 +136,10 @@ public class FileSystem extends FileSystem_Base {
 
     		Directory dir = (Directory)this.createFile(this, home_dir,  username, user, getCounter(), null,0,date);
     		dir.setLastModified(date);
-    		Directory Dir =	user.addDir(dir);
     		files.add(dir);
+    		user.addFile(dir);
+     		user.setHome(dir);
+     		home_dir.addFile(dir);
     		home_dir.addDir(dir);
     		//getEntitySet().add(dir);
     	}
@@ -177,7 +185,7 @@ public class FileSystem extends FileSystem_Base {
      }
      
      
-     public void RemoveDir(String dir_name){
+     public void RemoveDir(String dir_name){ // falta remover como deve ser o user da file ( e a file do user)
     	 for (Directory dir : this.workingDir.diretorias) {
     		 if(dir.getFilename().equals(dir_name)){
     			 this.workingDir.DeleteEntity(dir_name, "Directory");
@@ -188,7 +196,7 @@ public class FileSystem extends FileSystem_Base {
 
      }
 
-     public void RemoveFile(String file_name){
+     public void RemoveFile(String file_name){ // igual ao RemoveDir- ainda falta
     	 for (PlainFile plain : this.workingDir.plains) {
     		 if(plain.getFilename().equals(file_name)){
     			 this.workingDir.DeleteEntity(file_name, "Plain_File");
@@ -210,12 +218,16 @@ public class FileSystem extends FileSystem_Base {
     	 if (this.workingDir.getFilename().equals("/")){
     		Directory dir = (Directory)this.createFile(this,this.workingDir, name, this.logged_user, getCounter(),null,0,date);
     		this.workingDir.addDir(dir);
+    		this.workingDir.addFile(dir);
+    		this.logged_user.addFile(dir);
     		dir.setLastModified(date);
        	 	files.add(dir);
     	 }
     	 else{
     		Directory dir = (Directory)this.createFile(this,this.workingDir,  name, this.logged_user, getCounter(), null,0,date);
      		this.workingDir.addDir(dir);
+     		this.workingDir.addFile(dir);
+     		this.logged_user.addFile(dir);
      		dir.setLastModified(date);
         	files.add(dir);
     	 }
@@ -233,6 +245,8 @@ public class FileSystem extends FileSystem_Base {
     	 setCounter(getCounter()+1);
     	 PlainFile textfile = new PlainFile(this, this.workingDir, file_name, this.logged_user, getCounter(), date,  "");
     	 this.workingDir.addPlainFile(textfile);
+    	 this.workingDir.addFile(textfile);
+    	 this.logged_user.addFile(textfile);
     	 textfile.setLastModified(date);
     	 //getEntitySet().add(textfile);
     	 files.add(textfile);
@@ -244,7 +258,8 @@ public class FileSystem extends FileSystem_Base {
     		return;
     	}
     	if(directory_destiny.equals("..")){ //voltar atras
-    		if(this.workingDir.getPath("").equals("/")){
+    		System.out.println(this.workingDir==null);
+    		if(this.workingDir.getParent()==null){
     			return;
     		}
     		this.workingDir = this.workingDir.getParent();
@@ -286,8 +301,9 @@ public class FileSystem extends FileSystem_Base {
     
     public Entity getDirectoryHome(String dir_name){ //devolve uma entity no meio de todas criadas no file sistem
     	for (User user : getUserSet()) {
-    		if(user.getUserName().equals("SuperUser")){
-    			return user.getHome();
+    		if(user.getUserName().equals("root")){
+    			System.out.print(user.getHome().getFilename()+"----------------------------");
+    			return user.getHome().getParent(); //Pai do /home/root, que e /home
             	}
             }
         return null;
