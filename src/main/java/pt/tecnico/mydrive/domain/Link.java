@@ -7,9 +7,11 @@ public class Link extends Link_Base {
     
     public Link(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
         super();
-	initPlainFile(filesystem, dir, filename,user,id,lastModified,content);
+        init(filesystem, dir, filename,user,id,lastModified);
+        setContent(content);
     }
 
+    	
 
     public String getMyType(){
 	return "Link";

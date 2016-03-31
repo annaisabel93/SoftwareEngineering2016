@@ -7,12 +7,19 @@ public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
 	//add user in
-	public Entity(FileSystem filesystem, Directory parent, String filename,User user, long id,DateTime lastModified) {
+	public Entity(FileSystem filesystem, Directory parent, String filename,User owner, long id,DateTime lastModified) {
         	super();
-		this.init(filesystem, parent,filename,user,id,lastModified);
+        	setFilename(filename);
+    		setOwner(owner);
+    		setId(id);
+    		setLastModified(lastModified);
+    		setParent(parent);
+        	
+        	init(filesystem, parent,filename,owner,id,lastModified);
 	    }
 	
 	protected void init(FileSystem filesystem, Directory parent, String filename, User owner, long id,DateTime lastModified){
+		setFilename(filename);
 		setOwner(owner);
 		setId(id);
 		setLastModified(lastModified);
@@ -35,7 +42,7 @@ public abstract class Entity extends Entity_Base {
 	}
 	
 	
-	@Override
+	
 	/*
 	public void setFilesystem(FileSystem fs){
 		if(fs == null)
@@ -46,7 +53,6 @@ public abstract class Entity extends Entity_Base {
 	}
 	*/
 	
-	public void setOwner(User owner) {};
 	
 	public void xmlImport(Element filedoc){
 			setFilename(new String(filedoc.getChild("filename").getValue()));

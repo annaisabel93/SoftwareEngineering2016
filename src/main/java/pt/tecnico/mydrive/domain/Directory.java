@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 import org.joda.time.DateTime;
+import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;;
 
 public class Directory extends Directory_Base {
 	
@@ -16,8 +17,7 @@ public class Directory extends Directory_Base {
     public Directory(FileSystem filesystem, Directory dir, String filename, User user, long id,  DateTime lastModified) {
         super();
         init(filesystem, dir, filename,user,id,lastModified);
-        setParent(dir);
-
+        setSystem(filesystem);
         
 
     }
@@ -43,6 +43,17 @@ public class Directory extends Directory_Base {
 	public void addPlainFile(PlainFile text){
 		plains.add(text);
 		addFile(text);
+	}
+	
+	public void WriteToFile(String content, String filename)throws TexFileDoesNotExistException{
+		for (Entity entidade : getFileSet()) {
+   		 if(entidade.getFilename().equals(filename) && (entidade instanceof PlainFile)){
+   			 ((PlainFile) entidade).addContent(content); //cast para poder executar o metodo
+   			 return;
+   		 }
+   	 }
+   	
+   	 throw new TexFileDoesNotExistException(filename);
 	}
 	
 	

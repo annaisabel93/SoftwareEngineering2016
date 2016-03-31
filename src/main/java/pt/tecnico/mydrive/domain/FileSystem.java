@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;
+import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
@@ -51,23 +52,25 @@ public class FileSystem extends FileSystem_Base {
 		switch(type){
 			case 0:
 				file = new Directory(fs,dir,filename,owner,id,lastModified);
+				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
 				//file.setParent(fatherDir);
 				return file;
 			case 1:
 				file = new PlainFile(fs,dir, filename,owner,id,lastModified,content);
+				System.out.println(file.getFilename()+ " createfile"+file.checkMultiplicityOfParent());
 				return file;
 			case 2:
 				file = new Link(fs,dir, filename,owner,id,lastModified,content);
+				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
 				return file;
 			case 3:
 				file = new App(fs, dir, filename,owner,id,lastModified,content);
+				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
 				return file;
 			default:
 				return null;
 		}
 	}
-
-
 	public void login(String username) throws UsernameDoesntExistException, WrongPasswordException{
     	 String pw;
     	 //username =  System.console().readLine();
@@ -106,6 +109,8 @@ public class FileSystem extends FileSystem_Base {
      		Directory raiz =new Directory (this, null, "/",  user, getCounter(),date);
      		user.addFile(raiz);
      		files.add(raiz);
+     		raiz.setParent(raiz);
+     		setRootDir(raiz);
      		setCounter(getCounter()+1);
      		Directory home = new Directory(this, raiz, "home",  user, getCounter(),date);
      		files.add(home);
@@ -134,7 +139,7 @@ public class FileSystem extends FileSystem_Base {
     		Directory home_dir = (Directory) getDirectoryHome("root");
 
 
-    		Directory dir = (Directory)this.createFile(this, home_dir,  username, user, getCounter(), null,0,date);
+    		Directory dir = new Directory(this, home_dir,  username, user, getCounter(),date);
     		dir.setLastModified(date);
     		files.add(dir);
     		user.addFile(dir);
@@ -155,13 +160,12 @@ public class FileSystem extends FileSystem_Base {
      }
           
      public void WriteOnFile(String name , String content){
-    	 for (PlainFile plain : this.workingDir.plains) {
-    		 if(plain.getFilename().equals(name)){
-    			 plain.addContent(content);
-    			 return;
-    		 }
+    	 try{
+    		 this.workingDir.WriteToFile(content, name);
     	 }
-    	 System.out.println("Text file does not exist");
+    	 catch (TexFileDoesNotExistException e) {
+    		    System.err.println("TextFileDoesNotExistException: " + e.getMessage());
+    	 }
      }
      
      public void printHome() {
@@ -216,7 +220,7 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
-    		Directory dir = (Directory)this.createFile(this,this.workingDir, name, this.logged_user, getCounter(),null,0,date);
+    		Directory dir = new Directory(this,this.workingDir, name, this.logged_user, getCounter(), date);
     		this.workingDir.addDir(dir);
     		this.workingDir.addFile(dir);
     		this.logged_user.addFile(dir);
@@ -224,7 +228,7 @@ public class FileSystem extends FileSystem_Base {
        	 	files.add(dir);
     	 }
     	 else{
-    		Directory dir = (Directory)this.createFile(this,this.workingDir,  name, this.logged_user, getCounter(), null,0,date);
+    		Directory dir = new Directory(this,this.workingDir,  name, this.logged_user, getCounter(), date);
      		this.workingDir.addDir(dir);
      		this.workingDir.addFile(dir);
      		this.logged_user.addFile(dir);
@@ -258,7 +262,6 @@ public class FileSystem extends FileSystem_Base {
     		return;
     	}
     	if(directory_destiny.equals("..")){ //voltar atras
-    		System.out.println(this.workingDir==null);
     		if(this.workingDir.getParent()==null){
     			return;
     		}
@@ -302,7 +305,6 @@ public class FileSystem extends FileSystem_Base {
     public Entity getDirectoryHome(String dir_name){ //devolve uma entity no meio de todas criadas no file sistem
     	for (User user : getUserSet()) {
     		if(user.getUserName().equals("root")){
-    			System.out.print(user.getHome().getFilename()+"----------------------------");
     			return user.getHome().getParent(); //Pai do /home/root, que e /home
             	}
             }

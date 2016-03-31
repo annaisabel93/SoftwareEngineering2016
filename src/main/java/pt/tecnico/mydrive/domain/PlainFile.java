@@ -7,14 +7,11 @@ public class PlainFile extends PlainFile_Base {
     
     public PlainFile(FileSystem filesystem, Directory parent,String filename, User user, long id, DateTime lastModified,  String content) {
         super();
-        this.initPlainFile(filesystem,parent, filename,user,id,lastModified,content);
+        init(filesystem,parent,filename,user,id,lastModified);
+		setContent(content);
         
     }
 
-	public void initPlainFile(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content){
-		init(filesystem,null,filename,user,id,lastModified);
-		setContent(content);
-	}
 
 	
 	public String getMyType(){

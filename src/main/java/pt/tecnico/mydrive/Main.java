@@ -45,13 +45,13 @@ public class Main {
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
-        User userana;
-    	Directory dirana;
-    	DateTime date = new DateTime();
+        //User userana;
+    	//Directory dirana;
+    	//DateTime date = new DateTime();
 
-    	userana = new User(fs, "ana", "ana", "***", null, "home");
+    	//userana = new User(fs, "ana", "ana", "***", null, "home");
     	//FIX TODO last null arg should be date
-    	dirana = new Directory(fs, null,  "cenas", userana, 0, date);
+    	//dirana = new Directory(fs, null,  "cenas", userana, 0, date);
        //---------------------------------------------------------------------------------------------
       
         fs.adicionaUser("root");
@@ -79,6 +79,7 @@ public class Main {
         fs.moveDir("home");
         fs.RemoveFile("README");
         fs.printHome();
+        System.out.println("-----------------ended example");
         
     }
 
