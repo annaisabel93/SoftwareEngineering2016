@@ -1,10 +1,6 @@
 package pt.tecnico.mydrive.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import org.joda.time.DateTime;
-import org.junit.Test;
 
 import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;

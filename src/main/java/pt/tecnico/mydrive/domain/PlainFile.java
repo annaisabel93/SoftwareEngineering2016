@@ -5,13 +5,13 @@ import org.joda.time.DateTime;
 
 public class PlainFile extends PlainFile_Base {
     
-    public PlainFile(FileSystem filesystem, Directory parent,String filename, User user, long id, DateTime lastModified,  String content) {
+    public PlainFile(Directory parent,String filename, User user, long id, DateTime lastModified,  String content) {
         super();
-        init(filesystem,parent,filename,user,id,lastModified);
+        init(parent,filename,user,id,lastModified);
 		setContent(content);
         
     }
-
+    
 
 	public PlainFile() {
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,11 @@ public class PlainFile extends PlainFile_Base {
 		setContent(getContent()+content);
 	}
 	
-
+	public void Delete(){
+		getOwner().removeFile(this);
+		setParent(null);
+		setOwner(null);
+	}
 
 	public void xmlImport(Element PlainFileDoc){
 		super.xmlImport(PlainFileDoc);

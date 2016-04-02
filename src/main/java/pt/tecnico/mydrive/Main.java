@@ -53,7 +53,6 @@ public class Main {
     	//dirana = new Directory(fs, null,  "cenas", userana, 0, date);
        //---------------------------------------------------------------------------------------------
       
-        fs.adicionaUser("root");
         fs.adicionaUser("luis");
         fs.login("luis");
         fs.moveDir("..");
@@ -78,7 +77,6 @@ public class Main {
         fs.moveDir("home");
         fs.RemoveFile("README");
         fs.printHome();
-        System.out.println("-----------------ended example");
         
     }
 

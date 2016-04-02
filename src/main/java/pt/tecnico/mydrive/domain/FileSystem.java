@@ -11,12 +11,7 @@ import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;
-import pt.tecnico.mydrive.exception.TextFileDoesNotExistException;
-import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
-import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
-import pt.tecnico.mydrive.exception.WrongPasswordException;
+import pt.tecnico.mydrive.exception.*;
 
 public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
@@ -24,7 +19,7 @@ public class FileSystem extends FileSystem_Base {
     public Directory workingDir  = null;
     public User logged_user  = null;
     public byte[] array = {0,0,0,0};
-    public int check1 = 0;
+    public int check1 = 1;
 
     Set<Entity> files = new HashSet<Entity>();
     
@@ -51,21 +46,17 @@ public class FileSystem extends FileSystem_Base {
 		Entity file;
 		switch(type){
 			case 0:
-				file = new Directory(fs,dir,filename,owner,id,lastModified);
-				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
+				file = new Directory(dir,filename,owner,id,lastModified);
 				//file.setParent(fatherDir);
 				return file;
 			case 1:
-				file = new PlainFile(fs,dir, filename,owner,id,lastModified,content);
-				System.out.println(file.getFilename()+ " createfile"+file.checkMultiplicityOfParent());
+				file = new PlainFile(dir, filename,owner,id,lastModified,content);
 				return file;
 			case 2:
-				file = new Link(fs,dir, filename,owner,id,lastModified,content);
-				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
+				file = new Link(dir, filename,owner,id,lastModified,content);
 				return file;
 			case 3:
-				file = new App(fs, dir, filename,owner,id,lastModified,content);
-				System.out.println(file.getFilename()+ "createfile "+file.checkMultiplicityOfParent());
+				file = new App(dir, filename,owner,id,lastModified,content);
 				return file;
 			default:
 				return null;
@@ -102,7 +93,7 @@ public class FileSystem extends FileSystem_Base {
 	            }
 		 }
     	
-    	 if(check1 == 0){//caso root - apenas ira executar 1 vez
+    	 /*if(check1 == 0){//caso root - apenas ira executar 1 vez
      		setCounter(0);
      		user = new User(this, "SuperUser","root", "***", array, username);
      		
@@ -112,14 +103,14 @@ public class FileSystem extends FileSystem_Base {
      		raiz.setParent(raiz);
      		setRootDir(raiz);
      		setCounter(getCounter()+1);
-     		Directory home = new Directory(this, raiz, "home",  user, getCounter(),date);
+     		Directory home = new Directory(null, getRootDir(), "home",  user, getCounter(),date);
      		files.add(home);
      		user.addFile(home);
      		raiz.addFile(home);
      		//getEntitySet().add(home);
      		raiz.addDir(home);
      		setCounter(getCounter()+1);
-     		Directory home_root = new Directory(this, home,  "root", user, getCounter(),date);
+     		Directory home_root = new Directory(null, home,  "root", user, getCounter(),date);
      		files.add(home_root);
      		user.addFile(home_root);
      		user.setHome(home_root);
@@ -127,10 +118,9 @@ public class FileSystem extends FileSystem_Base {
      		home.addFile(home_root);
      		//getEntitySet().add(home_root);
      		check1 = 1;
-     	}
-    	else{
-    		
-    		
+     	}*/
+    	//else{
+    	    		
     		user = new User(this, username, username, username, array, username);
 
 
@@ -139,7 +129,7 @@ public class FileSystem extends FileSystem_Base {
     		Directory home_dir = (Directory) getDirectoryHome("root");
 
 
-    		Directory dir = new Directory(this, home_dir,  username, user, getCounter(),date);
+    		Directory dir = new Directory(home_dir,  username, user, getCounter(),date);
     		dir.setLastModified(date);
     		files.add(dir);
     		user.addFile(dir);
@@ -147,7 +137,7 @@ public class FileSystem extends FileSystem_Base {
      		home_dir.addFile(dir);
     		home_dir.addDir(dir);
     		//getEntitySet().add(dir);
-    	}
+    	//}
      }
      
      public void printReadMe(String name) {
@@ -220,7 +210,7 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
-    		Directory dir = new Directory(this,this.workingDir, name, this.logged_user, getCounter(), date);
+    		Directory dir = new Directory(this.workingDir, name, this.logged_user, getCounter(), date);
     		this.workingDir.addDir(dir);
     		this.workingDir.addFile(dir);
     		this.logged_user.addFile(dir);
@@ -228,7 +218,7 @@ public class FileSystem extends FileSystem_Base {
        	 	files.add(dir);
     	 }
     	 else{
-    		Directory dir = new Directory(this,this.workingDir,  name, this.logged_user, getCounter(), date);
+    		Directory dir = new Directory(this.workingDir,  name, this.logged_user, getCounter(), date);
      		this.workingDir.addDir(dir);
      		this.workingDir.addFile(dir);
      		this.logged_user.addFile(dir);
@@ -247,7 +237,7 @@ public class FileSystem extends FileSystem_Base {
     		 }
     	 }
     	 setCounter(getCounter()+1);
-    	 PlainFile textfile = new PlainFile(this, this.workingDir, file_name, this.logged_user, getCounter(), date,  "");
+    	 PlainFile textfile = new PlainFile(this.workingDir, file_name, this.logged_user, getCounter(), date,  "");
     	 this.workingDir.addPlainFile(textfile);
     	 this.workingDir.addFile(textfile);
     	 this.logged_user.addFile(textfile);
@@ -290,6 +280,31 @@ public class FileSystem extends FileSystem_Base {
     
     private FileSystem() {
         setRoot(FenixFramework.getDomainRoot());
+        DateTime date = new DateTime();
+        Root user = new Root(this, "SuperUser","root", "***", array, "root");
+        setCounter(0);
+ 		Directory raiz =new Directory (null, "/",  user, getCounter(),date);
+ 		user.addFile(raiz);
+ 		files.add(raiz);
+ 		raiz.setParent(raiz);
+ 		setRootDir(raiz);
+ 		raiz.setSystem(this);
+ 		setCounter(getCounter()+1);
+ 		Directory home = new Directory(getRootDir(), "home",  user, getCounter(),date);
+ 		files.add(home);
+ 		user.addFile(home);
+ 		raiz.addFile(home);
+ 		//getEntitySet().add(home);
+ 		raiz.addDir(home);
+ 		setCounter(getCounter()+1);
+ 		Directory home_root = new Directory(home,  "root", user, getCounter(),date);
+ 		files.add(home_root);
+ 		user.addFile(home_root);
+ 		user.setHome(home_root);
+ 		home.addDir(home_root);
+ 		home.addFile(home_root);
+ 		//getEntitySet().add(home_root);
+ 		check1 = 1;
         
     }
     
