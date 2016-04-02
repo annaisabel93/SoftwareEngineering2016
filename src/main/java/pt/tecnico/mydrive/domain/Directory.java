@@ -14,10 +14,9 @@ public class Directory extends Directory_Base {
 	public ArrayList<App> apps = new ArrayList<App>();
 	
 	
-    public Directory(FileSystem filesystem, Directory dir, String filename, User user, long id,  DateTime lastModified) {
+    public Directory(Directory dir, String filename, User user, long id,  DateTime lastModified) {
         super();
-        init(filesystem, dir, filename,user,id,lastModified);
-        setSystem(filesystem);
+        init(dir, filename,user,id,lastModified);
         
 
     }
@@ -60,9 +59,14 @@ public class Directory extends Directory_Base {
 	public void DeleteEntity(String entity_name, String type){ //remove uma entidade dentro da diretoria (check feito previamente)
 		
 		if(type.equals("Directory")){
-			Entity entity = getDirByName(entity_name, "directory");
-			diretorias.remove(entity);
-			removeFile(entity);
+			Directory directory = (Directory) getDirByName(entity_name, "directory");
+			//System.out.println("e mesmo o que procuro?" + directory.getFilename());
+			diretorias.remove(directory);
+			directory.Delete();
+			//System.out.println("Diretorio vazio?" +getFileSet().isEmpty());//esta vazio!!!!!!!!!!!
+			removeFile(directory);
+			//System.out.println("Diretorio vazio?" +getFileSet().isEmpty());//esta vazio!!!!!!!!!!!
+		
 		}
 		else if(type.equals("Plain_File")){
 			Entity entity = getDirByName(entity_name,"plainfile");
@@ -79,6 +83,22 @@ public class Directory extends Directory_Base {
 			apps.remove(entity);
 			removeFile(entity);
 		}
+	}
+	
+	public void Delete(){
+		for (Entity entity: getFileSet()) {
+    		entity.Delete();
+		}
+		//System.out.println("Vai apagar-se"+ this.getFilename());
+		this.diretorias.clear();
+		this.links.clear();
+		this.apps.clear();
+		this.plains.clear();
+		//System.out.println("este dono ainda tem este objeto? " + getOwner().getFileSet().contains(this));
+		getOwner().removeFile(this);
+		setOwner(null);
+		setParent(null);
+		//setSystem(null);
 	}
 
 	public Entity getDirByName(String dir_name, String type) {

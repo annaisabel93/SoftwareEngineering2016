@@ -7,7 +7,7 @@ public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
 	//add user in
-	public Entity(FileSystem filesystem, Directory parent, String filename,User owner, long id,DateTime lastModified) {
+	public Entity(Directory parent, String filename,User owner, long id,DateTime lastModified) {
         	super();
         	setFilename(filename);
     		setOwner(owner);
@@ -15,10 +15,10 @@ public abstract class Entity extends Entity_Base {
     		setLastModified(lastModified);
     		setParent(parent);
         	
-        	init(filesystem, parent,filename,owner,id,lastModified);
+        	init(parent,filename,owner,id,lastModified);
 	    }
 	
-	protected void init(FileSystem filesystem, Directory parent, String filename, User owner, long id,DateTime lastModified){
+	protected void init(Directory parent, String filename, User owner, long id,DateTime lastModified){
 		setFilename(filename);
 		setOwner(owner);
 		setId(id);
@@ -30,6 +30,7 @@ public abstract class Entity extends Entity_Base {
 		// TODO Auto-generated constructor stub
 	}
 
+	public abstract void Delete();
 	
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 
 		Directory parent = getParent();

@@ -5,9 +5,9 @@ import org.joda.time.DateTime;
 
 public class Link extends Link_Base {
     
-    public Link(FileSystem filesystem, Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
+    public Link(Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
         super();
-        init(filesystem, dir, filename,user,id,lastModified);
+        init(dir, filename,user,id,lastModified);
         setContent(content);
     }
 

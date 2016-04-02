@@ -38,6 +38,8 @@ public class User extends User_Base {
     	}
     }
     
+
+    
     public void xmlImport(Element userEl){
         	setUserName(new String(userEl.getAttribute("username").getValue()));
         	setName(new String(userEl.getChild("name").getValue()));
