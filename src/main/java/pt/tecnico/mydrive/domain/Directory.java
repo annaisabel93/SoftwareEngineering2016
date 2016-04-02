@@ -18,8 +18,6 @@ public class Directory extends Directory_Base {
         super();
         init(filesystem, dir, filename,user,id,lastModified);
         setSystem(filesystem);
-        
-
     }
 
 	

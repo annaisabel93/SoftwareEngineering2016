@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;
-import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+import pt.tecnico.mydrive.exception.TextFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
