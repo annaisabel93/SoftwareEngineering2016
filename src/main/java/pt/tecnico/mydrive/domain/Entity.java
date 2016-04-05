@@ -32,6 +32,8 @@ public abstract class Entity extends Entity_Base {
 
 	public abstract void Delete();
 	
+	
+
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 
 		Directory parent = getParent();
 		if(parent == null){
