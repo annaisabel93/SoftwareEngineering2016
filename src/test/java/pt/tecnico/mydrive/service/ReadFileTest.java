@@ -1,8 +1,9 @@
-package pt.tecnico.mydrie.service;
+package pt.tecnico.mydrive.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import pt.tecnico.mydrive.domain.User;
@@ -22,7 +23,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		FileSystem fs = FileSystem.getInstance();
 		
 		byte[] mask = {0,0,0,0};
-		DateTime date = new Date();
+		DateTime date = new DateTime();
 		
 		User u = new User(fs, "Someone", "SO", "****", mask , "homie");
 		Directory d = new Directory(fs.getRootDir(), "Some Directory", u, 5 , date); 		
