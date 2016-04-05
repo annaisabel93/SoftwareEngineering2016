@@ -11,12 +11,6 @@ public class Link extends Link_Base {
         setContent(content);
     }
 
-    	
-
-    public String getMyType(){
-	return "Link";
-    }
-
     public Link(User owner, Element xml){
     	xmlImport(xml);
     	setOwner(owner);

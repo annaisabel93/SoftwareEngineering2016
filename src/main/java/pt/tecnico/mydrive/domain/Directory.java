@@ -3,7 +3,7 @@ package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Element;
 import org.joda.time.DateTime;
-import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;;
+import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 public class Directory extends Directory_Base {
 	
@@ -17,8 +17,6 @@ public class Directory extends Directory_Base {
     public Directory(Directory dir, String filename, User user, long id,  DateTime lastModified) {
         super();
         init(dir, filename,user,id,lastModified);
-        
-
     }
 
 	
