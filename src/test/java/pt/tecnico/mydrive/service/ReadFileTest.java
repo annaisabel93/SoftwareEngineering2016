@@ -32,7 +32,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		new App(d, "S", u, 8, date, "WS");
 		new Link(d, "A", u, 9, date, "SA");	
 	}
-
+/*
 	@Test
 	public void success() {
 		//ReadFileService service = new ReadFileService();
@@ -45,7 +45,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		//assertEquals("Directory name should be Some Directory", "Some Directory", fs.get(0).getFileName());
 		//assertEquals("User name whom Directory belongs to should be Someone", "Someone",fs.get(0).getName());
 	}
-
+*/
 }
 
 

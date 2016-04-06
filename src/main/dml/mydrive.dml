@@ -54,12 +54,12 @@ relation FileSystemhasUser {
 
 
 relation FileSystemhasRootDir {
-	FileSystem playsRole system {
-		multiplicity 1..1;
-	} 
 	Directory playsRole rootDir {
-		multiplicity 0..1;
+		multiplicity 1..1;
 	}
+	FileSystem playsRole system {
+		multiplicity 0..1;
+	} 
 }
 
 relation UserhasEntity{

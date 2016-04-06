@@ -40,6 +40,7 @@ public class FileSystem extends FileSystem_Base {
     		 throw new WrongPasswordException();
     	 }
     	 this.logged_user = user;
+    	 System.out.println(this.logged_user.getName());
     	 
     	 this.workingDir = (Directory) getDirectoryHome(username);
 
@@ -78,10 +79,10 @@ public class FileSystem extends FileSystem_Base {
     	 //this.workingDir.printDir();    	 
      }
         
-     public void RemoveEntity(String dir_name){ // falta remover como deve ser o user da file ( e a file do user)
+     public void RemoveEntity(String dir_name){
     	 for (Entity dir : this.workingDir.getFileSet()) {
     		 if(dir.getFilename().equals(dir_name)){
-    			 this.workingDir.DeleteEntity(dir_name);
+    			 dir.delete();
     			 return;
     		 }
     	 }
@@ -97,11 +98,13 @@ public class FileSystem extends FileSystem_Base {
     	 }
     	 setCounter(getCounter()+1);
     	 if (this.workingDir.getFilename().equals("/")){
+    		System.out.println("User null2? "+ (this.logged_user == null));
     		Directory dir = new Directory(this.workingDir, name, this.logged_user, getCounter(), date);
     		this.workingDir.addFile(dir);
     		this.logged_user.addFile(dir);
     	 }
     	 else{
+    		System.out.println("User null1? "+ (this.logged_user == null));
     		Directory dir = new Directory(this.workingDir,  name, this.logged_user, getCounter(), date);
      		this.workingDir.addFile(dir);
      		this.logged_user.addFile(dir);
@@ -131,6 +134,7 @@ public class FileSystem extends FileSystem_Base {
     		return;
     	}
     	Directory destiny = null;
+    	
     	destiny = this.workingDir.getDir(directory_destiny);
     	if(destiny == null){
     		throw new DirectoryDoesNotExistInsideWorkingDirException(directory_destiny);
@@ -193,13 +197,16 @@ public class FileSystem extends FileSystem_Base {
     		throw new UsernameAlreadyExistsException(user.getUserName());}
     	else{
     		if((Directory)getRootDir()==null){
+    			System.out.println("User null3? "+ (this.logged_user == null));
     			Directory raiz =new Directory ("/",  user, Counter(),new DateTime());
     			setRootDir(raiz);
+    			System.out.println("User null4? "+ (this.logged_user == null));
     			Directory home1 = new Directory (getRootDir(),"home",  user, Counter(),new DateTime());
     			raiz.addFile(home1);
     	 		
     		}
     		Directory home = (Directory)getRootDir().getByName("home");
+    		System.out.println("User null5? "+ (this.logged_user == null));
 			Directory userHome = new Directory(home,  user.getUserName(), user, getCounter(),new DateTime());
 			user.setHome(userHome);
     		super.addUser(user);

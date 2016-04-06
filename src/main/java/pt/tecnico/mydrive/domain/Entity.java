@@ -7,7 +7,7 @@ public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
 	//add user in
-	public Entity(Directory parent, String filename,User owner, long id,DateTime lastModified) {
+	public Entity(Directory parent, String filename,User owner, long id,DateTime lastModified) {//potr o FS em vez do id, tirar o midify e por dentro
         	super();
         	setFilename(filename);
     		setOwner(owner);
@@ -30,7 +30,11 @@ public abstract class Entity extends Entity_Base {
 		// TODO Auto-generated constructor stub
 	}
 
-	public abstract void Delete();
+	public void delete(){
+		getOwner().removeFile(this);
+		setParent(null);
+		setOwner(null);
+	}
 	
 	
 

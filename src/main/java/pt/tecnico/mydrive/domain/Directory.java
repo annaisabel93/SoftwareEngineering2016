@@ -47,27 +47,14 @@ public class Directory extends Directory_Base {
    	 throw new TexFileDoesNotExistException(filename);
 	}
 	
-	
-	public void DeleteEntity(String entity_name){ //remove uma entidade dentro da diretoria (check feito previamente)
-			Entity entity = getDirByName(entity_name);
-			if(entity instanceof PlainFile){
-				((PlainFile) entity).Delete();
-			}
-			else{
-				((Directory)entity).Delete();
-			}
-			removeFile(entity);
 
-	}
-	
-	public void Delete(){
+	@Override
+	public void delete(){
 		for (Entity entity: getFileSet()) {
-    		entity.Delete();
+    		entity.delete();
+    		removeFile(entity);
 		}
-		getOwner().removeFile(this);
-		setOwner(null);
-		setParent(null);
-		//setSystem(null);
+		super.delete();
 	}
 
 	
