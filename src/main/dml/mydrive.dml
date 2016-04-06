@@ -20,7 +20,15 @@ class User {
 	String homeDir;      
 }
 
+class Login {
+	DateTime dateCreated;
+	long token;
+}
+
+
 class Root extends User;
+
+
 
 class Directory extends Entity;
 
@@ -92,5 +100,26 @@ relation UserhasHomeDir{
 	}
 }
 
+relation LoginhasDirectory{
+	Login playsRole login{
+		multiplicity 0..1;
+	}
+	Directory playsRole directory{
+		multiplicity 1..1;
+	}
+}
+
+relation UserhasLogin{
+	User playsRole user{
+		multiplicity 1..1;
+	}
+	Login playsRole login{
+		multiplicity 0..*;
+	}
+	
+}
+	
+	
+	
 
 
