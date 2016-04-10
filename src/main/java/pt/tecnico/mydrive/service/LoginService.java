@@ -1,5 +1,6 @@
 package pt.tecnico.mydrive.service;
 
+
 import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
@@ -7,6 +8,8 @@ import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
 import pt.tecnico.mydrive.exception.TokenAlreadyInUseException;
+import java.math.BigInteger;
+import java.util.Random;
 
 public class LoginService extends FileSystemService {
 
@@ -15,11 +18,11 @@ public class LoginService extends FileSystemService {
     private FileSystem fs;
     long token;
     
-    public LoginService(FileSystem fs1, long token1, String username1, String password1) {
+    public LoginService(FileSystem fs1, String username1, String password1){
         this.username = username1;
         this.password = password1;
         this.fs = fs1;
-        this.token = token1;
+        this.token = new BigInteger(64, new Random()).longValue();
     }
 
     @Override
@@ -33,7 +36,6 @@ public class LoginService extends FileSystemService {
     				}
     			}
     		}
-    	
     		User user = this.fs.getUserByUsername(username);  // Verifies if User already exists (throws exception if it doesnt )
     		if ((user.getPassword().equals(this.password)) == false){// Verifies if password is correct
     			throw new WrongPasswordException();

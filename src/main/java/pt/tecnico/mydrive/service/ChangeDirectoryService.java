@@ -2,7 +2,10 @@ package pt.tecnico.mydrive.service;
 
 import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.Login;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;;
+import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
+import pt.tecnico.mydrive.domain.FileSystem;
 
 public class ChangeDirectoryService extends FileSystemService {
 
@@ -12,8 +15,8 @@ public class ChangeDirectoryService extends FileSystemService {
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
     
-    public ChangeDirectoryService(Login login1, String directoryName1) {
-        this.login = login1;
+    public ChangeDirectoryService(FileSystem fs1, long token, String directoryName1) throws UnknownTokenException{
+    	this.login = getLogin(token);
         this.directoryName = directoryName1;
         this.workingDir = this.login.getDirectory();
     }
