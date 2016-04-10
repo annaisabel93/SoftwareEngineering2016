@@ -25,7 +25,8 @@ public class PlainFile extends PlainFile_Base {
 		setContent(getContent()+content);
 	}
 	
-	public void Delete(){
+	@Override
+	public void delete(){
 		getOwner().removeFile(this);
 		setParent(null);
 		setOwner(null);

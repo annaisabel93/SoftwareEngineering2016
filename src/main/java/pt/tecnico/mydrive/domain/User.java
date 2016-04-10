@@ -69,6 +69,13 @@ public class User extends User_Base {
     	return dir;
     }
     
+    public Entity getEntityByName(String fileName){
+    	for(Entity file: getFileSet())
+    		if (file.getFilename().equals(fileName))
+                return file;
+        return null;
+    }
+    
     public void remove() { //FIXME --mexer na funcao ainda
 		// TODO Auto-generated method stub
 	        

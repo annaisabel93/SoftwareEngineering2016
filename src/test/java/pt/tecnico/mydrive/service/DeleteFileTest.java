@@ -11,33 +11,13 @@ public class DeleteFileTest extends AbstractServiceTest {
 	
 	protected void populate(){
 		FileSystem fs =FileSystem.getInstance();
+		//Login service = new LoginService();
 		
-	 	     fs.adicionaUser("luis");
-	         fs.login("luis");
-	         fs.moveDir("..");
-	         fs.CreateTextFile("README");
-	         fs.WriteOnFile("README","lista de utilizadores");
-	         fs.moveDir("..");
-	         fs.AddDirtoCurrent("usr");
-	         fs.moveDir("usr");
-	         fs.AddDirtoCurrent("local");
-	         fs.moveDir("local");
-	         fs.AddDirtoCurrent("bin");
-	         fs.moveDir("..");
-	         fs.moveDir("..");
-	         fs.moveDir("home");
-	         fs.printReadMe("README");
-	         fs.moveDir("..");
-	         fs.moveDir("usr");
-	         fs.moveDir("local");
-	         fs.RemoveDir("bin");
-	         fs.moveDir("..");
-	         fs.moveDir("..");
-	         fs.moveDir("home");
-	         fs.RemoveFile("README");
-
+		
 	}
-	
+	//login
+	//criar ficheiro
+	//apagar ficheiro
 
 	/*
 	@Test

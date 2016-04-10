@@ -1,6 +1,5 @@
 package pt.tecnico.mydrive.domain;
 
-import java.util.ArrayList;
 
 import org.jdom2.Element;
 import org.joda.time.DateTime;
@@ -8,10 +7,11 @@ import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 public class Directory extends Directory_Base {
 	
-	public ArrayList<Directory> diretorias = new ArrayList<Directory>();
-	public ArrayList<PlainFile> plains = new ArrayList<PlainFile>();
-	public ArrayList<Link> links = new ArrayList<Link>();
-	public ArrayList<App> apps = new ArrayList<App>();
+	
+	public Directory(String filename, User user, long id,  DateTime lastModified) {
+		super();
+		init(this, filename, user, id, lastModified);
+	}
 	
 	
     public Directory(Directory dir, String filename, User user, long id,  DateTime lastModified) {
@@ -28,18 +28,12 @@ public class Directory extends Directory_Base {
 
     public Directory getDir(String name){
     	Entity destiny = null;
-    	destiny = getDirByName(name,"directory");
+    	destiny = getDirByName(name);
     	return (Directory) destiny;
     }
     
 	public void addDir(Directory dir){
-		diretorias.add(dir);
 		addFile(dir);
-	}
-	
-	public void addPlainFile(PlainFile text){
-		plains.add(text);
-		addFile(text);
 	}
 	
 	public void WriteToFile(String content, String filename)throws TexFileDoesNotExistException{
@@ -53,91 +47,39 @@ public class Directory extends Directory_Base {
    	 throw new TexFileDoesNotExistException(filename);
 	}
 	
-	
-	public void DeleteEntity(String entity_name, String type){ //remove uma entidade dentro da diretoria (check feito previamente)
-		
-		if(type.equals("Directory")){
-			Directory directory = (Directory) getDirByName(entity_name, "directory");
-			//System.out.println("e mesmo o que procuro?" + directory.getFilename());
-			diretorias.remove(directory);
-			directory.Delete();
-			//System.out.println("Diretorio vazio?" +getFileSet().isEmpty());//esta vazio!!!!!!!!!!!
-			removeFile(directory);
-			//System.out.println("Diretorio vazio?" +getFileSet().isEmpty());//esta vazio!!!!!!!!!!!
-		
-		}
-		else if(type.equals("Plain_File")){
-			Entity entity = getDirByName(entity_name,"plainfile");
-			plains.remove(entity);
-			removeFile(entity);
-		}
-		else if(type.equals("Link")){
-			Entity entity = getDirByName(entity_name,"link");
-			links.remove(entity);
-			removeFile(entity);
-		}
-		else if(type.equals("App")){
-			Entity entity = getDirByName(entity_name,"app");
-			apps.remove(entity);
-			removeFile(entity);
-		}
-	}
-	
-	public void Delete(){
+
+	@Override
+	public void delete(){
 		for (Entity entity: getFileSet()) {
-    		entity.Delete();
+    		entity.delete();
+    		removeFile(entity);
 		}
-		//System.out.println("Vai apagar-se"+ this.getFilename());
-		this.diretorias.clear();
-		this.links.clear();
-		this.apps.clear();
-		this.plains.clear();
-		//System.out.println("este dono ainda tem este objeto? " + getOwner().getFileSet().contains(this));
-		getOwner().removeFile(this);
-		setOwner(null);
-		setParent(null);
-		//setSystem(null);
+		super.delete();
 	}
 
-	public Entity getDirByName(String dir_name, String type) {
-        if(type.equals("directory")){
-        	for (Directory dir : diretorias) {
+	
+	public Entity getByName(String name){
+		for(Entity e: getFileSet()){
+			if(e.getFilename().equals(name)){
+				return e;
+			}
+		}
+		return null;
+	}
+	
+	
+	public Entity getDirByName(String dir_name) {
+        	for (Entity dir : getFileSet()) {
         		if (dir.getFilename().equals(dir_name)) {
         			return dir;
         		}
         	}
-        }
-        if(type.equals("plainfile")){
-        	for (PlainFile plain : plains) {
-        		if (plain.getFilename().equals(dir_name)) {
-        			return plain;
-        		}
-        	}
-        }
-        
-        if(type.equals("link")){
-        	for (Link link : links) {
-        		if (link.getFilename().equals(dir_name)) {
-        			return link;
-        		}
-        	}
-        }
-        
-        if(type.equals("app")){
-        	for (App app : apps) {
-        		if (app.getFilename().equals(dir_name)) {
-        			return app;
-        		}
-        	}
-        }
         return null;
     }
 	
 	public void printDir() {
-		for(Entity entity: this.diretorias) {
+		for(Entity entity: this.getFileSet()) {
 			String type = "unknown";
-			//String[] parts = entity.getClass().toString().split("\\."); //detect type FIX?
-			//type = parts[4];
 			if(entity instanceof Directory) { type = "Directory"; }
 			else if(entity instanceof App){ type = "App"; }
 			else if(entity instanceof Link){ type = "Link"; }

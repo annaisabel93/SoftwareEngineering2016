@@ -52,8 +52,7 @@ public class Main {
     	//FIX TODO last null arg should be date
     	//dirana = new Directory(fs, null,  "cenas", userana, 0, date);
        //---------------------------------------------------------------------------------------------
-      
-        fs.adicionaUser("luis");
+        User usr = new User(fs, "Ana", "chocolate!", "1234", new byte[] {0,0,0,0} , "/home/chocolate");
         fs.login("luis");
         fs.moveDir("..");
         fs.CreateTextFile("README");
@@ -71,11 +70,10 @@ public class Main {
         fs.moveDir("..");
         fs.moveDir("usr");
         fs.moveDir("local");
-        fs.RemoveDir("bin");
         fs.moveDir("..");
         fs.moveDir("..");
         fs.moveDir("home");
-        fs.RemoveFile("README");
+  
         fs.printHome();
         
     }
