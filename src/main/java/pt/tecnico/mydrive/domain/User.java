@@ -2,8 +2,11 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.jdom2.Element;
+
+import pt.ist.fenixframework.dml.runtime.DirectRelation;
 
 public class User extends User_Base {
 	
@@ -88,9 +91,7 @@ public class User extends User_Base {
     }
     
     public void remove() { //FIXME --mexer na funcao ainda
-		// TODO Auto-generated method stub
-	        
 	        setSystem(null);
-	        deleteDomainObject();
+	        setHome(null);
 	}
 }

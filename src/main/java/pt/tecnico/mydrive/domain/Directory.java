@@ -54,6 +54,8 @@ public class Directory extends Directory_Base {
     		entity.delete();
     		removeFile(entity);
 		}
+		setLogin(null);
+		
 		super.delete();
 	}
 
