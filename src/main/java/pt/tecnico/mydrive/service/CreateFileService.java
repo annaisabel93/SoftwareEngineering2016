@@ -11,6 +11,9 @@ import pt.tecnico.mydrive.domain.Link;
 import org.joda.time.DateTime;
 //import exceptions
 
+import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
+
+
 public class CreateFileService extends FileSystemService{
 
 	private long token;	
@@ -31,7 +34,7 @@ public class CreateFileService extends FileSystemService{
 		this.content = "";
 	}
 
-	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type, String content){
+	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type, String content) {
 		this(token, parent, fileName, id, lastModified, type);
 		this.content = content;
 	}
@@ -39,7 +42,7 @@ public class CreateFileService extends FileSystemService{
 	
 	
 	@Override
-	public final void dispatch(){
+	public final void dispatch() throws ContentCannotBeNullException {
 		User u = getLogin(token).getUser();
 		if (content.length() == 0) {
 			if (type.equals("Directory")) {
@@ -48,8 +51,11 @@ public class CreateFileService extends FileSystemService{
 			if (type.equals("App")){
 				new App(parent, fileName, u, id, lastModified, null);
 			}
-			if ( type.equals("PlainFile") ) {
+			if (type.equals("PlainFile")) {
 				new PlainFile(parent, fileName, u, id, lastModified, null);
+			}
+			if (type.equals("Link")){
+				throw new ContentCannotBeNullException(content); 
 			}
 		}
 		else {
