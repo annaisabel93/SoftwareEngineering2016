@@ -1,7 +1,6 @@
 package pt.tecnico.mydrive.service;
 
 import pt.tecnico.mydrive.domain.Login;
-import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
@@ -32,7 +31,7 @@ public class DeleteFileService extends FileSystemService {
 	
 	@Override
 	protected void dispatch() {
-//		if(hasDeletePermissions) {
+	//		if(hasDeletePermissions) {
 //			try {
 //				login.getUser().getEntityByName(filename).delete();	
 //			} catch(EntityDoesNotExistException e) {

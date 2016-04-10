@@ -31,6 +31,7 @@ public class DeleteFileTest extends AbstractServiceTest {
 		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
 		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
 		Link link = new Link(login.getDirectory(), "link", login.getUser(), 3, date, "ok");
+		
 
 		
 	}
@@ -39,7 +40,7 @@ public class DeleteFileTest extends AbstractServiceTest {
 		FileSystem fs =FileSystem.getInstance();
 	
 
-		DeleteFileService removeText = new DeleteFileService("text");
+		DeleteFileService removeText = new DeleteFileService("/home/chocolate");
 		removeText.execute();
 	
 		DeleteFileService removeApp = new DeleteFileService("app");

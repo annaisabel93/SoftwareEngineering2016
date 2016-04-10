@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
+import pt.tecnico.mydrive.exception.RootCannotBeRemovedException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
@@ -221,9 +222,13 @@ public class FileSystem extends FileSystem_Base {
     }
     
     
-    public void cleanup() {
-        for (User u: getUserSet())
-	    u.remove();
+    public void cleanup() throws RootCannotBeRemovedException{
+        for (User u: getUserSet()){
+        	if (u.getUserName() == "root")
+        		throw new RootCannotBeRemovedException((Root) u);
+        	else 
+        		u.remove();
+        }
     }
     
   
