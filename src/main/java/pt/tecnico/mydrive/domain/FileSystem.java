@@ -22,8 +22,6 @@ public class FileSystem extends FileSystem_Base {
     public int check1 = 1;
 
     Set<Entity> files = new HashSet<Entity>();
-    
-	
     /*
     public FileSystem(){
     	super();
@@ -129,7 +127,7 @@ public class FileSystem extends FileSystem_Base {
     		Directory home_dir = (Directory) getDirectoryHome("root");
 
 
-    		Directory dir = new Directory(home_dir,  username, user, getCounter(),date);
+		Directory dir = new Directory(home_dir, username, user, getCounter(),date);
     		dir.setLastModified(date);
     		files.add(dir);
     		user.addFile(dir);
