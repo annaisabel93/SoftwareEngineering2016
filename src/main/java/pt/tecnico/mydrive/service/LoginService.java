@@ -18,10 +18,10 @@ public class LoginService extends FileSystemService {
     private FileSystem fs;
     long token;
     
-    public LoginService(FileSystem fs1, String username1, String password1){
+    public LoginService(String username1, String password1){
         this.username = username1;
         this.password = password1;
-        this.fs = fs1;
+        this.fs = getFileSystem();
         this.token = new BigInteger(64, new Random()).longValue();
     }
 
