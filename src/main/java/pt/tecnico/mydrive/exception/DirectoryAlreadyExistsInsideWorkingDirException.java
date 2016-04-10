@@ -16,7 +16,7 @@ public class DirectoryAlreadyExistsInsideWorkingDirException extends MyDriveExce
 	
 	@Override
 	public String getMessage(){
-		return "This directory, " +directory + "already exists inside the working directory.";
+		return "This directory, " + directory + "already exists inside the working directory.";
 	} 
 	
 	
