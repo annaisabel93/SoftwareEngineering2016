@@ -26,7 +26,7 @@ public class DeleteFileTest extends AbstractServiceTest {
 		FileSystem fs =FileSystem.getInstance();
 		User usr = new User(fs, "Ana", "chocolate!", "1234", new byte[] {0,0,0,0} , "/home/chocolate");
 		LoginService service = new LoginService("chocolate!", "1234");
-		Login login = usr.getLoginbyToken(1);
+		Login login = usr.getLoginbyToken(service.getToken());
 		Directory dir = new Directory(login.getDirectory(), "strawberry", usr, 20000, date);
 		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
 		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
@@ -35,10 +35,7 @@ public class DeleteFileTest extends AbstractServiceTest {
 		
 		
 	}
-	//login
-	//criar ficheiro
-	//apagar ficheiro
-	//escrever ficheiro
+	
 
 //	@Test
 //	public void sucess(){
