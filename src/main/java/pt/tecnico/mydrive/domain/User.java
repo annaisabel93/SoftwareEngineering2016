@@ -52,20 +52,21 @@ public class User extends User_Base {
     
     public void xmlImport(Element userEl){
         	setUserName(new String(userEl.getAttribute("username").getValue()));
-        	setName(new String(userEl.getChild("name").getValue()));
         	setPassword(new String(userEl.getChild("password").getValue()));
-        	setHomeDir(new String(userEl.getChild("homeDir").getValue()));
+        	setName(new String(userEl.getChild("name").getValue()));
+        	setHomeDir(new String(userEl.getChild("home").getValue()));
+        	//FIXME mask
         //setMask(userDoc.getRootElement().getChild("mask").getValue().getBytes());
         return;
         
     }
 
     public Element xmlExport(){
-    	Element element = new Element("User");
-    	element.setAttribute("username", getUserName()); 	
-    	element.addContent(new Element("name").setText(getName()));
+    	Element element = new Element("user");
+    	element.setAttribute("username", getUserName()); 
     	element.addContent(new Element("password").setText(getPassword()));
-    	element.addContent(new Element("homeDir").setText(getHomeDir()));
+    	element.addContent(new Element("name").setText(getName()));
+    	element.addContent(new Element("home").setText(getHomeDir()));
     	//element.addContent("rwxd", getMask().toString());
 //    	for(Directory d: getDirectorySet())
 //			element.addContent(d.xmlExport().detach());

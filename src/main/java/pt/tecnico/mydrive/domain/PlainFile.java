@@ -40,13 +40,16 @@ public class PlainFile extends PlainFile_Base {
 	}
 	
 	public Element xmlExport(){
-		Element element = new Element("PlainFile");
+		Element element = new Element("plain");
 		element.setAttribute("content", getContent());
 		String str = String.format ("%d", getId());
-		element.setAttribute("id", str); 	    	
-		element.addContent(new Element ("filename").setText(getFilename())); 	
-		//element.addContent(new Element ("owner").setText(getOwner()));
-		//element.addContent(new Element("path").setText(getPath()));
+		element.setAttribute("id", str); 
+		element.addContent(new Element ("path").setText(getPath(getParent().toString())));
+		element.addContent(new Element ("name").setText(getFilename())); 	
+		element.addContent(new Element ("owner").setText(getOwner().toString()));
+		element.addContent(new Element ("content").setText(getContent()));
+		
+		//TODO Perm
 		
 		return element;
 	}

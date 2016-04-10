@@ -80,10 +80,10 @@ public class Directory extends Directory_Base {
 	public void printDir() {
 		for(Entity entity: this.getFileSet()) {
 			String type = "unknown";
-			if(entity instanceof Directory) { type = "Directory"; }
-			else if(entity instanceof App){ type = "App"; }
-			else if(entity instanceof Link){ type = "Link"; }
-			else if(entity instanceof PlainFile){ type = "PlainFile"; }
+			if(entity instanceof Directory) { type = "dir"; }
+			else if(entity instanceof App){ type = "app"; }
+			else if(entity instanceof Link){ type = "link"; }
+			else if(entity instanceof PlainFile){ type = "plainFile"; }
 			System.out.println(type + " " + "permissions" + " " + entity.getOwner() + " " + entity.getId() + " " + entity.getLastModified() + " " + entity.getFilename()); //FIXME: add permissions
 		}
 	}
@@ -93,7 +93,7 @@ public class Directory extends Directory_Base {
 	}
 	
 	public Element xmlExport(){
-		Element element = new Element("Directory");
+		Element element = new Element("dir");
 		String str = String.format ("%d", getId());
 		element.setAttribute("id", str); 	    	
 		element.addContent(new Element ("filename").setText(getFilename())); 	

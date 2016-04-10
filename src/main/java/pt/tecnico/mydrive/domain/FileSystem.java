@@ -190,28 +190,6 @@ public class FileSystem extends FileSystem_Base {
     	return getUserByUsername(username) != null;
     }
     
-    @Override
-    public void addUser(User user){
-    	if(hasUser(user.getUserName())){
-    		System.out.println("entro na funcao add user e verico que o user existe");
-    		throw new UsernameAlreadyExistsException(user.getUserName());}
-    	else{
-    		if((Directory)getRootDir()==null){
-    			System.out.println("User null3? "+ (this.logged_user == null));
-    			Directory raiz =new Directory ("/",  user, Counter(),new DateTime());
-    			setRootDir(raiz);
-    			System.out.println("User null4? "+ (this.logged_user == null));
-    			Directory home1 = new Directory (getRootDir(),"home",  user, Counter(),new DateTime());
-    			raiz.addFile(home1);
-    	 		
-    		}
-    		Directory home = (Directory)getRootDir().getByName("home");
-    		System.out.println("User null5? "+ (this.logged_user == null));
-			Directory userHome = new Directory(home,  user.getUserName(), user, getCounter(),new DateTime());
-			user.setHome(userHome);
-    		super.addUser(user);
-    	}
-    }
     
     public int Counter(){
     	int x = getCounter();
@@ -229,80 +207,77 @@ public class FileSystem extends FileSystem_Base {
     public void xmlImport(Document fsDoc){
     	Element rootElement = fsDoc.getRootElement();
     	System.out.println("ROOT_ELEMENT: " + fsDoc.getRootElement());
-    	List<Element> listElement = rootElement.getChildren("User");
-    	List<Element> listDir = rootElement.getChildren("Directory");
-    	/*List<Element> listPlainFile = rootElement.getChildren("PlainFile");
-    	List<Element> listApp = rootElement.getChildren("App");
-    	List<Element> listLink = rootElement.getChildren("Link");*/
+    	List<Element> listElement = rootElement.getChildren("user");
+    	List<Element> listDir = rootElement.getChildren("directory");
+    	List<Element> listPlain = rootElement.getChildren("plain");
+    	List<Element> listApp = rootElement.getChildren("app");
+    	List<Element> listLink = rootElement.getChildren("link");
     	
     	int size = listElement.size();
     	int sizeDir = listDir.size();
-    	/*int sizePlainFile = listPlainFile.size();
+    	int sizePlain = listPlain.size();
     	int sizeApp = listApp.size();
-    	int sizeLink = listLink.size();*/
+    	int sizeLink = listLink.size();
     	
+    	//user
     	for(int i=0; i<size;i++){
     		Element node = listElement.get(i);
     		String username = node.getAttribute("username").getValue();
-    		String name = node.getChild("name").getValue();
     		String password = node.getChild("password").getValue();
-    		String homeDir = node.getChild("homeDir").getValue();
+    		String name = node.getChild("name").getValue();
+    		String homeDir = node.getChild("home").getValue();
     		User user = getUserByUsername(username);
     		if(user == null){
     			user = new User(this, name, username, password, null, homeDir);
     		}
-    		//Element el = node.clone();
-    		//Document userDoc = new Document(el.detach());
+    		
     		user.xmlImport(node);
 
     	}
-    	for(int i=0; i<sizeDir ; i++){
-    		Element node = listDir.get(i);
-    		String filename = node.getChild("filename").getText();
-    		//String owner = node.getChild("owner");
-    		String path = node.getChild("path").getText();	
-		//FIX TODO owner is now a user
-		//LAST MODIFIED was added to dir
-    		//Directory dir = (Directory)this.createFile(this, null,  filename,null,1000,2,null,0,null);
-    		//dir.xmlImport(node);
-    	}
-    	/*
-    	for(int i=0; i<sizeDir ; i++){
-    		Element node = listPlainFile.get(i);
-    		String filename = node.getChild("filename").getText();
-    		String owner = node.getChild("owner").getText();
-    		String path = node.getChild("path").getText();
-    		
-    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
-    		dir.xmlImport(node);
-    	}
-    	
-    	for(int i=0; i<sizeDir ; i++){
-    		Element node = listDir.get(i);
-    		String filename = node.getChild("filename").getText();
-    		String owner = node.getChild("owner").getText();
-    		String path = node.getChild("path").getText();
-    		
-    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
-    		dir.xmlImport(node);
-    	}
-    	
-    	for(int i=0; i<sizeDir ; i++){
-    		Element node = listDir.get(i);
-    		String filename = node.getChild("filename").getText();
-    		String owner = node.getChild("owner").getText();
-    		String path = node.getChild("path").getText();
-    		
-    		Directory dir = new Directory(getUserByUsername(owner), this, path, filename,owner,1000,2,null);
-    		dir.xmlImport(node);
-    	}*/
+    	//dir
+//    	for(int i=0; i<sizeDir ; i++){
+//    		Element node = listDir.get(i);
+//    		String path = node.getChild("path").getText();	
+//    		String name = node.getChild("name").getText();
+//    		String owner = node.getChild("owner").getText();
+//    		//TODO perm
+//    	}
+//    	
+//    	for(int i=0; i<sizePlain ; i++){
+//    		Element node = listPlain.get(i);
+//    		String path = node.getChild("path").getText();	
+//    		String name = node.getChild("name").getText();
+//    		String owner = node.getChild("owner").getText();
+//    		//TODO perm
+//    		String content = node.getChild("contents").getText();
+//    		
+//    		
+//    	}
+//    	
+//    	for(int i=0; i<sizeApp ; i++){
+//    		Element node = listApp.get(i);
+//    		String path = node.getChild("path").getText();	
+//    		String name = node.getChild("name").getText();
+//    		String owner = node.getChild("owner").getText();
+//    		//TODO perm
+//    		String method = node.getChild("method").getText();
+//    	}
+//    	
+//    	for(int i=0; i<sizeLink ; i++){
+//    		Element node = listLink.get(i);
+//    		String path = node.getChild("path").getText();	
+//    		String name = node.getChild("name").getText();
+//    		String owner = node.getChild("owner").getText();
+//    		//TODO perm
+//    		String value = node.getChild("value").getText();
+//    	}
     	
     	
     }
     
     public Document xmlExport(){
     	
-    	Element element = new Element("FileSystem");
+    	Element element = new Element("myDrive");
 		Document doc = new Document(element);
 		
 		for(User u: getUserSet()){
@@ -310,13 +285,8 @@ public class FileSystem extends FileSystem_Base {
 				for(Entity e: u.getFileSet()){
 					element.addContent(e.xmlExport().detach());
 			}
-		//System.out.println(u.xmlExport().detachRootElement());
 		}
-		/*
-		for(Entity e: getEntitySet()){
-			if(e instanceof Directory)
-			element.addContent(e.xmlExport().getChild());
-		}*/
+
 		return doc;
     }   
     

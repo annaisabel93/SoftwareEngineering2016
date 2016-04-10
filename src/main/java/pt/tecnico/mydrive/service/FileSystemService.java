@@ -8,9 +8,6 @@ import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
-import pt.tecnico.mydrive.domain.Entity;
-//import pt.tecnico.phonebook.exception.PersonDoesNotExistException;
-//import pt.tecnico.phonebook.exception.PhoneBookException;
 
 public abstract class FileSystemService {
     protected static final Logger log = LogManager.getRootLogger();
