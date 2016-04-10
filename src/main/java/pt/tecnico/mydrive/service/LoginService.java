@@ -1,7 +1,6 @@
 package pt.tecnico.mydrive.service;
 
 
-import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
