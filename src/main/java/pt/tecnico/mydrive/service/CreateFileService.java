@@ -28,6 +28,7 @@ public class CreateFileService extends FileSystemService{
 		this.id = id;
 		this.lastModified = lastModified;
 		this.type = type;
+		this.content = "";
 	}
 
 	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type, String content){
@@ -39,5 +40,8 @@ public class CreateFileService extends FileSystemService{
 	
 	@Override
 	public final void dispatch(){
+		User u = getLogin(token).getUser();
+		if (content.length() == 0) {}
+		else {}
 	}
 }
