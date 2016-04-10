@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirException;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;
+import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
@@ -122,7 +122,7 @@ public class FileSystem extends FileSystem_Base {
     	 new PlainFile(this.workingDir, file_name, this.logged_user, Counter(), date,  "");
      }
     		
-    public void moveDir(String directory_destiny) throws DirectoryDoesNotExistInsideWorkingDirException{ //unfinished
+    public void moveDir(String directory_destiny) throws DirectoryDoesNotExistWithinDirectoryException{ //unfinished
     	if(directory_destiny.equals(".")){//ficar na propria diretoria
     		return;
     	}
@@ -137,7 +137,7 @@ public class FileSystem extends FileSystem_Base {
     	
     	destiny = this.workingDir.getDir(directory_destiny);
     	if(destiny == null){
-    		throw new DirectoryDoesNotExistInsideWorkingDirException(directory_destiny);
+    		throw new DirectoryDoesNotExistWithinDirectoryException(directory_destiny);
     	}
     	this.workingDir = destiny;
     	

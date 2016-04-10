@@ -4,7 +4,7 @@ import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;;
+import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;;
 
 public class ChangeDirectoryService extends FileSystemService {
 
@@ -21,11 +21,11 @@ public class ChangeDirectoryService extends FileSystemService {
     }
 
     @Override
-    public final void dispatch() throws DirectoryDoesNotExistInsideWorkingDirException {
+    public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
 	if (this.workingDir.getByName(this.directoryName) instanceof Directory){
 		this.login.setDirectory((Directory)this.workingDir.getByName(this.directoryName));
 	}
 	else
-	    throw new DirectoryDoesNotExistInsideWorkingDirException(this.directoryName);
+	    throw new DirectoryDoesNotExistWithinDirectoryException(this.directoryName);
     }
 }
