@@ -2,6 +2,7 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.jdom2.Element;
 
@@ -36,6 +37,16 @@ public class User extends User_Base {
     	else{
     		fs.addUser(this);
     	}
+    }
+    
+    public Login getLoginbyToken(long token){
+    	for (Login login : getLoginSet()){
+			if (login.getToken() == token)
+				return login;
+			
+		}
+		return null;
+    
     }
     
 

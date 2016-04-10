@@ -10,10 +10,14 @@ public class LoginService extends FileSystemService {
 
     private String username;
     private String password;
+    private FileSystem fs;
+    long token;
     
-    public LoginService(String username1, String password1) {
+    public LoginService(FileSystem fs1, long token1, String username1, String password1) {
         this.username = username1;
         this.password = password1;
+        this.fs = fs1;
+        this.token = token1;
     }
 
     @Override
