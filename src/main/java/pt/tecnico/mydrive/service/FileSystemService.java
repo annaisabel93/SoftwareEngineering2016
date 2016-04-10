@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import pt.ist.fenixframework.Atomic;
 import pt.tecnico.mydrive.domain.FileSystem;
+import pt.tecnico.mydrive.domain.Login;
+import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.domain.Entity;
 //import pt.tecnico.phonebook.exception.PersonDoesNotExistException;
 //import pt.tecnico.phonebook.exception.PhoneBookException;
@@ -19,6 +22,19 @@ public abstract class FileSystemService {
 
     static FileSystem getFileSystem() {
         return FileSystem.getInstance();
+    }
+    
+    
+    static Login getLogin(long token) throws UnknownTokenException{
+    	FileSystem fs1 = getFileSystem();
+    	for(User user : fs1.getUserSet()){
+    		for(Login login : user.getLoginSet()){
+    			if(login.getToken() == token){
+    				return login;
+    			}
+    		}
+    	}
+    		throw new UnknownTokenException(token);
     }
 
     /*static Entity getEntity(String fileName) throws PersonDoesNotExistException {        

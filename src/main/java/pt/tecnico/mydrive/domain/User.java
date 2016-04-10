@@ -2,7 +2,6 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.jdom2.Element;
 
