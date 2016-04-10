@@ -34,6 +34,7 @@ public abstract class Entity extends Entity_Base {
 		getOwner().removeFile(this);
 		setParent(null);
 		setOwner(null);
+		//deleteDomainObject();
 	}
 	
 	
