@@ -23,6 +23,12 @@ class User {
 class Login {
 	DateTime dateCreated;
 	long token;
+	
+}
+
+class Variable {
+	String name;
+	String value;
 }
 
 
@@ -118,6 +124,16 @@ relation UserhasLogin{
 	}
 	
 }
+
+relation LoginhasVariable{
+	Login playsRole login{
+		multiplicity 0..1;
+	}
+	Variable playsRole variable{
+		multiplicity 0..*;
+	}
+}
+
 	
 	
 	
