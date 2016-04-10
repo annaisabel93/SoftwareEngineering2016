@@ -222,13 +222,13 @@ public class FileSystem extends FileSystem_Base {
     }
     
     
-    public void cleanup() throws RootCannotBeRemovedException{
-        for (User u: getUserSet()){
-        	if (u.getUserName() == "root")
-        		throw new RootCannotBeRemovedException((Root) u);
-        	else 
-        		u.remove();
-        }
+    public void cleanup() {
+        try {
+			for (User u: getUserSet())
+			u.remove();
+		} catch (RootCannotBeRemovedException e) {
+			System.err.println("RootCannotBeRemovedException: " + e.getMessage());
+		}
     }
     
   

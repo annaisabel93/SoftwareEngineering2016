@@ -27,10 +27,10 @@ public class DeleteFileTest extends AbstractServiceTest {
 		User usr = new User(fs, "Ana", "chocolate!", "1234", new byte[] {0,0,0,0} , "/home/chocolate");
 		LoginService service = new LoginService("chocolate!", "1234");
 		Login login = usr.getLoginbyToken(service.getToken());
-		Directory dir = new Directory(login.getDirectory(), "dir", usr, 20000, date);
-		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
-		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
-		Link link = new Link(login.getDirectory(), "link", login.getUser(), 3, date, "ok");
+//		Directory dir = new Directory(login.getDirectory(), "dir", usr, 20000, date);
+//		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
+//		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
+//		Link link = new Link(login.getDirectory(), "link", login.getUser(), 3, date, "ok");
 		
 
 		
@@ -55,7 +55,7 @@ public class DeleteFileTest extends AbstractServiceTest {
 		
 		// check if all files were removed
       
-		Entity dir = fs.getUserByUsername("chocolate!").getHome().getByName("dir");	
+		Entity dir = fs.getUserByUsername("chocolate!").getHome().getByName("/home/chocolate");	
         assertNull("Directory was not removed", dir);
         
         Entity f = fs.getUserByUsername("chocolate!").getHome().getByName("text");
