@@ -41,7 +41,27 @@ public class CreateFileService extends FileSystemService{
 	@Override
 	public final void dispatch(){
 		User u = getLogin(token).getUser();
-		if (content.length() == 0) {}
-		else {}
-	}
+		if (content.length() == 0) {
+			if (type.equals("Directory")) {
+				new Directory(parent, fileName, u, id, lastModified);
+			}
+			if (type.equals("App")){
+				new App(parent, fileName, u, id, lastModified, null);
+			}
+			if ( type.equals("PlainFile") ) {
+				new PlainFile(parent, fileName, u, id, lastModified, null);
+			}
+		}
+		else {
+			if (type.equals("Link")) {
+			   new Link(parent, fileName, u, id, lastModified, content);
+		      	}
+		      	if (type.equals("App")) { 
+			   new App(parent, fileName, u, id, lastModified, content);
+		      	}
+		      	if(type.equals("PlainFile")) { 
+		           new PlainFile(parent, fileName, u, id, lastModified, content);
+		       	}	
+		     }
+	        }
 }
