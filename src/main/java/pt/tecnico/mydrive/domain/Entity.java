@@ -49,27 +49,15 @@ public abstract class Entity extends Entity_Base {
 	}
 	
 	
-	
-	/*
-	public void setFilesystem(FileSystem fs){
-		if(fs == null)
-			super.setFilesystem(null);
-		else{
-			fs.addEntity(this);
-		}
-	}
-	*/
-	
-	
 	public void xmlImport(Element filedoc){
-			setFilename(new String(filedoc.getChild("filename").getValue()));
+			setFilename(new String(filedoc.getChild("name").getValue()));
 			//setOwner(new String(filedoc.getChild("owner").getValue()));    agora e um objeto user
 			//setPath(new String (filedoc.getChild("path").getValue()));
 			return;
 	}
 	
 	public Element xmlExport(){	
-			Element element = new Element("Entity");
+			Element element = new Element("entity");
 			return element;    
 	}
     

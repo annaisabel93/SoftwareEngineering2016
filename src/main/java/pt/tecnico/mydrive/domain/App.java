@@ -20,7 +20,16 @@ public class App extends App_Base {
     }
     
     public Element xmlExport(){
-    	return super.xmlExport();
+		Element element = new Element("app");
+		element.setAttribute("content", getContent());
+		String str = String.format ("%d", getId());
+		element.setAttribute("id", str); 
+		element.addContent(new Element ("path").setText(getPath(getParent().toString())));
+		element.addContent(new Element ("name").setText(getFilename())); 	
+		element.addContent(new Element ("owner").setText(getOwner().toString()));
+		element.addContent(new Element ("method").setText(getContent()));
+		
+		return element;		
     	
     }
 }

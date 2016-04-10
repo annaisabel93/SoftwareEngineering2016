@@ -18,10 +18,22 @@ public class Link extends Link_Base {
     
     public void xmlImport(Element linkDoc){
     	super.xmlImport(linkDoc);
+    	setContent(new String(linkDoc.getChild("content").getValue()));
     }
     
     public Element xmlExport(){
-    	return super.xmlExport();
+		Element element = new Element("link");
+		element.setAttribute("content", getContent());
+		String str = String.format ("%d", getId());
+		element.setAttribute("id", str); 
+		element.addContent(new Element ("path").setText(getPath(getParent().toString())));
+		element.addContent(new Element ("name").setText(getFilename())); 	
+		element.addContent(new Element ("owner").setText(getOwner().toString()));
+		element.addContent(new Element ("value").setText(getContent()));
+		
+		//TODO Perm
+		
+		return element;
     
     }
 }
