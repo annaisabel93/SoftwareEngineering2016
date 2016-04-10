@@ -42,4 +42,9 @@ public class LoginService extends FileSystemService {
     		}
     		new Login(user, this.token);
     }
+    
+    
+    public long getToken(){
+    	return this.token;
+    }
 }
