@@ -12,25 +12,26 @@ import org.joda.time.DateTime;
 //import exceptions
 
 public class CreateFileService extends FileSystemService{
-	
+
+	private long token;	
 	private Directory parent;
 	private String fileName;
-	private User owner;
 	private long id;
 	private DateTime lastModified;
 	private String content;
+	private String type;
 
-	public CreateFileService(Directory parent, String fileName, User owner, long id, DateTime lastModified){
+	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type){
+		this.token = token;
 		this.parent = parent;	
 		this.fileName = fileName;
-		this.owner = owner;
 		this.id = id;
 		this.lastModified = lastModified;
-		this.content = "";
+		this.type = type;
 	}
 
-	public CreateFileService(Directory parent, String fileName, User owner, long id, DateTime lastModified, String content){
-		this(parent,fileName,owner,id,lastModified);
+	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type, String content){
+		this(token, parent, fileName, id, lastModified, type);
 		this.content = content;
 	}
 
@@ -38,18 +39,5 @@ public class CreateFileService extends FileSystemService{
 	
 	@Override
 	public final void dispatch(){
-		if (content.length() == 0) {
-			new Directory(parent,fileName,owner,id,lastModified);
-		}
-		else {
-			/*if (getFile(fileName) instanceof App)
-				new App(parent,fileName,owner,id,lastModified,content);
-			if (getFile(fileName) instanceof Link)
-				return;
-				new Link();
-			if (getFile(fileName) instanceof PlainFile)
-				return;
-				new PlainFile();*/
-		}
 	}
 }
