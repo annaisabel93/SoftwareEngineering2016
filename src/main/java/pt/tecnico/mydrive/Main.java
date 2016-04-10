@@ -44,6 +44,7 @@ public class Main {
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
+        //System.out.println(new DateTime().getMillis());
         //User userana;
     	//Directory dirana;
     	//DateTime date = new DateTime();

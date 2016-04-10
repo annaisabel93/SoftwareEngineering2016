@@ -4,7 +4,8 @@ import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistInsideWorkingDirException;;
+import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
+import pt.tecnico.mydrive.exception.WrongPasswordException;
 
 public class LoginService extends FileSystemService {
 
@@ -22,11 +23,11 @@ public class LoginService extends FileSystemService {
 
     @Override
     
-    public final void dispatch() throws DirectoryDoesNotExistInsideWorkingDirException {
-	//if (this.workingDir.getByName(this.directoryName) instanceof Directory){
-	//	this.login.setDirectory((Directory)this.workingDir.getByName(this.directoryName));
-	//}
-	//else
-	 //   throw new DirectoryDoesNotExistInsideWorkingDirException(this.directoryName);
+    public final void dispatch() throws UsernameDoesntExistException, WrongPasswordException {
+    		User user = this.fs.getUserByUsername(username);
+    		if ((user.getPassword().equals(this.password)) == false){
+    			throw new WrongPasswordException();
+    		}
+    		new Login(user, this.token);
     }
 }
