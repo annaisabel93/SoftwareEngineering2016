@@ -25,6 +25,8 @@ public class CreateFileService extends FileSystemService{
 	private User user;
 	private Directory workingDir;
 	private long id;
+	private DateTime lastModified;
+
 
 	public CreateFileService(long token, String fileName, String type){
 		this.token = token;
@@ -33,6 +35,7 @@ public class CreateFileService extends FileSystemService{
 		this.user = this.getLogin(token).getUser();
 		this.workingDir = this.getLogin(token).getDirectory();
 		this.id = this.getFileSystem().getCounter();
+		this.lastModified = new DateTime();
 		this.content = "";
 	}
 
@@ -49,11 +52,11 @@ public class CreateFileService extends FileSystemService{
 		if (content.length() == 0) {
 			switch(type) {
 				case "Directory":
-					new Directory(this.workingDir, this.fileName, this.user, this.id, new DateTime());
+					new Directory(this.workingDir, this.fileName, this.user, this.id, this.lastModified);
 				case "App":
-					new App(this.workingDir, this.fileName, this.user, this.id, new DateTime() , null);
+					new App(this.workingDir, this.fileName, this.user, this.id, this.lastModified , null);
 				case "PlainFile":
-					new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), null);
+					new PlainFile(this.workingDir, this.fileName, this.user, this.id, this.lastModified, null);
 				case "Link":
 					throw new ContentCannotBeNullException(content); 
 				default:
@@ -62,15 +65,15 @@ public class CreateFileService extends FileSystemService{
 		}
 		else {
 			switch(type) {
-				case "Directory":
-					throw new DirectoryCannotHaveContentException(content);
 				case "Link":
-			   		new Link(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
+			   		new Link(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
 		      		case "App":
-			   		new App(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
+			   		new App(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
 		      		case "PlainFile":
-		           		new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
-		       		default:
+		           		new PlainFile(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
+		       		case "Directory":
+					throw new DirectoryCannotHaveContentException(content);
+				default:
 					throw new UnknownFileTypeException(type);
 			}	
 		
