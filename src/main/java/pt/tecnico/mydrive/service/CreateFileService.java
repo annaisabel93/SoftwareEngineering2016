@@ -47,38 +47,34 @@ public class CreateFileService extends FileSystemService{
 	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException, UnknownFileTypeException {	
 
 		if (content.length() == 0) {
-			if (type.equals("Directory")) {
-				new Directory(this.workingDir, this.fileName, this.user, this.id, new DateTime());
-			}
-			if (type.equals("App")){
-				new App(this.workingDir, this.fileName, this.user, this.id, new DateTime() , null);
-			}
-			if (type.equals("PlainFile")) {
-				new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), null);
-			}
-			if (type.equals("Link")){
-				throw new ContentCannotBeNullException(content); 
-			}
-			else { 
-				throw new UnknownFileTypeException(type);
+			switch(type) {
+				case "Directory":
+					new Directory(this.workingDir, this.fileName, this.user, this.id, new DateTime());
+				case "App":
+					new App(this.workingDir, this.fileName, this.user, this.id, new DateTime() , null);
+				case "PlainFile":
+					new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), null);
+				case "Link":
+					throw new ContentCannotBeNullException(content); 
+				default:
+					throw new UnknownFileTypeException(type);
 			}
 		}
 		else {
-			if (type.equals("Directory")) {
-				throw new DirectoryCannotHaveContentException(content);
-			}
-			if (type.equals("Link")) {
-			   new Link(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
-		      	}
-		      	if (type.equals("App")) { 
-			   new App(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
-		      	}
-		      	if(type.equals("PlainFile")) { 
-		           new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
-		       	}
-			else {
-				throw new UnknownFileTypeException(type);
+			switch(type) {
+				case "Directory":
+					throw new DirectoryCannotHaveContentException(content);
+				case "Link":
+			   		new Link(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
+		      		case "App":
+			   		new App(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
+		      		case "PlainFile":
+		           		new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
+		       		default:
+					throw new UnknownFileTypeException(type);
 			}	
-		     }
+		
 	        }
+
+	}
 }
