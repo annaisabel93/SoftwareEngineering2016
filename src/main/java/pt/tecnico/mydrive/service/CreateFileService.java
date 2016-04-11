@@ -12,6 +12,8 @@ import org.joda.time.DateTime;
 
 import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
 import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
+import pt.tecnico.mydrive.exception.UnknownFileTypeException;
+
 
 public class CreateFileService extends FileSystemService{
 
@@ -42,7 +44,7 @@ public class CreateFileService extends FileSystemService{
 	
 	
 	@Override
-	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException {	
+	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException, UnknownFileTypeException {	
 
 		if (content.length() == 0) {
 			if (type.equals("Directory")) {
@@ -57,6 +59,9 @@ public class CreateFileService extends FileSystemService{
 			if (type.equals("Link")){
 				throw new ContentCannotBeNullException(content); 
 			}
+			else { 
+				throw new UnknownFileTypeException(type);
+			}
 		}
 		else {
 			if (type.equals("Directory")) {
@@ -70,7 +75,10 @@ public class CreateFileService extends FileSystemService{
 		      	}
 		      	if(type.equals("PlainFile")) { 
 		           new PlainFile(this.workingDir, this.fileName, this.user, this.id, new DateTime(), content);
-		       	}	
+		       	}
+			else {
+				throw new UnknownFileTypeException(type);
+			}	
 		     }
 	        }
 }
