@@ -28,9 +28,9 @@ public class ReadFileService extends FileSystemService{
 	}
 	
 	public String returnContent(String filename) throws WrongFileTypeException{
-		User user = getLogin(getToken()).getUser();
-		Entity file = user.getEntityByName(filename);
-		if(!(file instanceof PlainFile)){
+		User user = this.login.getUser();
+		Entity file = this.login.getDirectory().getByName(filename); //verificar se e nulo ou nao
+		if(!(file instanceof PlainFile)){  //verificacao fica ou sai??
 			throw new WrongFileTypeException();
 		}
 		return ((PlainFile) file).getContent();	
