@@ -13,6 +13,7 @@ import pt.tecnico.mydrive.exception.DirectoryAlreadyExistsInsideWorkingDirExcept
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.RootCannotBeRemovedException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+import pt.tecnico.mydrive.exception.TokenAlreadyInUseException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
@@ -31,6 +32,18 @@ public class FileSystem extends FileSystem_Base {
     public Directory getWorkDir(){
     	return this.workingDir;
     }
+    
+    public boolean validateToken(long token){
+    	for(User user1 : getUserSet()){ //Verifies if the given token is already in use by another login
+    		for(Login login : user1.getLoginSet()){
+    			if(login.getToken() == token){
+					return false;
+    			}
+    		}
+    	}
+    	return true;
+    }
+    
 
 	public void login(String username) throws UsernameDoesntExistException, WrongPasswordException{
     	 String pw;
