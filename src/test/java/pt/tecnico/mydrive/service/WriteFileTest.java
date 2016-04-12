@@ -17,7 +17,7 @@ import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class WriteFileTest extends AbstractServiceTest{
@@ -61,20 +61,20 @@ public class WriteFileTest extends AbstractServiceTest{
         assertNull("File content ", fil);
         
 		//PlainFile file = service.result();
-		//assertEquals(file.getContent(), "testContent");
+		//assertEquals(fil.getContent(), "testContent");
 	}
 	
-//	@Test(expected = EntityDoesNotExistException.class)
-//	public void invalidWriteFileWithNonexistingFilename() {
+	@Test(expected = TexFileDoesNotExistException.class)
+	public void invalidWriteFileWithNonexistingFilename() {
+		WriteFileService service = new WriteFileService(this.token, "noFile", "content");
+		service.execute();
+	}
+	
+	
+//	@Test(expected = UserHasInvalidPermissionsException.class)
+//	public void invalidWriteFileWithNonexistingFilename2() {
 //		WriteFileService service = new WriteFileService(this.token, "noFile", "content");
 //		service.execute();
 //	}
-	
-	
-	//@Test(expected = UserHasInvalidPermissionsException.class)
-	//public void invalidWriteFileWithNonexistingFilename() {
-	//	WriteFileService service = new WriteFileService(101L, "noFile", "content");
-	//	service.execute();
-	//}
 	//Se utilizador nao tiver permissoes para escrever no ficheiro dado (excepcao--> check)
 }
