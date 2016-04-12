@@ -1,5 +1,6 @@
 package pt.tecnico.mydrive.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.joda.time.DateTime;
@@ -13,11 +14,7 @@ import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.exception.AppDoesNotExistException;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
-import pt.tecnico.mydrive.exception.LinkDoesNotExistException;
-import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 
 public class DeleteFileTest extends AbstractServiceTest {
@@ -63,25 +60,20 @@ public class DeleteFileTest extends AbstractServiceTest {
 		// check if all files were removed
       
 		Entity dir = fs.getUserByUsername("chocolate!").getHome().getByName("dir");
-		System.out.println((dir== null)+"<---- null1?");
         assertNull("Directory was not removed", dir);
         
         Entity f = fs.getUserByUsername("chocolate!").getHome().getByName("text");
-        System.out.println((f== null)+"<---- null2?");
         assertNull("Text file was not removed", f);
         
         Entity a = fs.getUserByUsername("chocolate!").getHome().getByName("app");
-        System.out.println((a== null)+"<---- null?3");
         assertNull("App was not removed", a);
         
         Entity l = fs.getUserByUsername("chocolate!").getHome().getByName("link");
-        System.out.println((l== null)+"<---- null?4");
         assertNull("Link was not removed", l);
 	
+        assertEquals("Invalid number of files", 0, FileSystemService.getLogin(token).getUser().getFileSet().size());
 
-
-        
-//        assertEquals("Invalid number of files", 0, FileSystem.service.getUserbyUserName.getFile().size())
+               
 	}		
 	@Test(expected = EntityDoesNotExistException.class)
 	public void removePlainFile(){
