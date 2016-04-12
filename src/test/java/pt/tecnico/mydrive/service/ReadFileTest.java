@@ -21,7 +21,7 @@ public class ReadFileTest extends AbstractServiceTest {
 	
 		
 	protected void populate() {
-		FileSystem fs = FileSystem.getInstance();
+		FileSystem fs = FileSystemService.getFileSystem();
 	
 			
 		String name = "Someone";
@@ -31,15 +31,32 @@ public class ReadFileTest extends AbstractServiceTest {
 		String homeDir = "/home/SS";
 	
 		User u = new User(fs, name, userName, password, mask , homeDir);
-
+		fs.addUser(u);
+	
 		LoginService service = new LoginService(userName, password);
-		Login log = u.getLoginbyToken(service.getToken());
+		long uToken = service.getToken();
+
+		// /home/SS
+
+/*		Directory d = new Directory("Music", u, fs.Counter(), new DateTime());
+		u.getHome().addFile(d);
+
+		
+		PlainFile p1 = new PlainFile(d, "Sweet", u, );
+		d.addFile(p1);
+
+		PlainFile p2 = new PlainFile();
+		d.addFile(p2);
+
+		PlainFile p3 = new PlainFile();
+		d.addFile(p3);	*/	
+			
 //		new PlainFile();
 //		new App();
 //		new Link();
 	}
-/*
-	@Test
+
+/*	@Test
 	public void success() {
 		FileSystem fs = FileSystem.getInstance();
 
@@ -52,8 +69,8 @@ public class ReadFileTest extends AbstractServiceTest {
 		//assertEquals("Directory parent should be "/" ", "/", fs.get(0).getParent().getFileName());
 		//assertEquals("Directory name should be Some Directory", "Some Directory", fs.get(0).getFileName());
 		//assertEquals("User name whom Directory belongs to should be Someone", "Someone",fs.get(0).getName());
-	}
-*/
+	}*/
+
 }
 
 
