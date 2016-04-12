@@ -38,7 +38,7 @@ public class ChangeDirectoryService extends FileSystemService {
     		return;
     	}
     	String[] items= this.directoryPath.split("/");
-    	if(items[0].equals("home")){
+    	if(items[0].equals("")){
     		moveAbsolute(this.directoryPath);
     		return;
     	}
@@ -53,7 +53,7 @@ public class ChangeDirectoryService extends FileSystemService {
     public void moveAbsolute(String absolutePath) throws DirectoryDoesNotExistWithinDirectoryException{ //Goes from rootDir until the desired Directory
     	Directory root = fs.getRootDir(); //Starts on rootDir
     	String[] items= this.directoryPath.split("/"); //splits the full path into Directories
-    	for(int x = 0; x < items.length; x++){ // Goes to each array position to move 1 by 1 until the last position (destiny)
+    	for(int x = 1; x < items.length; x++){ // Goes to each array position to move 1 by 1 until the last position (destiny)
     		Directory dir = (Directory) root.getByName(items[x]);
     		if(dir == null){
     			throw new DirectoryDoesNotExistWithinDirectoryException(items[x]);

@@ -11,19 +11,26 @@ import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.domain.FileSystem;
+import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 public class CreateFileTest extends AbstractServiceTest{
+	
+	private long token;
 	
 	protected void populate(){
 		DateTime date = new DateTime();
 		FileSystem fs = FileSystem.getInstance();
 		User user = new User(fs, "Rita", "rita", "rita94", null, "home/rita");
-		Entity e = new Directory(fs.getWorkDir(), "exemplo", user, 20000, date); //FIXME-- apenas um esboco ainda
+		LoginService service = new LoginService("chocolate!", "1234");
+		service.execute();
+		this.token =  service.getToken();
+		Login login = user.getLoginbyToken(this.token);
+		Directory d = new Directory(login.getDirectory(), "exemplo", user, 20000, date); //FIXME-- apenas um esboco ainda
 	
 	}
 	
-	private Entity getEntity(String username, String fileName){
+	private Entity getEntity(String username, String fileName){ //tu queres ir buscar a entidade dentro da working dir, nao do user
 		User user = FileSystemService.getFileSystem().getUserByUsername(username); 
 		return user.getEntityByName(fileName);
 	}

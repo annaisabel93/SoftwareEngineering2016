@@ -19,6 +19,7 @@ public class Directory extends Directory_Base {
         init(dir, filename,user,id,lastModified);
     }
 
+    
 	
     public Directory(User owner, Element xml){
     	xmlImport(xml);
@@ -81,13 +82,20 @@ public class Directory extends Directory_Base {
 	
 	public void printDir() {
 		for(Entity entity: this.getFileSet()) {
-			String type = "unknown";
-			if(entity instanceof Directory) { type = "dir"; }
-			else if(entity instanceof App){ type = "app"; }
-			else if(entity instanceof Link){ type = "link"; }
-			else if(entity instanceof PlainFile){ type = "plainFile"; }
-			System.out.println(type + " " + "permissions" + " " + entity.getOwner() + " " + entity.getId() + " " + entity.getLastModified() + " " + entity.getFilename()); //FIXME: add permissions
+//			String type = "unknown";
+//			if(entity instanceof Directory) { type = "dir"; }
+//			else if(entity instanceof App){ type = "app"; }
+//			else if(entity instanceof Link){ type = "link"; }
+//			else if(entity instanceof PlainFile){ type = "plainFile"; }
+			byte [] array = entity.getPermissions();
+			System.out.println("name: "+ entity.getFilename() + " " + "permissions: " + array[0]+array[1]+array[2]+array[3]+" Owner: " + entity.getOwner().getUserName() + " " + entity.getId() + " Last Modified: " + entity.getLastModified());
 		}
+	}
+	
+	
+	@Override
+	public String checkType(){
+		return "dir";
 	}
 	
 	public void xmlImport(Element directoryDoc){

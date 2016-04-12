@@ -16,6 +16,12 @@ public class Link extends Link_Base {
     	setOwner(owner);
     }
     
+    
+    
+    public String checkType(){
+    	return "link";
+    }
+    
     public void xmlImport(Element linkDoc){
     	super.xmlImport(linkDoc);
     	setContent(new String(linkDoc.getChild("content").getValue()));

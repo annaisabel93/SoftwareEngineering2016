@@ -19,6 +19,10 @@ public class App extends App_Base {
     	super.xmlImport(appDoc);
     }
     
+    public String checkType(){
+    	return "app";
+    }
+    
     public Element xmlExport(){
 		Element element = new Element("app");
 		element.setAttribute("content", getContent());
