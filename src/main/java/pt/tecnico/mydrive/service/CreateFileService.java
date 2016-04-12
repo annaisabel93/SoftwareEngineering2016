@@ -48,7 +48,8 @@ public class CreateFileService extends FileSystemService{
 		fs.setCounter( count++ );
 		return count;
 	}
-	
+
+	//verify if receives path or not	
 	@Override
 	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException, UnknownFileTypeException {	
 
@@ -56,10 +57,13 @@ public class CreateFileService extends FileSystemService{
 			switch(type) {
 				case "Directory":
 					new Directory(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified);
+					break;
 				case "App":
 					new App(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified , null);
+					break;
 				case "PlainFile":
 					new PlainFile(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, null);
+					break;
 				case "Link":
 					throw new ContentCannotBeNullException(content); 
 				default:
@@ -70,10 +74,13 @@ public class CreateFileService extends FileSystemService{
 			switch(type) {
 				case "Link":
 			   		new Link(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
+					break;
 		      		case "App":
 			   		new App(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
+					break;
 		      		case "PlainFile":
 		           		new PlainFile(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
+					break;
 		       		case "Directory":
 					throw new DirectoryCannotHaveContentException(content);
 				default:
