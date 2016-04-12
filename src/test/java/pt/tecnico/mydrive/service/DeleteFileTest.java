@@ -71,7 +71,7 @@ public class DeleteFileTest extends AbstractServiceTest {
         Entity l = fs.getUserByUsername("chocolate!").getHome().getByName("link");
         assertNull("Link was not removed", l);
 	
-        assertEquals("Invalid number of files", 0, FileSystemService.getLogin(token).getUser().getFileSet().size());
+        assertEquals("Invalid number of files", 1, FileSystemService.getLogin(token).getUser().getFileSet().size());
 
                
 	}		
