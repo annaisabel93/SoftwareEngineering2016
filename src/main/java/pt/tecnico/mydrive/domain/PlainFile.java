@@ -38,6 +38,10 @@ public class PlainFile extends PlainFile_Base {
 			setContent(new String(PlainFileDoc.getChild("content").getValue()));
 		
 	}
+	@Override
+	public String checkType(){
+		return "plainFile";
+	}
 	
 	public Element xmlExport(){
 		Element element = new Element("plain");

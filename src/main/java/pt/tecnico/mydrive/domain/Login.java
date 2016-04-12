@@ -1,21 +1,33 @@
 package pt.tecnico.mydrive.domain;
 
+import java.math.BigInteger;
+import java.util.Random;
+
 import org.joda.time.DateTime;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
+import pt.tecnico.mydrive.exception.WrongPasswordException;
 
 public class Login extends Login_Base {
     
-    public Login(User user, long token1) {
+    public Login(User user, String pw) {
     	super();
     	deleteInvalidLogins(user);
     	setDateCreated(new DateTime());
-    	setToken(token1);
+    	long token = new BigInteger(64, new Random()).longValue();
+    	while(user.getSystem().validateToken(token) == false){
+    		token = new BigInteger(64, new Random()).longValue();
+    	}
+    	if ((user.getPassword().equals(pw)) == false){// verifica pw
+			throw new WrongPasswordException();
+		}
+    	setToken(token);
     	setUser(user);
     	setDirectory(user.getHome());
+    	
     }
     
     
-    public void checkTimeout() throws LoginTimeExpiredException{ //Verifies if the login timeout has occured (2 hours)
+    public void checkTimeout() throws LoginTimeExpiredException{ //Verifies if the login 
     	if((getDateCreated().getMillis() - new DateTime().getMillis()) > 720000){
     		setDirectory(null);
     		setUser(null);

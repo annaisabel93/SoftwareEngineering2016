@@ -29,6 +29,10 @@ public abstract class Entity extends Entity_Base {
 	public Entity() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String checkType(){
+		return null;
+	}
 
 	public void delete(){
 		getOwner().removeFile(this);

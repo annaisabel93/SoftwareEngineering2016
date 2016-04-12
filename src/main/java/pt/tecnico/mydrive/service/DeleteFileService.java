@@ -3,18 +3,16 @@ package pt.tecnico.mydrive.service;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 
 
 public class DeleteFileService extends FileSystemService {
 	Login login;
-	long token;
 	String filename;
-	boolean hasDeletePermissions;
 	
 	
-	public DeleteFileService(String filename) throws UnknownTokenException {
-		this.login = getLogin(token);
-		this.token = this.login.getToken();
+	public DeleteFileService(long token1 , String filename) throws UnknownTokenException {
+		this.login = getLogin(token1);
 		this.filename = filename;
 		
 		checkPermissions(login.getUser().getMask());
@@ -23,21 +21,22 @@ public class DeleteFileService extends FileSystemService {
 	}
 	
 	public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-		this.hasDeletePermissions = false;
-		if(permissions[3] == 1) {
-			this.hasDeletePermissions = true;
+		if(permissions[3] == 0) {
+			throw new UserHasInvalidPermissionsException();
 		}
+
 	}
 	
 	@Override
-	protected void dispatch() {
-	//		if(hasDeletePermissions) {
-//			try {
-//				login.getUser().getEntityByName(filename).delete();	
-//			} catch(EntityDoesNotExistException e) {
-//				throw e;
-//			}
-//		}
+	protected void dispatch() throws EntityDoesNotExistException{
+			if (login.getDirectory().getByName(filename) == null){
+				throw new EntityDoesNotExistException(this.filename);
+			}
+			try {
+				login.getDirectory().getByName(filename).delete();	
+			} catch(EntityDoesNotExistException e) {
+				throw e;
+			}
 	}
-
+	
 }

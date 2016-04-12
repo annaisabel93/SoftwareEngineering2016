@@ -1,73 +1,69 @@
 package pt.tecnico.mydrive.service;
 
-import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.App;
 import pt.tecnico.mydrive.domain.Link;
-
+import pt.tecnico.mydrive.domain.User;
 
 import org.joda.time.DateTime;
-//import exceptions
 
 import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
+import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
+import pt.tecnico.mydrive.exception.UnknownFileTypeException;
 
 
 public class CreateFileService extends FileSystemService{
 
 	private long token;	
-	private Directory parent;
 	private String fileName;
-	private long id;
+	private String type;	
+	
+	private FileSystem fs;
+	private Directory workingDir;
+	private User user;
 	private DateTime lastModified;
 	private String content;
-	private String type;
 
-	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type){
+
+	public CreateFileService(long token, String fileName, String type, String content){
 		this.token = token;
-		this.parent = parent;	
 		this.fileName = fileName;
-		this.id = id;
-		this.lastModified = lastModified;
 		this.type = type;
-		this.content = "";
-	}
-
-	public CreateFileService(long token, Directory parent, String fileName, long id, DateTime lastModified, String type, String content) {
-		this(token, parent, fileName, id, lastModified, type);
+		this.user = this.getLogin(token).getUser();
+		this.workingDir = this.getLogin(token).getDirectory();
+		this.lastModified = new DateTime();
 		this.content = content;
+		this.fs = this.getFileSystem();
 	}
 
-	
-	
-	@Override
-	public final void dispatch() throws ContentCannotBeNullException {
-		User u = getLogin(token).getUser();
-		if (content.length() == 0) {
-			if (type.equals("Directory")) {
-				new Directory(parent, fileName, u, id, lastModified);
-			}
-			if (type.equals("App")){
-				new App(parent, fileName, u, id, lastModified, null);
-			}
-			if (type.equals("PlainFile")) {
-				new PlainFile(parent, fileName, u, id, lastModified, null);
-			}
-			if (type.equals("Link")){
-				throw new ContentCannotBeNullException(content); 
-			}
+
+	private void createCaseContent() throws UnknownFileTypeException{
+		switch(this.type) {
+			case "Directory":
+				new Directory(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified);
+				break;
+			case "App":
+				new App(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+			case "PlainFile":
+				new PlainFile(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+			case "Link":
+				if (this.content.equals(null)) { throw new ContentCannotBeNullException(content); }
+				else{
+					new Link(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+					break;
+				}
+			default:
+				throw new UnknownFileTypeException(type);
 		}
-		else {
-			if (type.equals("Link")) {
-			   new Link(parent, fileName, u, id, lastModified, content);
-		      	}
-		      	if (type.equals("App")) { 
-			   new App(parent, fileName, u, id, lastModified, content);
-		      	}
-		      	if(type.equals("PlainFile")) { 
-		           new PlainFile(parent, fileName, u, id, lastModified, content);
-		       	}	
-		     }
-	        }
+	}
+
+		
+	@Override
+	public final void dispatch(){	
+		this.createCaseContent();
+	}
+
 }
