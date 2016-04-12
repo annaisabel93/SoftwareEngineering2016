@@ -28,64 +28,42 @@ public class CreateFileService extends FileSystemService{
 	private String content;
 
 
-	public CreateFileService(long token, String fileName, String type){
+	public CreateFileService(long token, String fileName, String type, String content){
 		this.token = token;
 		this.fileName = fileName;
 		this.type = type;
 		this.user = this.getLogin(token).getUser();
 		this.workingDir = this.getLogin(token).getDirectory();
 		this.lastModified = new DateTime();
-		this.content = "";
-	}
-
-	public CreateFileService(long token, String fileName, String type, String content) {
-		this(token, fileName, type);
 		this.content = content;
+		this.fs = this.getFileSystem();
 	}
 
-	private int incCounter(){
-		FileSystem fs = this.user.getSystem();
-		int count = fs.getCounter();
-		fs.setCounter( count++ );
-		return count;
-	}
 
-	private void createCaseContent(boolean isContentNull) {
+	private void createCaseContent() throws UnknownFileTypeException{
 		switch(this.type) {
 			case "Directory":
-				if (isContentNull) {
-					new Directory(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified);
-					break;
-				}else{ throw new DirectoryCannotHaveContentException(content); }
+				new Directory(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified);
+				break;
 			case "App":
-				if (isContentNull) { this.content = null; }
-				new App(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
-				break;
-
+				new App(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 			case "PlainFile":
-				if (isContentNull) { this.content = null; }
-				new PlainFile(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
-				break;
+				new PlainFile(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 			case "Link":
-				if (isContentNull) { throw new ContentCannotBeNullException(content); }
+				if (this.content.equals(null)) { throw new ContentCannotBeNullException(content); }
 				else{
-					new Link(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
+					new Link(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 					break;
-
 				}
 			default:
 				throw new UnknownFileTypeException(type);
 		}
 	}
 
-	
-	//verify if receives path or not	
+		
 	@Override
-	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException, UnknownFileTypeException {	
-
-		if (content.length() == 0) { createCaseContent(true); }
-		else { createCaseContent(false); }
-
+	public final void dispatch(){	
+		this.createCaseContent();
 	}
 
 }
