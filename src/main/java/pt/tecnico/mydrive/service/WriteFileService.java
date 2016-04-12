@@ -20,7 +20,9 @@ public class WriteFileService extends FileSystemService {
     	
         Login login = getLogin(token);
         PlainFile text = (PlainFile) login.getDirectory().getByName(this.fileName);
+		if(text == null ){
+        	throw new TexFileDoesNotExistException(this.fileName);
+        }
         text.setContent(content);
-    	
     }
 }
