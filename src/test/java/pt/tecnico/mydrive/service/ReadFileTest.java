@@ -13,6 +13,7 @@ import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.App;
 import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.FileSystem;
+import pt.tecnico.mydrive.domain.Login;
 //exceptions
 //
 
@@ -21,20 +22,27 @@ public class ReadFileTest extends AbstractServiceTest {
 		
 	protected void populate() {
 		FileSystem fs = FileSystem.getInstance();
-		
+	
+			
+		String name = "Someone";
+		String userName = "SS";
+		String password = "***";
 		byte[] mask = {0,0,0,0};
-		DateTime date = new DateTime();
-		
-		User u = new User(fs, "Someone", "SO", "****", mask , "homie");
-		Directory d = new Directory(fs.getRootDir(), "Some Directory", u, 5 , date); 		
-		new Directory(d, "D", u, 6, date);
-		new PlainFile(d, "D", u, 7, date, "ZA");
-		new App(d, "S", u, 8, date, "WS");
-		new Link(d, "A", u, 9, date, "SA");	
+		String homeDir = "/home/SS";
+	
+		User u = new User(fs, name, userName, password, mask , homeDir);
+
+		LoginService service = new LoginService(userName, password);
+		Login log = u.getLoginbyToken(service.getToken());
+//		new PlainFile();
+//		new App();
+//		new Link();
 	}
 /*
 	@Test
 	public void success() {
+		FileSystem fs = FileSystem.getInstance();
+
 		//ReadFileService service = new ReadFileService();
 		//receiveing a user and reading all the files that belong to user?
 		//service.execute();

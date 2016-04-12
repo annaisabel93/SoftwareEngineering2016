@@ -24,7 +24,6 @@ public class CreateFileService extends FileSystemService{
 	private FileSystem fs;
 	private User user;
 	private Directory workingDir;
-	private long id;
 	private DateTime lastModified;
 
 
@@ -34,7 +33,6 @@ public class CreateFileService extends FileSystemService{
 		this.type = type;
 		this.user = this.getLogin(token).getUser();
 		this.workingDir = this.getLogin(token).getDirectory();
-		this.id = this.getFileSystem().getCounter();
 		this.lastModified = new DateTime();
 		this.content = "";
 	}
@@ -44,7 +42,12 @@ public class CreateFileService extends FileSystemService{
 		this.content = content;
 	}
 
-	
+	public int incCounter(){
+		FileSystem fs = this.user.getSystem();
+		int count = fs.getCounter();
+		fs.setCounter( count++ );
+		return count;
+	}
 	
 	@Override
 	public final void dispatch() throws ContentCannotBeNullException, DirectoryCannotHaveContentException, UnknownFileTypeException {	
@@ -52,11 +55,11 @@ public class CreateFileService extends FileSystemService{
 		if (content.length() == 0) {
 			switch(type) {
 				case "Directory":
-					new Directory(this.workingDir, this.fileName, this.user, this.id, this.lastModified);
+					new Directory(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified);
 				case "App":
-					new App(this.workingDir, this.fileName, this.user, this.id, this.lastModified , null);
+					new App(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified , null);
 				case "PlainFile":
-					new PlainFile(this.workingDir, this.fileName, this.user, this.id, this.lastModified, null);
+					new PlainFile(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, null);
 				case "Link":
 					throw new ContentCannotBeNullException(content); 
 				default:
@@ -66,11 +69,11 @@ public class CreateFileService extends FileSystemService{
 		else {
 			switch(type) {
 				case "Link":
-			   		new Link(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
+			   		new Link(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
 		      		case "App":
-			   		new App(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
+			   		new App(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
 		      		case "PlainFile":
-		           		new PlainFile(this.workingDir, this.fileName, this.user, this.id, this.lastModified, content);
+		           		new PlainFile(this.workingDir, this.fileName, this.user, incCounter(), this.lastModified, content);
 		       		case "Directory":
 					throw new DirectoryCannotHaveContentException(content);
 				default:
