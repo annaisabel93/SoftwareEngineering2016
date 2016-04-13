@@ -31,13 +31,7 @@ public abstract class Entity extends Entity_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String checkType(){
-		if(this instanceof Directory) { return "dir"; }
-		else if(this instanceof App){ return "app"; }
-		else if(this instanceof Link){ return "link"; }
-		else if(this instanceof PlainFile){ return "plainFile"; }
-		else { return null; }
-	}
+	public abstract String checkType();
 	
 	public void checkDelete(Login login){
 		checkPermissions(login, "delete");

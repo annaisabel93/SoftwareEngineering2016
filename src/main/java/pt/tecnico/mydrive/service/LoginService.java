@@ -4,11 +4,9 @@ package pt.tecnico.mydrive.service;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.TokenAlreadyInUseException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
-import pt.tecnico.mydrive.exception.TokenAlreadyInUseException;
-import java.math.BigInteger;
-import java.util.Random;
 
 public class LoginService extends FileSystemService {
 
