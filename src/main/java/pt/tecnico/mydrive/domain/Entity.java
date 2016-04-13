@@ -1,6 +1,7 @@
 package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Element;
+
 import org.joda.time.DateTime;
 
 public abstract class Entity extends Entity_Base {
@@ -31,7 +32,11 @@ public abstract class Entity extends Entity_Base {
 	}
 	
 	public String checkType(){
-		return null;
+		if(this instanceof Directory) { return "dir"; }
+		else if(this instanceof App){ return "app"; }
+		else if(this instanceof Link){ return "link"; }
+		else if(this instanceof PlainFile){ return "plainFile"; }
+		else { return null; }
 	}
 	
 	public void checkDelete(Login login){
