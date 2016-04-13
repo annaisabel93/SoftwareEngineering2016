@@ -15,14 +15,14 @@ public class WriteFileService extends FileSystemService {
     	this.token = token;
     	this.login = getLogin(token);
         this.fileName = fileName;
-        checkPermissions(login.getUser().getMask());
+        //checkPermissions(login.getUser().getMask());
         }
 
-    public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-		if(permissions[1] == 0) {
-			throw new UserHasInvalidPermissionsException();
-		}
-	}
+//    public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
+//		if(permissions[1] == 0) {
+//			throw new UserHasInvalidPermissionsException();
+//		}
+//	}
     
     @Override
     public final void dispatch() throws TexFileDoesNotExistException, UserHasInvalidPermissionsException{
