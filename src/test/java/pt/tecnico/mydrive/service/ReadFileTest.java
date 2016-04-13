@@ -47,7 +47,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		String name = "Someone";
 		String userName = "SS";
 		String password = "***";
-		byte[] mask = {0,0,0,0};
+		byte[] mask = {1,0,0,0};
 		String homeDir = "/home/SS";
 	
 		User u = new User(fs, name, userName, password, mask , homeDir);
