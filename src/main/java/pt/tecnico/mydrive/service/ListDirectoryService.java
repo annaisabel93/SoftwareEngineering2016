@@ -1,6 +1,5 @@
 package pt.tecnico.mydrive.service;
 
-import java.lang.instrument.Instrumentation;
 import pt.tecnico.mydrive.domain.Directory;
 
 import pt.tecnico.mydrive.domain.Entity;
@@ -8,14 +7,13 @@ import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
-import pt.tecnico.mydrive.domain.FileSystem;
+
 
 public class ListDirectoryService extends FileSystemService {
 
     private Login login;
     private String directoryPath;
     private Directory workingDir;
-    private FileSystem fs;
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
     
@@ -23,7 +21,6 @@ public class ListDirectoryService extends FileSystemService {
     	this.login = getLogin(token);
         this.directoryPath = dirpath;
         this.workingDir = this.login.getDirectory();
-        this.fs = getFileSystem();
     }
 
     @Override
