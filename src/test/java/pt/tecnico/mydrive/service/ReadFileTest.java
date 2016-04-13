@@ -23,7 +23,6 @@ import pt.tecnico.mydrive.exception.WrongFileTypeException;
 public class ReadFileTest extends AbstractServiceTest {
 
 	private long uToken;
-//	private FileSystem fs;	
 	
 	final String[] fileNames =    { "Sweet", 
 					"WhiskeyInTheJar", 
@@ -51,31 +50,21 @@ public class ReadFileTest extends AbstractServiceTest {
 		String homeDir = "/home/SS";
 	
 		User u = new User(fs, name, userName, password, mask , homeDir);
-		//fs.addUser(u);
-
 			
 		LoginService service = new LoginService(userName, password);
 		service.execute();
 		this.uToken = service.getToken();
 		Login log = u.getLoginbyToken(service.getToken());
+
 		// /home/SS
 
-
-			
 		PlainFile p1 = new PlainFile(log.getDirectory(), this.fileNames[0], u, fs.Counter(), new DateTime(), this.contents[0] );
 		PlainFile p2 = new PlainFile(log.getDirectory(), this.fileNames[1], u, fs.Counter(), new DateTime(),this.contents[1]);
 		Link l1 = new Link(log.getDirectory(), this.fileNames[2], u, fs.Counter(), new DateTime(), this.contents[2]);
 		Link l2 = new Link(log.getDirectory(), this.fileNames[3], u, fs.Counter(), new DateTime(), this.contents[3]);
 		App a1 = new App(log.getDirectory(), this.fileNames[4], u, fs.Counter(), new DateTime(), this.contents[4]);
 		App a2 = new App(log.getDirectory(), this.fileNames[5], u, fs.Counter(), new DateTime(), this.contents[5]);
-		
-		/*i.addFile(p1);
-		d.addFile(p2);
-		d.addFile(l1);
-		d.addFile(l2);
-		d.addFile(a1);
-		d.addFile(a2);*/
-		
+	
 			
 	}
 
@@ -95,7 +84,10 @@ public class ReadFileTest extends AbstractServiceTest {
 		}
 	}
 
-
+	//ler ficheiro que nao existe
+	//ler directoria
+	//o que acontece com permissoes
+	//o que acontece quando se le o link
 	@Test
 	public void success(){
 
