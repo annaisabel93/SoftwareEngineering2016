@@ -5,6 +5,8 @@ import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class ReadFileService extends FileSystemService{
@@ -17,6 +19,7 @@ public class ReadFileService extends FileSystemService{
 		this.login = getLogin(token);
 		this.filename = filename;
 		this.token = token;
+		checkPermissions(login.getUser().getMask());
 	}
 	
 	public long getToken(){
@@ -27,30 +30,33 @@ public class ReadFileService extends FileSystemService{
 		return this.filename;
 	}
 	
+	public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
+		if(permissions[0] == 0) {
+			throw new UserHasInvalidPermissionsException();
+		}
+		
+	}
+	
 	public String returnContent(String filename) throws WrongFileTypeException{
 		User user = this.login.getUser();
-		Entity file = this.login.getDirectory().getByName(filename); //verificar se e nulo ou nao
-		if(!(file instanceof PlainFile)){  //verificacao fica ou sai??
+		Entity file = this.login.getDirectory().getByName(filename); 
+		if(file == null){
+			throw new EntityDoesNotExistException(filename);
+		}
+		if(!(file instanceof PlainFile)){  //verificacao fica ou sai?
 			throw new WrongFileTypeException();
 		}
+		
 		return ((PlainFile) file).getContent();	
 	}
-		
-		//ir buscar a mask to user
-		//com a mascara do user verificar as permissoes que o user tem para ler files
-	
 	
 	@Override
 	public final void dispatch(){
 		try {
 			returnContent(getFilename());
 		} catch (WrongFileTypeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//--FIXME
-		//TODO--verificar se o tipo de ficheiro tem conteudo, ou seja, se nao e Directory
-		
 	} 
 
 }
