@@ -40,7 +40,7 @@ public class Directory extends Directory_Base {
 	public void WriteToFile(String content, String filename)throws TexFileDoesNotExistException{
 		for (Entity entidade : getFileSet()) {
    		 if(entidade.getFilename().equals(filename) && (entidade instanceof PlainFile)){
-   			 ((PlainFile) entidade).addContent(content); //cast para poder executar o metodo
+   			 ((PlainFile) entidade).addContent(getLogin(), content); //cast para poder executar o metodo
    			 return;
    		 }
    	 }

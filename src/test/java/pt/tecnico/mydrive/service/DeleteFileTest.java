@@ -19,9 +19,7 @@ import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 
 public class DeleteFileTest extends AbstractServiceTest {
 	
-	
 	private long token;
-	
 	
 	protected void populate(){
 		DateTime date = new DateTime();
@@ -35,15 +33,13 @@ public class DeleteFileTest extends AbstractServiceTest {
 		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
 		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
 		Link link = new Link(login.getDirectory(), "link", login.getUser(), 3, date, "ok");
-		
-
-		
 	}
+	
 	@Test
 	public void sucess(){
+		
 		FileSystem fs =FileSystem.getInstance();
 	
-
 		DeleteFileService removeText = new DeleteFileService(this.token, "text");
 		removeText.execute();
 	
@@ -55,10 +51,8 @@ public class DeleteFileTest extends AbstractServiceTest {
 
 		DeleteFileService removeDir = new DeleteFileService(this.token, "dir");
 		removeDir.execute();				
-		
-		
-		// check if all files were removed
-      
+			
+		// check if all files were removed   
 		Entity dir = fs.getUserByUsername("chocolate!").getHome().getByName("dir");
         assertNull("Directory was not removed", dir);
         
@@ -71,10 +65,9 @@ public class DeleteFileTest extends AbstractServiceTest {
         Entity l = fs.getUserByUsername("chocolate!").getHome().getByName("link");
         assertNull("Link was not removed", l);
 	
-        assertEquals("Invalid number of files", 0, FileSystemService.getLogin(token).getDirectory().getFileSet().size());
-
-               
+        assertEquals("Invalid number of files", 0, FileSystemService.getLogin(token).getDirectory().getFileSet().size());            
 	}		
+	
 	@Test(expected = EntityDoesNotExistException.class)
 	public void removePlainFile(){
 		 DeleteFileService service = new DeleteFileService(this.token, "text2");
@@ -97,8 +90,5 @@ public class DeleteFileTest extends AbstractServiceTest {
 	public void removeDirectory(){
 		 DeleteFileService service = new DeleteFileService(this.token, "dirname2");
 		 service.execute();
-	}
-	
-        
-		
+	}		
 }

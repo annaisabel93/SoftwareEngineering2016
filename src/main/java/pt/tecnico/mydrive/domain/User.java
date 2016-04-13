@@ -2,11 +2,8 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.jdom2.Element;
 
-import pt.ist.fenixframework.dml.runtime.DirectRelation;
 
 public class User extends User_Base {
 	
@@ -22,8 +19,7 @@ public class User extends User_Base {
         setSystem(filesystem);
     }
     
-    protected User(){
-    	
+    protected User(){  	
     }
     
     public User(FileSystem filesystem, Element xml){
@@ -44,15 +40,11 @@ public class User extends User_Base {
     public Login getLoginbyToken(long token){
     	for (Login login : getLoginSet()){
 			if (login.getToken() == token)
-				return login;
-			
+				return login;			
 		}
-		return null;
-    
+		return null;    
     }
-    
-
-    
+       
     public void xmlImport(Element userEl){
         	setUserName(new String(userEl.getAttribute("username").getValue()));
         	setPassword(new String(userEl.getChild("password").getValue()));
@@ -73,8 +65,7 @@ public class User extends User_Base {
     	//element.addContent("rwxd", getMask().toString());
 //    	for(Directory d: getDirectorySet())
 //			element.addContent(d.xmlExport().detach());
-//    	
-    	
+//    		
         return element; 
     }
     

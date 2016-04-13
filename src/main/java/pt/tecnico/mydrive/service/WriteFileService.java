@@ -32,6 +32,6 @@ public class WriteFileService extends FileSystemService {
 		if(text == null ){
         	throw new TexFileDoesNotExistException(this.fileName);
         }
-        text.setContent(content);
+        text.addContent(login, content);
     }
 }

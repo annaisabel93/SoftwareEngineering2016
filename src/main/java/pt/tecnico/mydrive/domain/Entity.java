@@ -14,7 +14,7 @@ public abstract class Entity extends Entity_Base {
     		setId(id);
     		setLastModified(lastModified);
     		setParent(parent);
-        	
+        
         	init(parent,filename,owner,id,lastModified);
 	    }
 	
@@ -33,14 +33,17 @@ public abstract class Entity extends Entity_Base {
 	public String checkType(){
 		return null;
 	}
+	
+	public void checkDelete(Login login){
+		checkPermissions(login, "delete");
+		delete();
+	}
 
 	public void delete(){
 		getOwner().removeFile(this);
 		setParent(null);
 		setOwner(null);
 	}
-	
-	
 
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 
 		Directory parent = getParent();
@@ -52,6 +55,33 @@ public abstract class Entity extends Entity_Base {
 		}
 	}
 	
+	public boolean checkPermissions(Login login, String action){
+		User loggedUser = login.getUser();	
+		User owner = getOwner();
+		
+		if (loggedUser == owner) {
+			return true;
+		}
+		
+		else
+			if (action.equals("read"))
+				if (getPermissions()[0] == 1)
+					return true;
+		
+			if (action.equals("write"))
+				if (getPermissions()[1] == 1)
+					return true;
+			
+			if (action.equals("execute"))
+				if(getPermissions()[2] == 1)
+					return true;
+
+			if (action.equals("delete"))
+				if (getPermissions()[3] == 1)
+					return true;
+			
+		return false;	
+	}
 	
 	public void xmlImport(Element filedoc){
 			setFilename(new String(filedoc.getChild("name").getValue()));
@@ -63,6 +93,5 @@ public abstract class Entity extends Entity_Base {
 	public Element xmlExport(){	
 			Element element = new Element("entity");
 			return element;    
-	}
-    
+	}   
 }

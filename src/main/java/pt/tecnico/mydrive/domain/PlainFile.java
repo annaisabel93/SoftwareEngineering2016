@@ -3,6 +3,8 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+
 public class PlainFile extends PlainFile_Base {
     
     public PlainFile(Directory parent,String filename, User user, long id, DateTime lastModified,  String content) {
@@ -21,8 +23,10 @@ public class PlainFile extends PlainFile_Base {
 		xmlImport(xml);
 		setOwner(owner);
 	}
-	public void addContent(String content){
-		setContent(getContent()+content);
+	public void addContent(Login login, String content){
+		if (checkPermissions(login, "write") == false)	
+			throw new UserHasInvalidPermissionsException();
+		setContent(content);
 	}
 	
 	@Override
@@ -38,6 +42,7 @@ public class PlainFile extends PlainFile_Base {
 			setContent(new String(PlainFileDoc.getChild("content").getValue()));
 		
 	}
+	
 	@Override
 	public String checkType(){
 		return "plainFile";
