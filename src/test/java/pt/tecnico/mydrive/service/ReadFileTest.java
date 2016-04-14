@@ -121,7 +121,7 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	}
 
-	@Test(expected = UserHasInvalidPermissionsException.class)
+/*	@Test(expected = UserHasInvalidPermissionsException.class)
 	public void tryReadFile() {
 		ReadFileService r = new ReadFileService(this.uToken2,"Slack");
 		r.execute();
@@ -131,7 +131,7 @@ public class ReadFileTest extends AbstractServiceTest {
 	public void tryReadInexistentFile() {
 		ReadFileService r = new ReadFileService(this.uToken2,"Zena");
 		r.execute();
-	}
+	}*/
 
 /*	@Test(expected = CannotReadDirectory.class)
 	public void tryReadDirectory() {
