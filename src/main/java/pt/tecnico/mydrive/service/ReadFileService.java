@@ -13,6 +13,7 @@ public class ReadFileService extends FileSystemService{
 	private long token;
 	private Login login;
 	private String filename;
+	private String result;
 	
 	public ReadFileService(long token, String filename){
 		this.login = getLogin(token);
@@ -36,24 +37,15 @@ public class ReadFileService extends FileSystemService{
 		
 	}
 	
-	public String returnContent(String filename) throws WrongFileTypeException{
-		User user = this.login.getUser();
-		Entity file = this.login.getDirectory().getByName(filename); 
-		if(file == null){
-			throw new EntityDoesNotExistException(filename);
-		}
-		if(!(file instanceof PlainFile)){  //verificacao fica ou sai?
-			throw new WrongFileTypeException();
-		}
-		
-		return ((PlainFile) file).getContent();	
-	}
-	
 	@Override
 	public final void dispatch(){
-		try {
-			returnContent(getFilename());
-		} catch (WrongFileTypeException e) {
+		try{
+			this.result = this.login.read(getFilename());
+		}
+		catch(WrongFileTypeException e){
+			e.printStackTrace();
+		}
+		catch(EntityDoesNotExistException e){
 			e.printStackTrace();
 		}
 	} 

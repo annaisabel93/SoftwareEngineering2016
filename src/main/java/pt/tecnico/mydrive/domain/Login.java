@@ -4,7 +4,10 @@ import java.math.BigInteger;
 import java.util.Random;
 
 import org.joda.time.DateTime;
+
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
+import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
 
 public class Login extends Login_Base {
@@ -36,6 +39,14 @@ public class Login extends Login_Base {
     	//we must renew DateTime after each checkTimeout()!!
     }
     
+    public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException{
+    	Entity file = getDirectory().getByName(filename);
+    	if(file == null)
+    		throw new EntityDoesNotExistException(filename);
+    	if(file.checkType().equals("dir"))
+    		throw new WrongFileTypeException();
+    	return ((PlainFile) file).read(this);
+    }
     
     public void deleteInvalidLogins(User user){ //Checks if user logins are still valid
     	for(Login login : user.getLoginSet()){

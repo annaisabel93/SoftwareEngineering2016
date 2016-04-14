@@ -3,7 +3,9 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class PlainFile extends PlainFile_Base {
     
@@ -27,6 +29,14 @@ public class PlainFile extends PlainFile_Base {
 		if (checkPermissions(login, "write") == false)	
 			throw new UserHasInvalidPermissionsException();
 		setContent(content);
+	}
+	
+	public String read(Login login) throws UserHasInvalidPermissionsException{
+		if(!(checkPermissions(login, "read")))
+			throw new UserHasInvalidPermissionsException();
+		else{
+			return getContent();
+		}
 	}
 	
 	@Override
