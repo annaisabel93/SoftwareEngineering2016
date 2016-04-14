@@ -53,10 +53,11 @@ public class PlainFile extends PlainFile_Base {
 		element.setAttribute("content", getContent());
 		String str = String.format ("%d", getId());
 		element.setAttribute("id", str); 
-		element.addContent(new Element ("path").setText(getPath(getParent().toString())));
+		element.addContent(new Element ("path").setText(getPath("")));
 		element.addContent(new Element ("name").setText(getFilename())); 	
 		element.addContent(new Element ("owner").setText(getOwner().toString()));
 		element.addContent(new Element ("content").setText(getContent()));
+		element.addContent(new Element("perm").setText(getPermissions().toString()));
 		
 		//TODO Perm
 		

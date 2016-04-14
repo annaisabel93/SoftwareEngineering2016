@@ -1,7 +1,6 @@
 package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Element;
-
 import org.joda.time.DateTime;
 
 public abstract class Entity extends Entity_Base {
@@ -25,6 +24,7 @@ public abstract class Entity extends Entity_Base {
 		setId(id);
 		setLastModified(lastModified);
 		setParent(parent);
+		setPermissions(owner.getMask());
 	}
 
 	public Entity() {
@@ -46,11 +46,11 @@ public abstract class Entity extends Entity_Base {
 
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 
 		Directory parent = getParent();
-		if(parent == null){
+		if(parent.getParent() == parent){
 			return path_until_now;
 		}
 		else{
-			return getPath(getFilename()+"/"+path_until_now);
+			return parent.getPath(getFilename()+"/"+path_until_now);
 		}
 	}
 	
@@ -80,6 +80,36 @@ public abstract class Entity extends Entity_Base {
 					return true;
 			
 		return false;	
+	}
+	
+	public String permtoString(){
+		String perm = "";
+		byte [] mask = new byte [4];
+		mask = this.getPermissions();
+		System.out.println(getPermissions() == null);
+		if(mask[0] == 1)
+			perm += "r";
+		else
+			perm += "-";
+		
+		if(mask[1] == 1)
+			perm += "w";
+		else
+			perm += "-";
+		
+		if(mask[2] == 1)
+			perm += "x";
+		else
+			perm += "-";
+		
+		if(mask[3] == 1)
+			perm += "d";
+		else
+			perm += "-";
+		
+		
+		return perm;
+		
 	}
 	
 	public void xmlImport(Element filedoc){
