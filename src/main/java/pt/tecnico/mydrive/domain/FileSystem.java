@@ -77,15 +77,19 @@ public class FileSystem extends FileSystem_Base {
     
     @Override
     public void addUser(User user){
+    	System.out.println("vai adicionar user" + user.getUserName());
     	if(hasUser(user.getUserName())){
     		System.out.println("entro na funcao add user e verico que o user existe");
     		throw new UsernameAlreadyExistsException(user.getUserName());}
     	else {
     		if((Directory)getRootDir()==null){
+    			System.out.println("vai criar root dir\n\n\n\n\n\n");
     			Directory raiz =new Directory ("/",  user, Counter(),new DateTime());
     			setRootDir(raiz);
     			Directory home1 = new Directory (getRootDir(),"home",  user, Counter(),new DateTime());
     			raiz.addFile(home1);
+    			
+    			System.out.println(user == null);
     		}
     		Directory home = (Directory)getRootDir().getByName("home");
     		Directory userHome = new Directory(home,  user.getUserName(), user, getCounter(),new DateTime());
