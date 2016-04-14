@@ -19,22 +19,14 @@ public class ReadFileService extends FileSystemService{
 		this.login = getLogin(token);
 		this.filename = filename;
 		this.token = token;
-		checkPermissions(login.getUser().getMask());
-	}
-	
-	public long getToken(){
-		return this.token;
 	}
 	
 	public String getFilename(){
 		return this.filename;
 	}
 	
-	public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-		if(permissions[0] == 0) {
-			throw new UserHasInvalidPermissionsException();
-		}
-		
+	public String getResult(){
+		return this.result;
 	}
 	
 	@Override

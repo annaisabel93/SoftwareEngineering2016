@@ -79,7 +79,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		int i;
 		for ( i=0; i<rfsArray.length; i++) {
 			rfsArray[i].execute();
-			String content = rfsArray[i].returnContent(this.fileNames[i]);	
+			String content = rfsArray[i].getResult();	
 			assertEquals("The content of plainfile" + this.fileNames[i] + "should be " + this.contents[i] , this.contents[i], content );
 		}
 	}
