@@ -40,17 +40,22 @@ public class CreateFileService extends FileSystemService{
 	}
 
 
-	private void createCaseContent() throws UnknownFileTypeException{
+	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException{
 		switch(this.type) {
 			case "Directory":
-				new Directory(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified);
-				break;
+				if (this.content != null){
+					throw new DirectoryCannotHaveContentException(content);
+				}
+				else{
+					new Directory(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified);
+					break;
+				}
 			case "App":
 				new App(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 			case "PlainFile":
 				new PlainFile(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 			case "Link":
-				if (this.content.equals(null)) { throw new ContentCannotBeNullException(content); }
+				if (this.content == null) { throw new ContentCannotBeNullException(content); }
 				else{
 					new Link(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
 					break;
