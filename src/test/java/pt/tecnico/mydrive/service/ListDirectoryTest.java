@@ -121,8 +121,10 @@ public class ListDirectoryTest extends AbstractServiceTest {
 	public void removeLinkAndList(){ //remove o link e lista
 //		 DeleteFileService service = new DeleteFileService(this.token, "link");
 //		 service.execute();
-//		 //String [] result = listdir.getResult();
-//		 String[] expected = new String[6];
+//		 ListDirectoryService listdir = new ListDirectoryService(this.token);
+//		 listdir.execute();
+//		 String [] result = listdir.getResult();
+//		 String[] expected = new String[5];
 //		 //parent dir
 //		 expected[0] = "dir "+PermissionsToString(this.login.getDirectory().getParent().getPermissions());
 //		 expected[0] = expected[0] + " 4 root" + Long.toString(this.login.getDirectory().getParent().getId())+ " ";
@@ -144,6 +146,38 @@ public class ListDirectoryTest extends AbstractServiceTest {
 //		 expected[4] = expected[0] + " 0 luis" + Long.toString(this.login.getDirectory().getId())+ " ";
 //		 expected[4] = expected[0] + "app";
 //		 
-//		 assertEquals("Did not list what was expected", expected, result); 
+//		 assertEquals("Did not print what was supposed" result, expected); 
 	}
+	
+	
+	@Test
+	public void changeDirAndList(){//ir para /home e listar
+//	
+//	 ChangeDirectoryService service = new ChangeDirectoryService(this.token, "/home");
+//	 service.execute();
+//	 ListDirectoryService listdir = new ListDirectoryService(this.token);
+//	 listdir.execute();
+//	 String [] result = listdir.getResult();
+//	 String[] expected = new String[4];
+//	 // parent dir
+//	 expected[0] = "dir "+PermissionsToString(this.login.getDirectory().getParent().getPermissions());
+//	 expected[0] = expected[0] + " 3 root" + Long.toString(this.login.getDirectory().getParent().getId())+ " ";
+//	 expected[0] = expected[0] + "/";
+//	 // home dir
+//	 expected[1] = "dir "+PermissionsToString(this.login.getDirectory().getPermissions());
+//	 expected[1] = expected[0] + " 4 "+ this.login.getDirectory().getOwner().getUserName()+" " + Long.toString(this.login.getDirectory().getId())+ " ";
+//	 expected[1] = expected[0] + "home";
+//	 //root homedir
+//	 expected[2] = "dir "+PermissionsToString(this.login.getDirectory().getByName("root").getPermissions());
+//	 expected[2] = expected[0] + " 2 root" + Long.toString(this.login.getDirectory().getId())+ " ";
+//	 expected[2] = expected[0] + "root";
+//	 //luis homedir
+//	 expected[3] = "dir "+PermissionsToString(this.login.getDirectory().getByName("luis").getPermissions());
+//	 expected[3] = expected[0] + " 6 luis" + Long.toString(this.login.getDirectory().getId())+ " ";
+//	 expected[3] = expected[0] + "luis";
+//
+//	 assertEquals("Did not list what was expected", expected, result);
+	 
+	}
+	
 }
