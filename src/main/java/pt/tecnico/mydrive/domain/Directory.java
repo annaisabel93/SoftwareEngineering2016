@@ -3,6 +3,8 @@ package pt.tecnico.mydrive.domain;
 
 import org.jdom2.Element;
 import org.joda.time.DateTime;
+
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 public class Directory extends Directory_Base {
@@ -61,13 +63,14 @@ public class Directory extends Directory_Base {
 	}
 
 	
-	public Entity getByName(String name){
+	public Entity getByName(String name) throws EntityDoesNotExistException {
 		for(Entity e: getFileSet()){
+			
 			if(e.getFilename().equals(name)){
 				return e;
 			}
 		}
-		return null;
+		throw new EntityDoesNotExistException(name);
 	}
 	
 	
@@ -88,7 +91,7 @@ public class Directory extends Directory_Base {
 //			else if(entity instanceof Link){ type = "link"; }
 //			else if(entity instanceof PlainFile){ type = "plainFile"; }
 			byte [] array = entity.getPermissions();
-			System.out.println("name: "+ entity.getFilename() + " " + "permissions: " + array[0]+array[1]+array[2]+array[3]+" Owner: " + entity.getOwner().getUserName() + " " + entity.getId() + " Last Modified: " + entity.getLastModified());
+			
 		}
 	}
 	

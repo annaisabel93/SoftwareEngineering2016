@@ -55,10 +55,11 @@ public abstract class Entity extends Entity_Base {
 	}
 	
 	public boolean checkPermissions(Login login, String action){
+		
 		User loggedUser = login.getUser();	
 		User owner = getOwner();
 		
-		if (loggedUser == owner) {
+		if (loggedUser.equals(owner)) {
 			return true;
 		}
 		

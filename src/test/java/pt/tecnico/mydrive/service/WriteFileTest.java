@@ -1,15 +1,17 @@
 package pt.tecnico.mydrive.service;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import junit.framework.TestFailure;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
@@ -51,7 +53,6 @@ public class WriteFileTest extends AbstractServiceTest{
 		
 	}
 	
-// ver se a data foi alterada, se conteudo foi alterado 
 	
 	@Test
 	public void success() {
@@ -62,22 +63,21 @@ public class WriteFileTest extends AbstractServiceTest{
 		
 		//checks
 		
-		Entity fil = fs.getUserByUsername("filipac").getHome().getByName("file");
-        assertNull("File content ", fil);
+		Entity fil = login.getDirectory().getByName("testFile");
+		PlainFile f = (PlainFile) fil;
+        assertEquals("content", f.getContent());
         
-		//PlainFile file = service.result();
-		//assertEquals(fil.getContent(), "testContent");
 	}
 	
 	//file does not exist
-	@Test(expected = TexFileDoesNotExistException.class)
+	@Test(expected = EntityDoesNotExistException.class)
 	public void invalidWriteFileWithNonexistingFilename() {
-		WriteFileService service = new WriteFileService(this.token, "File", "content");
+		WriteFileService service = new WriteFileService(this.token, "Filea", "content");
 		service.execute();
 	}
 	
-	
-	 //user has invalid permissions to write on file
+	 
+	//user has invalid permissions to write on file
 	@Test(expected = UserHasInvalidPermissionsException.class)
 	public void userHasNoPermissionsToEditFile() {
 		//login2.setDirectory(login.getDirectory());
@@ -87,9 +87,24 @@ public class WriteFileTest extends AbstractServiceTest{
 		service.execute();
 	}
 	
-//	@Test(expected = UserHasInvalidPermissionsException.class)
-//	public void invalidWriteFileWithNonexistingFilename2() {
-//		WriteFileService service = new WriteFileService(this.token, "noFile", "content");
+	//checks if the file modification date is altered when a file is written
+//	@Test
+//	public void checksModifiedDate() {
+//		Entity e = login.getDirectory().getByName("testFile");
+//		DateTime dateBefore = e.getLastModified();
+//		WriteFileService service = new WriteFileService(this.token, "testFile", "content");
 //		service.execute();
-//	} 
+//		e = login.getDirectory().getByName("testFile");
+//		DateTime dateAfter = e.getLastModified();
+//		assertNotEquals(dateBefore, dateAfter);
+//	}
+	
+	//checks if the content of the file is altered 
+	
+//	@Test(expected = TexFileDoesNotExistException.class)
+//	public void invalidWriteFileWithNonexistingFilename() {
+//		WriteFileService service = new WriteFileService(this.token, "File", "content");
+//		assertEquals(textFile.getContent(), "testContent");
+//		service.execute();
+//	}
 }
