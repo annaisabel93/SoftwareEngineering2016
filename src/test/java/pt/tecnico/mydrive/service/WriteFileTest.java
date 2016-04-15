@@ -110,10 +110,16 @@ public class WriteFileTest extends AbstractServiceTest{
 	
 	//checks if the content of the file is altered 
 	
-//	@Test(expected = TexFileDoesNotExistException.class)
-//	public void invalidWriteFileWithNonexistingFilename() {
-//		WriteFileService service = new WriteFileService(this.token, "File", "content");
-//		assertEquals(textFile.getContent(), "testContent");
-//		service.execute();
-//	}
+	@Test
+	public void unchangedContentAfterWrite() {
+		Entity e = login.getDirectory().getByName("testFile");
+		PlainFile f = (PlainFile) e;
+		String contentBefore = f.getContent();
+		WriteFileService service = new WriteFileService(this.token, "testFile", "different");
+		service.execute();
+		Entity e2 = login.getDirectory().getByName("testFile");
+		PlainFile f2 = (PlainFile) e2;
+		String contentAfter = f2.getContent();
+		assertNotEquals(contentBefore, contentAfter);
+	}
 }
