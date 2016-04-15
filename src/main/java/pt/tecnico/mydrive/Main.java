@@ -43,39 +43,6 @@ public class Main {
     public static void setup() {
         log.trace("Setup: " + FenixFramework.getDomainRoot());
         FileSystem fs = FileSystem.getInstance(); 
-        //System.out.println(new DateTime().getMillis());
-        //User userana;
-    	//Directory dirana;
-    	//DateTime date = new DateTime();
-
-    	//userana = new User(fs, "ana", "ana", "***", null, "home");
-    	//FIX TODO last null arg should be date
-    	//dirana = new Directory(fs, null,  "cenas", userana, 0, date);
-       //---------------------------------------------------------------------------------------------
-//        User usr = new User(fs, "Ana", "chocolate!", "1234", new byte[] {0,0,0,0} , "/home/chocolate");
-//        fs.login("chocolate!");
-//        fs.moveDir("..");
-//        fs.CreateTextFile("README");
-//        fs.WriteOnFile("README","lista de utilizadores");
-//        fs.moveDir("..");
-//        fs.AddDirtoCurrent("usr");
-//        fs.moveDir("usr");
-//        fs.AddDirtoCurrent("local");
-//        fs.moveDir("local");
-//        fs.AddDirtoCurrent("bin");
-//        fs.moveDir("..");
-//        fs.moveDir("..");
-//        fs.moveDir("home");
-//        fs.printReadMe("README");
-//        fs.moveDir("..");
-//        fs.moveDir("usr");
-//        fs.moveDir("local");
-//        fs.moveDir("..");
-//        fs.moveDir("..");
-//        fs.moveDir("home");
-//  
-//        fs.printHome();
-        
     }
 
     @Atomic

@@ -37,7 +37,9 @@ public class Link extends Link_Base {
 		element.addContent(new Element ("owner").setText(getOwner().toString()));
 		element.addContent(new Element ("value").setText(getContent()));
 		
-		//TODO Perm
+		if (getOwner().getUserName().equals("root")){ 	//FIXME
+			element.addContent(new Element("perm").setText("----")); //dirty hack, can't have mask working
+		}
 		
 		return element;
     

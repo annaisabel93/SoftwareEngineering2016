@@ -3,9 +3,7 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
-import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
-import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class PlainFile extends PlainFile_Base {
     
@@ -67,9 +65,12 @@ public class PlainFile extends PlainFile_Base {
 		element.addContent(new Element ("name").setText(getFilename())); 	
 		element.addContent(new Element ("owner").setText(getOwner().toString()));
 		element.addContent(new Element ("content").setText(getContent()));
-		//FIXME element.addContent(new Element("perm").setText(getPermissions().toString()));
 		
-		//TODO Perm
+		if (getOwner().getUserName().equals("root")){	//FIXME
+			element.addContent(new Element("perm").setText("----")); //dirty hack, can't have mask working
+		}
+//		else
+//			element.addContent(new Element("perm").setText(getPermissions().toString()));
 		
 		return element;
 	}
