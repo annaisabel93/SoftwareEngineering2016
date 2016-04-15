@@ -108,8 +108,8 @@ public class WriteFileTest extends AbstractServiceTest{
 		assertNotEquals(dateBefore, dateAfter);
 	}
 	
-	//checks if the content of the file is altered 
 	
+	//checks if the content of the file is altered 
 	@Test
 	public void unchangedContentAfterWrite() {
 		Entity e = login.getDirectory().getByName("testFile");
