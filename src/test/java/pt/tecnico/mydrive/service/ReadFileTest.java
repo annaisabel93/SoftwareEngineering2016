@@ -17,12 +17,15 @@ import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
 
- 
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
+import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+
+
 
 public class ReadFileTest extends AbstractServiceTest {
 
-	private long uToken;
+	private long uToken1, uToken2;
 	
 	final String[] fileNames =    { "Sweet", 
 					"WhiskeyInTheJar", 
@@ -37,41 +40,60 @@ public class ReadFileTest extends AbstractServiceTest {
 					"/home/peaches", 
 					"package.pt.tecnico.mydrive.domain", 
 					"package.pt.tecnico.mydrive.service" };
+
 	
 		
 	protected void populate() {
 		FileSystem fs = FileSystem.getInstance();
 	
 			
-		String name = "Someone";
-		String userName = "SS";
+		String name1 = "Reaper", 
+		       name2 = "Bunny" ;
+
+		String userName1 = "GR", 
+		       userName2 = "BB";
+
 		String password = "***";
-		byte[] mask = {1,0,0,0};
-		String homeDir = "/home/SS";
-	
-		User u = new User(fs, name, userName, password, mask , homeDir);
-			
-		LoginService service = new LoginService(userName, password);
-		service.execute();
-		this.uToken = service.getToken();
-		Login log = u.getLoginbyToken(service.getToken());
 
-		// /home/SS
+		byte[] mask1 = {1,0,0,0}, 
+		       mask2 = {0,1,1,1};
 
-		PlainFile p1 = new PlainFile(log.getDirectory(), this.fileNames[0], u, fs.Counter(), new DateTime(), this.contents[0] );
-		PlainFile p2 = new PlainFile(log.getDirectory(), this.fileNames[1], u, fs.Counter(), new DateTime(),this.contents[1]);
-		Link l1 = new Link(log.getDirectory(), this.fileNames[2], u, fs.Counter(), new DateTime(), this.contents[2]);
-		Link l2 = new Link(log.getDirectory(), this.fileNames[3], u, fs.Counter(), new DateTime(), this.contents[3]);
-		App a1 = new App(log.getDirectory(), this.fileNames[4], u, fs.Counter(), new DateTime(), this.contents[4]);
-		App a2 = new App(log.getDirectory(), this.fileNames[5], u, fs.Counter(), new DateTime(), this.contents[5]);
+		String homeDir1 = "/home/GR", 
+		       homeDir2 = "/home/BB";
 	
+		User u1 = new User(fs, name1, userName1, password, mask1 , homeDir1);
+		LoginService service1 = new LoginService(userName1, password);
+		service1.execute();
+		this.uToken1 = service1.getToken();
+		Login log1 = u1.getLoginbyToken(service1.getToken());
+
+
+		PlainFile p1 = new PlainFile(log1.getDirectory(), this.fileNames[0], u1, 1, new DateTime(), this.contents[0] );
+		PlainFile p2 = new PlainFile(log1.getDirectory(), this.fileNames[1], u1, 2, new DateTime(),this.contents[1]);
+		Link l1 = new Link(log1.getDirectory(), this.fileNames[2], u1, 3, new DateTime(), this.contents[2]);
+		Link l2 = new Link(log1.getDirectory(), this.fileNames[3], u1, 4, new DateTime(), this.contents[3]);
+		App a1 = new App(log1.getDirectory(), this.fileNames[4], u1, 5, new DateTime(), this.contents[4]);
+		App a2 = new App(log1.getDirectory(), this.fileNames[5], u1, 6, new DateTime(), this.contents[5]);
+
+
+		User u2 = new User(fs, name2, userName2, password, mask2 , homeDir2);
+		LoginService service2 = new LoginService(userName2, password);
+		service2.execute();
+		this.uToken2 = service2.getToken();
+		Login log2 = u2.getLoginbyToken(service2.getToken());
+
+
+		Directory d1 = new Directory(log2.getDirectory(), "Xena", u2, 8, new DateTime());
+		PlainFile p3 = new PlainFile(log2.getDirectory(), "Slack", u2, 10, new DateTime(), this.contents[0] );
+		
+
 			
 	}
 
 	public void initializeReadFileServices( ReadFileService[] rfsArray) {
 		int i;
 		for ( i=0; i<rfsArray.length; i++) {
-			rfsArray[i] = new ReadFileService(this.uToken,this.fileNames[i]);
+			rfsArray[i] = new ReadFileService(this.uToken1,this.fileNames[i]);
 		} 		
 	}
 
@@ -79,15 +101,13 @@ public class ReadFileTest extends AbstractServiceTest {
 		int i;
 		for ( i=0; i<rfsArray.length; i++) {
 			rfsArray[i].execute();
-			String content = rfsArray[i].returnContent(this.fileNames[i]);	
+			String content = rfsArray[i].getResult();	
 			assertEquals("The content of plainfile" + this.fileNames[i] + "should be " + this.contents[i] , this.contents[i], content );
 		}
 	}
 
-	//ler ficheiro que nao existe
-	//ler directoria
-	//o que acontece com permissoes
-	//o que acontece quando se le o link
+	
+
 	@Test
 	public void success(){
 
@@ -101,9 +121,29 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	}
 
+/*	@Test(expected = UserHasInvalidPermissionsException.class)
+	public void tryReadFile() {
+		ReadFileService r = new ReadFileService(this.uToken2,"Slack");
+		r.execute();
+	}
 
-		
+	@Test(expected = TexFileDoesNotExistException.class)
+	public void tryReadInexistentFile() {
+		ReadFileService r = new ReadFileService(this.uToken2,"Zena");
+		r.execute();
+	}*/
 
+/*	@Test(expected = CannotReadDirectory.class)
+	public void tryReadDirectory() {
+		ReadFileService r = new ReadFileService(this.uToken1,"Xena");
+		r.execute();
+	}
+
+*/
+	/*@Test
+ * 	public void testLink() {
+ * 	}		
+*/
 }
 
 

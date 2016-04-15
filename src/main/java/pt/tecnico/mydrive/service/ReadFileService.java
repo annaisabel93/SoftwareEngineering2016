@@ -13,47 +13,31 @@ public class ReadFileService extends FileSystemService{
 	private long token;
 	private Login login;
 	private String filename;
+	private String result;
 	
 	public ReadFileService(long token, String filename){
 		this.login = getLogin(token);
 		this.filename = filename;
 		this.token = token;
-		checkPermissions(login.getUser().getMask());
-	}
-	
-	public long getToken(){
-		return this.token;
 	}
 	
 	public String getFilename(){
 		return this.filename;
 	}
 	
-	public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-		if(permissions[0] == 0) {
-			throw new UserHasInvalidPermissionsException();
-		}
-		
-	}
-	
-	public String returnContent(String filename) throws WrongFileTypeException{
-		User user = this.login.getUser();
-		Entity file = this.login.getDirectory().getByName(filename); 
-		if(file == null){
-			throw new EntityDoesNotExistException(filename);
-		}
-		if(!(file instanceof PlainFile)){  //verificacao fica ou sai?
-			throw new WrongFileTypeException();
-		}
-		
-		return ((PlainFile) file).getContent();	
+	public String getResult(){
+		return this.result;
 	}
 	
 	@Override
 	public final void dispatch(){
-		try {
-			returnContent(getFilename());
-		} catch (WrongFileTypeException e) {
+		try{
+			this.result = this.login.read(getFilename());
+		}
+		catch(WrongFileTypeException e){
+			e.printStackTrace();
+		}
+		catch(EntityDoesNotExistException e){
 			e.printStackTrace();
 		}
 	} 

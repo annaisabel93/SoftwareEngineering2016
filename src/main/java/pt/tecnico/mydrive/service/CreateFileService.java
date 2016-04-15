@@ -21,7 +21,6 @@ public class CreateFileService extends FileSystemService{
 	private String fileName;
 	private String type;	
 	
-	private FileSystem fs;
 	private Directory workingDir;
 	private User user;
 	private DateTime lastModified;
@@ -36,23 +35,22 @@ public class CreateFileService extends FileSystemService{
 		this.workingDir = this.getLogin(token).getDirectory();
 		this.lastModified = new DateTime();
 		this.content = content;
-		this.fs = this.getFileSystem();
 	}
 
 
-	private void createCaseContent() throws UnknownFileTypeException{
+	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException{
 		switch(this.type) {
 			case "Directory":
-				new Directory(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified);
-				break;
+					new Directory(this.workingDir, this.fileName, this.user, 3, this.lastModified);
+					break;
 			case "App":
-				new App(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+				new App(this.workingDir, this.fileName, this.user, 5, this.lastModified, content);
 			case "PlainFile":
-				new PlainFile(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+				new PlainFile(this.workingDir, this.fileName, this.user, 2, this.lastModified, content);
 			case "Link":
-				if (this.content.equals(null)) { throw new ContentCannotBeNullException(content); }
+				if (this.content == null) { throw new ContentCannotBeNullException(content); }
 				else{
-					new Link(this.workingDir, this.fileName, this.user, this.fs.Counter(), this.lastModified, content);
+					new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
 					break;
 				}
 			default:

@@ -92,7 +92,7 @@ public class FileSystem extends FileSystem_Base {
     			System.out.println(user == null);
     		}
     		Directory home = (Directory)getRootDir().getByName("home");
-    		Directory userHome = new Directory(home,  user.getUserName(), user, getCounter(),new DateTime());
+    		Directory userHome = new Directory(home,  user.getUserName(), user, Counter(),new DateTime());
     		user.setHome(userHome);
     		super.addUser(user);
     	}
