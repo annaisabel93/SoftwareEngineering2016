@@ -19,6 +19,7 @@ import pt.tecnico.mydrive.domain.Login;
 
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 
@@ -90,30 +91,37 @@ public class ReadFileTest extends AbstractServiceTest {
 			
 	}
 
-	public void initializeReadFileServices( ReadFileService[] rfsArray) {
+	public void initializeReadFileServices( ReadFileService[] rfsArray) throws WrongFileTypeException {
 		int i;
-		for ( i=0; i<rfsArray.length; i++) {
+		try {
+			for ( i=0; i<rfsArray.length; i++) {
 			rfsArray[i] = new ReadFileService(this.uToken1,this.fileNames[i]);
-		} 		
+				
+		}
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}		
+
 	}
 
-	public void verifyContentPlains(ReadFileService[] rfsArray ) throws WrongFileTypeException {	
+	public void verifyContentPlains(ReadFileService[] rfsArray ) {	
 		int i;
 		for ( i=0; i<rfsArray.length; i++) {
 			rfsArray[i].execute();
 			String content = rfsArray[i].getResult();	
 			assertEquals("The content of plainfile" + this.fileNames[i] + "should be " + this.contents[i] , this.contents[i], content );
 		}
+	
 	}
 
 	
 
 	@Test
-	public void success(){
+	public void success() throws WrongFileTypeException{
 
 		ReadFileService[] rs = new ReadFileService[6];
-		initializeReadFileServices(rs);
-		try {
+		try{
+			initializeReadFileServices(rs);
 			this.verifyContentPlains(rs);	
 		} catch (WrongFileTypeException e) {
 			e.printStackTrace();
@@ -121,29 +129,34 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	}
 
-/*	@Test(expected = UserHasInvalidPermissionsException.class)
-	public void tryReadFile() {
+	@Test(expected = UserHasInvalidPermissionsException.class)
+	public void tryReadFile() throws WrongFileTypeException{
+		try {
 		ReadFileService r = new ReadFileService(this.uToken2,"Slack");
 		r.execute();
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Test(expected = TexFileDoesNotExistException.class)
-	public void tryReadInexistentFile() {
+	@Test(expected = EntityDoesNotExistException.class)
+	public void tryReadInexistentFile() throws WrongFileTypeException {
+		try {
 		ReadFileService r = new ReadFileService(this.uToken2,"Zena");
 		r.execute();
-	}*/
+		} catch (WrongFileTypeException e) {
+			e.printStackTrace();
+		}
+	}
 
-/*	@Test(expected = CannotReadDirectory.class)
+	@Test(expected = WrongFileTypeException.class)
 	public void tryReadDirectory() {
 		ReadFileService r = new ReadFileService(this.uToken1,"Xena");
 		r.execute();
+		
 	}
 
-*/
-	/*@Test
- * 	public void testLink() {
- * 	}		
-*/
+
 }
 
 
