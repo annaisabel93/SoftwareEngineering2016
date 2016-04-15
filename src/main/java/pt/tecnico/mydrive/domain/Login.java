@@ -9,11 +9,18 @@ import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
+import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
+import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 
 public class Login extends Login_Base {
     
-    public Login(User user, String pw) {
+    public Login(User user, String pw) throws WrongPasswordException, UsernameDoesntExistException{
     	super();
+    	
+    	if (user == null) {
+			throw new UsernameDoesntExistException("Username does not exist");
+		}
+    	
     	deleteInvalidLogins(user);
     	setDateCreated(new DateTime());
     	long token = new BigInteger(64, new Random()).longValue();
