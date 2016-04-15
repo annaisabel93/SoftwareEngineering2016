@@ -44,7 +44,6 @@ public class Login extends Login_Base {
     		setUser(null);
     		throw new LoginTimeExpiredException();
     	}
-    	//we must renew DateTime after each checkTimeout()!!
     }
     
     public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException, UserHasInvalidPermissionsException{
