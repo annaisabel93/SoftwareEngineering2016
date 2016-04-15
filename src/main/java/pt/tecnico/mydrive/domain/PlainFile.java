@@ -57,7 +57,7 @@ public class PlainFile extends PlainFile_Base {
 		element.addContent(new Element ("name").setText(getFilename())); 	
 		element.addContent(new Element ("owner").setText(getOwner().toString()));
 		element.addContent(new Element ("content").setText(getContent()));
-		element.addContent(new Element("perm").setText(getPermissions().toString()));
+		//FIXME element.addContent(new Element("perm").setText(getPermissions().toString()));
 		
 		//TODO Perm
 		

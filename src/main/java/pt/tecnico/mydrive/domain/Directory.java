@@ -109,7 +109,8 @@ public class Directory extends Directory_Base {
 		element.addContent(new Element ("path").setText(getPath("")));
 		element.addContent(new Element ("name").setText(getFilename())); 	
 		element.addContent(new Element ("owner").setText(getOwner().getUserName()));
-		//element.addContent(new Element("perm").setText(permtoString()));
+		
+		//FIXME element.addContent(new Element("perm").setText(permtoString()));
 		
 
 		return element;
