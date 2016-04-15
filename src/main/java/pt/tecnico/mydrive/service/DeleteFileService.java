@@ -15,16 +15,7 @@ public class DeleteFileService extends FileSystemService {
 		this.login = getLogin(token1);
 		this.filename = filename;
 		
-		checkPermissions(login.getUser().getMask());
-		
-		
-	}
-	
-	public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-		if(permissions[3] == 0) {
-			throw new UserHasInvalidPermissionsException();
-		}
-
+		login.getDirectory().getByName(filename).checkPermissions(login, "delete");
 	}
 	
 	@Override

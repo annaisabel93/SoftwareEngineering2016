@@ -16,19 +16,11 @@ public class WriteFileService extends FileSystemService {
     	this.token = token;
     	this.login = getLogin(token);
         this.fileName = fileName;
-        checkPermissions(login.getUser().getMask(), "write");
-        }
+        this.content = content;
+        login.getDirectory().getByName(fileName).checkPermissions(login, "write");
+    }
 
-//    public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
-//		if(permissions[1] == 0) {
-//			throw new UserHasInvalidPermissionsException();
-//		}
-//	}
-    
-    private void checkPermissions(byte[] mask, String string) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
     public final void dispatch() throws TexFileDoesNotExistException, UserHasInvalidPermissionsException{

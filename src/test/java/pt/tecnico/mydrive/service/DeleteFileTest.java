@@ -15,28 +15,37 @@ import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 
 public class DeleteFileTest extends AbstractServiceTest {
 	
 	private long token;
+	private long token2;
+	private Login login;
+	private Login login2;
 	
 	protected void populate(){
 		DateTime date = new DateTime();
 		FileSystem fs =FileSystem.getInstance();
-		User usr = new User(fs, "Ana", "chocolate!", "1234", new byte[] {1,1,1,1} , "/home/chocolate");
-		LoginService service = new LoginService("chocolate!", "1234");
-		service.execute();
-		this.token =  service.getToken();
-		Login login = usr.getLoginbyToken(service.getToken());
-		Directory dir = new Directory(login.getDirectory(), "dir", usr, 20000, date);
+		User usr = new User(fs, "Ana", "chocolate1", "1234", new byte[] {1,1,1,0} , "/home/chocolate1");
+		User usr2 = new User(fs, "AnaG", "chocolate2", "1234", new byte[] {1,1,1,0} , "/home/chocolate2");
+		LoginService service1 = new LoginService("chocolate1", "1234");
+		service1.execute();
+		LoginService service2 = new LoginService("chocolate2", "1234");
+		service2.execute();
+		this.token =  service1.getToken();
+		this.token2 =  service2.getToken();
+		this.login = service1.getLogin(this.token);
+		this.login2 = service2.getLogin(this.token2);
+		Directory dir = new Directory(login.getDirectory(), "dir", login.getUser(), 20000, date);
 		PlainFile file = new PlainFile(login.getDirectory(), "text", login.getUser(), 1, date, "ola ana");
 		App app = new App(login.getDirectory(), "app", login.getUser(), 2, date, "adeus ana");
 		Link link = new Link(login.getDirectory(), "link", login.getUser(), 3, date, "ok");
 	}
 	
 	@Test
-	public void sucess(){
+	public void success(){
 		
 		FileSystem fs =FileSystem.getInstance();
 	
@@ -48,23 +57,11 @@ public class DeleteFileTest extends AbstractServiceTest {
 
 		DeleteFileService removeLink = new DeleteFileService(this.token, "link");
 		removeLink.execute();
-
+		System.out.println("here");
 		DeleteFileService removeDir = new DeleteFileService(this.token, "dir");
 		removeDir.execute();				
 			
 		// check if all files were removed   
-		Entity dir = fs.getUserByUsername("chocolate!").getHome().getByName("dir");
-        assertNull("Directory was not removed", dir);
-        
-        Entity f = fs.getUserByUsername("chocolate!").getHome().getByName("text");
-        assertNull("Text file was not removed", f);
-        
-        Entity a = fs.getUserByUsername("chocolate!").getHome().getByName("app");
-        assertNull("App was not removed", a);
-        
-        Entity l = fs.getUserByUsername("chocolate!").getHome().getByName("link");
-        assertNull("Link was not removed", l);
-	
         assertEquals("Invalid number of files", 0, FileSystemService.getLogin(token).getDirectory().getFileSet().size());            
 	}		
 	
@@ -91,4 +88,12 @@ public class DeleteFileTest extends AbstractServiceTest {
 		 DeleteFileService service = new DeleteFileService(this.token, "dirname2");
 		 service.execute();
 	}		
+	
+//	@Test(expected = UserHasInvalidPermissionsException.class)
+//	public void userHasNoPermissionsToDeleteFile() {
+//		ChangeDirectoryService change = new ChangeDirectoryService(this.token2, "/home/chocolate2");
+//		change.execute();
+//		WriteFileService service = new WriteFileService(this.token2, "text", "content");
+//		service.execute();
+//	}
 }
