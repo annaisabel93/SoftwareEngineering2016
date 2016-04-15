@@ -11,39 +11,47 @@ import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
-//import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class WriteFileTest extends AbstractServiceTest{
 
 	private long token;
+	private long token2;
+	private Login login;
+	private Login login2;
 
 	protected void populate() {
 		
 		FileSystem fs = FileSystem.getInstance();
 	
-		byte[] mask = {1, 0, 1, 1};
-		byte[] mask2 = {1, 1, 1, 1};
-		String username = "filipac";
+		byte[] mask1 = {1, 0, 1, 1};
+		String username1 = "filipac";
 		String username2 = "filipaco";
-		String name = username;
-		String password = username;
-		String homeDir = "/home/" + username;
-		User user = new User(fs, name, username, password, mask, homeDir);
-		LoginService service = new LoginService(username, password);
-		service.execute();
+		String name = "ola";
+		String password = "password";
+		String homeDir1 = "/home/" + username1;
+		String homeDir2 = "/home/" + username2;
+		User userWithPermissions = new User(fs, name, username1, password, mask1, homeDir1);
+		User userWithoutPermissions = new User(fs, name, username2, password, mask1, homeDir2);
+		LoginService service1 = new LoginService(username1, password);
 		
-		this.token =  service.getToken();
-		Login login = user.getLoginbyToken(service.getToken());
+		LoginService service2 = new LoginService(username2, password);
+		service1.execute();
+		service2.execute();
 		
+		this.token =  service1.getToken();
+		this.token2 =  service2.getToken();
+		this.login = service1.getLogin(this.token);
+		this.login2 = service2.getLogin(this.token2);
 		String filename = "testFile";
 		long id = 1;
 		DateTime lastModified = new DateTime();
 		String content = "content";
-		PlainFile file = new PlainFile(fs.getUserDir(username), filename, user, id, lastModified, content);
+		new PlainFile(login.getDirectory(), filename, userWithPermissions, id, lastModified, content);
 		
 	}
 	
-//ficheiro nao existe, user nao tem permissoes para escrever no ficheiro, ver se a data foi alterada, se conteudo foi alterado 
+// ver se a data foi alterada, se conteudo foi alterado 
 	
 	@Test
 	public void success() {
@@ -61,22 +69,27 @@ public class WriteFileTest extends AbstractServiceTest{
 		//assertEquals(fil.getContent(), "testContent");
 	}
 	
+	//file does not exist
 	@Test(expected = TexFileDoesNotExistException.class)
 	public void invalidWriteFileWithNonexistingFilename() {
 		WriteFileService service = new WriteFileService(this.token, "File", "content");
 		service.execute();
 	}
 	
-//	@Test(expected = UserHasInvalidPermissionsException.class)
-//	public void userHasNoPermissionsToEditFile() {
-//		WriteFileService service = new WriteFileService(this.token, "testFile", "content");
-//		service.execute();
-//	}
+	
+	 //user has invalid permissions to write on file
+	@Test(expected = UserHasInvalidPermissionsException.class)
+	public void userHasNoPermissionsToEditFile() {
+		//login2.setDirectory(login.getDirectory());
+		ChangeDirectoryService change = new ChangeDirectoryService(this.token2, "/home/filipac");
+		change.execute();
+		WriteFileService service = new WriteFileService(this.token2, "testFile", "content");
+		service.execute();
+	}
 	
 //	@Test(expected = UserHasInvalidPermissionsException.class)
 //	public void invalidWriteFileWithNonexistingFilename2() {
 //		WriteFileService service = new WriteFileService(this.token, "noFile", "content");
 //		service.execute();
-//	}
-	//Se utilizador nao tiver permissoes para escrever no ficheiro dado (excepcao--> check)
+//	} 
 }

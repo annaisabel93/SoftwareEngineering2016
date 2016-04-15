@@ -52,6 +52,7 @@ public class ChangeDirectoryService extends FileSystemService {
     
     public void moveAbsolute(String absolutePath) throws DirectoryDoesNotExistWithinDirectoryException{ //Goes from rootDir until the desired Directory
     	Directory root = fs.getRootDir(); //Starts on rootDir
+    	System.out.println("vai fazer move abs");
     	String[] items= this.directoryPath.split("/"); //splits the full path into Directories
     	for(int x = 1; x < items.length; x++){ // Goes to each array position to move 1 by 1 until the last position (destiny)
     		Directory dir = (Directory) root.getByName(items[x]);
@@ -60,6 +61,7 @@ public class ChangeDirectoryService extends FileSystemService {
     		}
     		root = dir;
     	}
+    	System.out.println("mudou para "+ root.getFilename());
     	login.setDirectory(root);
     	System.out.println(root.getPath(""));
     }
