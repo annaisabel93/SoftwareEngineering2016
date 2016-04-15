@@ -27,6 +27,8 @@ public class PlainFile extends PlainFile_Base {
 		if (checkPermissions(login, "write") == false)	
 			throw new UserHasInvalidPermissionsException();
 		setContent(content);
+		setLastModified(new DateTime());
+		getParent().setLastModified(new DateTime());
 	}
 	
 	public String read(Login login) throws UserHasInvalidPermissionsException{

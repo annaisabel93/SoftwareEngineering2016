@@ -2,6 +2,7 @@ package pt.tecnico.mydrive.service;
 
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
+import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
@@ -15,7 +16,7 @@ public class WriteFileService extends FileSystemService {
     	this.token = token;
     	this.login = getLogin(token);
         this.fileName = fileName;
-        //checkPermissions(login.getUser().getMask());
+        checkPermissions(login.getUser().getMask(), "write");
         }
 
 //    public void checkPermissions(byte[] permissions) throws UserHasInvalidPermissionsException {
@@ -24,7 +25,12 @@ public class WriteFileService extends FileSystemService {
 //		}
 //	}
     
-    @Override
+    private void checkPermissions(byte[] mask, String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
     public final void dispatch() throws TexFileDoesNotExistException, UserHasInvalidPermissionsException{
     	
         Login login = getLogin(token);
