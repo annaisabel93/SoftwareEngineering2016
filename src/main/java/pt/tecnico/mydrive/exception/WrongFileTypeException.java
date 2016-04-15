@@ -1,6 +1,6 @@
 package pt.tecnico.mydrive.exception;
 
-public class WrongFileTypeException extends Exception {
+public class WrongFileTypeException extends MyDriveException {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
