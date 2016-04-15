@@ -2,10 +2,13 @@ package pt.tecnico.mydrive.service;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
 
 import junit.framework.TestFailure;
+import pt.ist.fenixframework.dml.runtime.DomainBasedMap.Getter;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
@@ -88,16 +91,22 @@ public class WriteFileTest extends AbstractServiceTest{
 	}
 	
 	//checks if the file modification date is altered when a file is written
-//	@Test
-//	public void checksModifiedDate() {
-//		Entity e = login.getDirectory().getByName("testFile");
-//		DateTime dateBefore = e.getLastModified();
-//		WriteFileService service = new WriteFileService(this.token, "testFile", "content");
-//		service.execute();
-//		e = login.getDirectory().getByName("testFile");
-//		DateTime dateAfter = e.getLastModified();
-//		assertNotEquals(dateBefore, dateAfter);
-//	}
+	@Test
+	public void checksModifiedDate() {
+		Entity e = login.getDirectory().getByName("testFile");
+		DateTime dateBefore = e.getLastModified();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		WriteFileService service = new WriteFileService(this.token, "testFile", "content");
+		service.execute();
+		e = login.getDirectory().getByName("testFile");
+		DateTime dateAfter = e.getLastModified();
+		//assertFalse(dateBefore.equals(dateAfter));
+		assertNotEquals(dateBefore, dateAfter);
+	}
 	
 	//checks if the content of the file is altered 
 	
