@@ -18,6 +18,7 @@ public class DeleteFileService extends FileSystemService {
 		login.getDirectory().getByName(filename).checkPermissions(login, "delete");
 	}
 	
+	//executa o servico
 	@Override
 	protected void dispatch() throws EntityDoesNotExistException{
 			if (login.getDirectory().getByName(filename) == null){
