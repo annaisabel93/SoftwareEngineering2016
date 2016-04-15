@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
@@ -46,12 +47,14 @@ public class Login extends Login_Base {
     	//we must renew DateTime after each checkTimeout()!!
     }
     
-    public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException{
+    public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException, UserHasInvalidPermissionsException{
     	Entity file = getDirectory().getByName(filename);
     	if(file == null)
     		throw new EntityDoesNotExistException(filename);
     	if(file.checkType().equals("dir"))
     		throw new WrongFileTypeException();
+    	if(file.checkPermissions(this, "read") == false)
+    		throw new UserHasInvalidPermissionsException();
     	return ((PlainFile) file).read(this);
     }
     

@@ -42,7 +42,8 @@ public class ReadFileTest extends AbstractServiceTest {
 					"package.pt.tecnico.mydrive.domain", 
 					"package.pt.tecnico.mydrive.service" };
 
-	
+	Login login1;
+	Login login2;
 		
 	protected void populate() {
 		FileSystem fs = FileSystem.getInstance();
@@ -67,6 +68,8 @@ public class ReadFileTest extends AbstractServiceTest {
 		service1.execute();
 		this.uToken1 = service1.getToken();
 		Login log1 = u1.getLoginbyToken(service1.getToken());
+		this.login1 = log1;
+		
 
 
 		PlainFile p1 = new PlainFile(log1.getDirectory(), this.fileNames[0], u1, 1, new DateTime(), this.contents[0] );
@@ -82,7 +85,7 @@ public class ReadFileTest extends AbstractServiceTest {
 		service2.execute();
 		this.uToken2 = service2.getToken();
 		Login log2 = u2.getLoginbyToken(service2.getToken());
-
+		this.login2 = log2;
 
 		Directory d1 = new Directory(log2.getDirectory(), "Xena", u2, 8, new DateTime());
 		PlainFile p3 = new PlainFile(log2.getDirectory(), "Slack", u2, 10, new DateTime(), this.contents[0] );
@@ -131,17 +134,15 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	@Test(expected = UserHasInvalidPermissionsException.class)
 	public void tryReadFile() throws WrongFileTypeException{
-		//try {
-		ReadFileService r = new ReadFileService(this.uToken2,"Slack");
+		login1.setDirectory(login2.getDirectory());
+		ReadFileService r = new ReadFileService(this.uToken1,"Slack");
 		r.execute();
-		/*} catch (WrongFileTypeException e) {
-			e.printStackTrace();
-		}*/
 	}
 
 	@Test(expected = EntityDoesNotExistException.class)
 	public void tryReadInexistentFile() throws WrongFileTypeException {
 		//try {
+		
 		ReadFileService r = new ReadFileService(this.uToken2,"Zena");
 		r.execute();
 		/*} catch (WrongFileTypeException e) {
@@ -151,7 +152,7 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	@Test(expected = WrongFileTypeException.class)
 	public void tryReadDirectory() {
-		ReadFileService r = new ReadFileService(this.uToken1,"Xena");
+		ReadFileService r = new ReadFileService(this.uToken2,"Xena");
 		r.execute();
 		
 	}
