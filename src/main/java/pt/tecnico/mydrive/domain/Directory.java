@@ -113,9 +113,15 @@ public class Directory extends Directory_Base {
 		element.addContent(new Element ("name").setText(getFilename())); 	
 		element.addContent(new Element ("owner").setText(getOwner().getUserName()));
 		
-		//FIXME element.addContent(new Element("perm").setText(permtoString()));
-		
-
+		if (getOwner().getUserName().equals("root")){
+			element.addContent(new Element("perm").setText("----")); //dirty hack, can't have mask working
+		}
+//		else
+//		{
+//			System.out.println(getOwner().getUserName());
+//			element.addContent(new Element("perm").setText(getPermissions().toString()));
+//		
+//		}
 		return element;
 	}
 	

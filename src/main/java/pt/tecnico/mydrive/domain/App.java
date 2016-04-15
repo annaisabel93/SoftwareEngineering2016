@@ -33,6 +33,10 @@ public class App extends App_Base {
 		element.addContent(new Element ("owner").setText(getOwner().toString()));
 		element.addContent(new Element ("method").setText(getContent()));
 		
+		if (getOwner().getUserName().equals("root")){ 	//FIXME
+			element.addContent(new Element("perm").setText("----")); //dirty hack, can't have mask working
+		}
+		
 		return element;		
     	
     }
