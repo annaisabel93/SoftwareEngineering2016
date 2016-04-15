@@ -93,14 +93,14 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	public void initializeReadFileServices( ReadFileService[] rfsArray) throws WrongFileTypeException {
 		int i;
-		try {
+		//try {
 			for ( i=0; i<rfsArray.length; i++) {
 			rfsArray[i] = new ReadFileService(this.uToken1,this.fileNames[i]);
 				
-		}
+			}/*
 		} catch (WrongFileTypeException e) {
 			e.printStackTrace();
-		}		
+		}*/		
 
 	}
 
@@ -131,22 +131,22 @@ public class ReadFileTest extends AbstractServiceTest {
 
 	@Test(expected = UserHasInvalidPermissionsException.class)
 	public void tryReadFile() throws WrongFileTypeException{
-		try {
+		//try {
 		ReadFileService r = new ReadFileService(this.uToken2,"Slack");
 		r.execute();
-		} catch (WrongFileTypeException e) {
+		/*} catch (WrongFileTypeException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Test(expected = EntityDoesNotExistException.class)
 	public void tryReadInexistentFile() throws WrongFileTypeException {
-		try {
+		//try {
 		ReadFileService r = new ReadFileService(this.uToken2,"Zena");
 		r.execute();
-		} catch (WrongFileTypeException e) {
+		/*} catch (WrongFileTypeException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Test(expected = WrongFileTypeException.class)
