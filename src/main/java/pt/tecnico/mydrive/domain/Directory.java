@@ -35,6 +35,33 @@ public class Directory extends Directory_Base {
     	return (Directory) destiny;
     }
     
+    
+    public String[] list(){
+    	String[] result = null;
+    	for(Entity entity: getFileSet()) {
+    		
+    		//System.out.print(entity.checkType() + " ");
+    		
+    		byte[] array = entity.getOwner().getMask();
+    		//System.out.print(array[0]+""+ array[1]+""+array[2]+""+array[3] + " ");
+
+    		if(entity.checkType() == "dir") {
+    			//System.out.print(((Directory) entity).getFileCount()+2 + " ");
+    		}
+    		else {
+    			//System.out.print(((PlainFile) entity).getContent().length() + " ");
+    		}
+    		//System.out.print(entity.getOwner().getUserName() + " ");
+    		//System.out.print(entity.getId() + " ");
+    		//System.out.print(entity.getLastModified().getYear()+"-"+entity.getLastModified().getMonthOfYear()+"-"+entity.getLastModified().getDayOfMonth()+" "+entity.getLastModified().getHourOfDay()+":"+entity.getLastModified().getMinuteOfHour()+":"+entity.getLastModified().getSecondOfMinute() + " ");
+    		//System.out.println(entity.getFilename() + " ");
+    		
+    		
+    	}
+    	return result;
+    }
+    
+    
 	public void addDir(Directory dir){
 		addFile(dir);
 	}
