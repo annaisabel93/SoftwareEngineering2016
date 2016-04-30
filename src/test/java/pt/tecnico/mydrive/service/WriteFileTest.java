@@ -1,14 +1,11 @@
 package pt.tecnico.mydrive.service;
 
-import static org.junit.Assert.*;
-
-import java.util.Date;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import junit.framework.TestFailure;
-import pt.ist.fenixframework.dml.runtime.DomainBasedMap.Getter;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Login;
@@ -18,6 +15,7 @@ import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class WriteFileTest extends AbstractServiceTest{
 
@@ -62,8 +60,8 @@ public class WriteFileTest extends AbstractServiceTest{
 	public void success() {
 		FileSystem fs = FileSystem.getInstance();
 		
-		WriteFileService writetext = new WriteFileService(this.token, "testFile", "content");
-		writetext.execute();
+		WriteFileService service = new WriteFileService(this.token, "testFile", "content");
+		service.execute();
 		
 		//checks
 		
@@ -129,8 +127,16 @@ public class WriteFileTest extends AbstractServiceTest{
 	public void invalidToken() {
 		FileSystem fs = FileSystem.getInstance();
 		long invalidToken = 0L;
-		WriteFileService writetext = new WriteFileService( invalidToken, "testFile", "content");
-		writetext.execute();
+		WriteFileService service = new WriteFileService( invalidToken, "testFile", "content");
+		service.execute();
+	}
+	
+	//attempts to write to a directory instead of a file
+	@Test(expected = EntityDoesNotExistException.class)
+	public void writeToDirectory() {
+		FileSystem fs = FileSystem.getInstance();
+		WriteFileService service = new WriteFileService( this.token, login.getDirectory().getFilename(), "content");
+		service.execute();
 	}
 
 }
