@@ -21,6 +21,7 @@ import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
 
 
 
@@ -155,6 +156,15 @@ public class ReadFileTest extends AbstractServiceTest {
 		ReadFileService r = new ReadFileService(this.uToken2,"Xena");
 		r.execute();
 		
+	}
+	
+	//checks if the token is invalid 
+	@Test(expected = UnknownTokenException.class)
+	public void invalidToken() {
+		FileSystem fs = FileSystem.getInstance();
+		long invalidToken = 0L;
+		ReadFileService service = new ReadFileService(invalidToken, "Jane");
+		service.execute();
 	}
 
 
