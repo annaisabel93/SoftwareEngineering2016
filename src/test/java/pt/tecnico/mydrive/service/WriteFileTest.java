@@ -16,6 +16,7 @@ import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class WriteFileTest extends AbstractServiceTest{
@@ -122,4 +123,14 @@ public class WriteFileTest extends AbstractServiceTest{
 		String contentAfter = f2.getContent();
 		assertNotEquals(contentBefore, contentAfter);
 	}
+	
+	//checks if the token is invalid 
+	@Test(expected = UnknownTokenException.class)
+	public void invalidToken() {
+		FileSystem fs = FileSystem.getInstance();
+		long invalidToken = 0L;
+		WriteFileService writetext = new WriteFileService( invalidToken, "testFile", "content");
+		writetext.execute();
+	}
+
 }
