@@ -50,7 +50,7 @@ public abstract class Entity extends Entity_Base {
 			return path_until_now;
 		}
 		else{
-			return parent.getPath(getFilename()+"/"+path_until_now);
+			return parent.getPath("/"+parent.getFilename()+path_until_now);
 		}
 	}
 	
