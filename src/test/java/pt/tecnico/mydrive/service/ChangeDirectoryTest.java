@@ -51,7 +51,7 @@ public class ChangeDirectoryTest extends AbstractServiceTest {
 		FileSystem fs =FileSystem.getInstance();
 		ChangeDirectoryService service = new ChangeDirectoryService(this.token, dirtogo);
 		
-		//assertEquals(dirtogo, login.getDirectory().getPath("/home/chocolate1"));
+		assertEquals(dirtogo, login.getDirectory().getPath(""));
 
 	}
 	
