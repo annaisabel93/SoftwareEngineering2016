@@ -1,27 +1,21 @@
 package pt.tecnico.mydrive.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Arrays;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.domain.Entity;
-import pt.tecnico.mydrive.domain.Directory;
-import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.App;
-import pt.tecnico.mydrive.domain.Link;
+import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.FileSystem;
+import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.Login;
-
+import pt.tecnico.mydrive.domain.PlainFile;
+import pt.tecnico.mydrive.domain.User;
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
-import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
-import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
-import pt.tecnico.mydrive.exception.UnknownTokenException;
 
 
 
@@ -56,13 +50,13 @@ public class ReadFileTest extends AbstractServiceTest {
 		String userName1 = "GRA", 
 		       userName2 = "BBA";
 
-		String password = "***";
+		String password = "********";
 
 		byte[] mask1 = {1,0,0,0}, 
 		       mask2 = {0,1,1,1};
 
-		String homeDir1 = "/home/GR", 
-		       homeDir2 = "/home/BB";
+		String homeDir1 = "/home/GRA", 
+		       homeDir2 = "/home/BBA";
 	
 		User u1 = new User(fs, name1, userName1, password, mask1 , homeDir1);
 		LoginService service1 = new LoginService(userName1, password);
