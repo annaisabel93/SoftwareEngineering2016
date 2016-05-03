@@ -19,6 +19,10 @@ public class App extends App_Base {
     	super.xmlImport(appDoc);
     }
     
+    public int getSize(){
+    	return getContent().length();
+    }
+    
     public String checkType(){
     	return "app";
     }

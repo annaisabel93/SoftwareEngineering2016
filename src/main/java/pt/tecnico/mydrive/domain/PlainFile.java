@@ -19,6 +19,9 @@ public class PlainFile extends PlainFile_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	
 	public PlainFile(User owner, Element xml){
 		xmlImport(xml);
 		setOwner(owner);
@@ -29,6 +32,11 @@ public class PlainFile extends PlainFile_Base {
 		setContent(content);
 		setLastModified(new DateTime());
 		getParent().setLastModified(new DateTime());
+	}
+	
+	
+	public int getSize(){
+		return getContent().length();
 	}
 	
 	public String read(Login login) throws UserHasInvalidPermissionsException{

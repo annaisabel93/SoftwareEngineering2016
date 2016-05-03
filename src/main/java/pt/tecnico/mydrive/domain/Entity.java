@@ -39,6 +39,8 @@ public abstract class Entity extends Entity_Base {
 		checkPermissions(login, "delete");
 		delete();
 	}
+	
+	public abstract int getSize();
 
 	public void delete(){
 		getOwner().removeFile(this);

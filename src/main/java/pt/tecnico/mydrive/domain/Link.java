@@ -16,7 +16,9 @@ public class Link extends Link_Base {
     	setOwner(owner);
     }
     
-    
+    public int getSize(){
+    	return getContent().length();
+    }
     
     public String checkType(){
     	return "link";

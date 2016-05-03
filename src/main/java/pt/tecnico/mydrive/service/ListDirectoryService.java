@@ -1,16 +1,19 @@
 package pt.tecnico.mydrive.service;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import pt.tecnico.mydrive.domain.Directory;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
+import pt.tecnico.mydrive.service.dto.ListDirDto;
 
 
 public class ListDirectoryService extends FileSystemService {
 
     private Login login;
-    private String[] result;
+    private List<ListDirDto> dto;
    
     private Directory workingDir;
 
@@ -24,13 +27,17 @@ public class ListDirectoryService extends FileSystemService {
 
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
-    	this.result = this.workingDir.list();
-    	
+    	String[] result  = this.workingDir.list();
+    	dto = new ArrayList<ListDirDto>();
+    	for(String line: result){
+    		dto.add(new ListDirDto(line));
+    	}
+    	Collections.sort(this.dto);
     	
     }
     
-    public String[] getResult(){
-    	return this.result;
+    public List<ListDirDto> getResult(){
+    	return this.dto;
     }
     
     

@@ -36,27 +36,70 @@ public class Directory extends Directory_Base {
     }
     
     
+    public String DateToString(DateTime time){
+		String result = "";
+		result = result + time.getYear()+"-"+time.getMonthOfYear()+"-"+time.getDayOfMonth()+" "+time.getHourOfDay()+":"+time.getMinuteOfHour()+":"+time.getSecondOfMinute();
+		return result;
+	}
+    
+    
+    public String PermissionsToString(byte[] perm){
+		String toReturn = "";
+		if(perm[0] == 1){
+			toReturn = toReturn + "r";
+		}
+		else{
+			toReturn = toReturn + "-";
+		}
+		if(perm[1] == 1){
+			toReturn = toReturn + "w";
+		}
+		else{
+			toReturn = toReturn + "-";
+		}
+		if(perm[2] == 1){
+			toReturn = toReturn + "x";
+		}
+		else{
+			toReturn = toReturn + "-";
+		}
+		if(perm[3] == 1){
+			toReturn = toReturn + "d";
+		}
+		else{
+			toReturn = toReturn + "-";
+		}
+		return toReturn;
+	}
+    
+    
+    public int getSize(){
+    	return getFileSet().size();
+    }
+    
     public String[] list(){
-    	String[] result = null;
+    	int size = getFileSet().size() +1; //+1 por causa da propria diretoria
+    	
+    	if(getParent().equals(this)){ //se estivermos na raiz
+    		size++;
+    	}
+    	
+    	String[] result = new String[size];
+    	int count = 0;
     	for(Entity entity: getFileSet()) {
     		
-    		//System.out.print(entity.checkType() + " ");
+    		result[count] = result[count] + entity.checkType() + " ";
     		
     		byte[] array = entity.getOwner().getMask();
-    		//System.out.print(array[0]+""+ array[1]+""+array[2]+""+array[3] + " ");
+    		result[count] = result[count] + PermissionsToString(array) + " ";
 
-    		if(entity.checkType() == "dir") {
-    			//System.out.print(((Directory) entity).getFileCount()+2 + " ");
-    		}
-    		else {
-    			//System.out.print(((PlainFile) entity).getContent().length() + " ");
-    		}
-    		//System.out.print(entity.getOwner().getUserName() + " ");
-    		//System.out.print(entity.getId() + " ");
-    		//System.out.print(entity.getLastModified().getYear()+"-"+entity.getLastModified().getMonthOfYear()+"-"+entity.getLastModified().getDayOfMonth()+" "+entity.getLastModified().getHourOfDay()+":"+entity.getLastModified().getMinuteOfHour()+":"+entity.getLastModified().getSecondOfMinute() + " ");
-    		//System.out.println(entity.getFilename() + " ");
-    		
-    		
+    		result[count] = result[count] + entity.getSize()+ " ";
+    		result[count] = result[count] + getOwner().getUserName() + " ";
+    		result[count] = result[count] + entity.getId() + " ";
+    		result[count] = result[count] + DateToString(getLastModified()) + " ";
+    		result[count] = result[count] + getFilename();
+    	
+    		count++;	
     	}
     	return result;
     }
