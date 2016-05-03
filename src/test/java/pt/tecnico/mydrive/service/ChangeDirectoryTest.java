@@ -24,12 +24,12 @@ public class ChangeDirectoryTest extends AbstractServiceTest {
 	protected void populate() {
 		DateTime date = new DateTime();
 		FileSystem fs =FileSystem.getInstance();
-		User usr = new User(fs, "Ana", "chocolate1", "1234", new byte[] {1,1,1,0} , "/home/chocolate1");
-		User usr2 = new User(fs, "AnaG", "chocolate2", "1234", new byte[] {1,1,1,0} , "/home/chocolate2");
-		LoginService service1 = new LoginService("chocolate1", "1234");
+		User usr = new User(fs, "Ana", "chocolate1", "12345678", new byte[] {1,1,1,0} , "/home/chocolate1");
+		User usr2 = new User(fs, "AnaG", "chocolate2", "12345678", new byte[] {1,1,1,0} , "/home/chocolate2");
+		LoginService service1 = new LoginService("chocolate1", "12345678");
 		service1.execute();
 		
-		LoginService service2 = new LoginService("chocolate2", "1234");
+		LoginService service2 = new LoginService("chocolate2", "12345678");
 		service2.execute();
 		
 		this.token =  service1.getToken();

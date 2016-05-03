@@ -23,8 +23,8 @@ public class CreateFileTest extends AbstractServiceTest{
 	protected void populate(){
 		DateTime date = new DateTime();
 		FileSystem fs = FileSystem.getInstance();
-		User user = new User(fs, "Rita", "chocolate!", "1234", new byte[] {1,1,1,1}, "home/chocolate!");
-		LoginService service = new LoginService("chocolate!", "1234");
+		User user = new User(fs, "Rita", "chocolate!", "12345678", new byte[] {1,1,1,1}, "home/chocolate!");
+		LoginService service = new LoginService("chocolate!", "12345678");
 		service.execute();
 		this.token =  service.getToken();
 		Login login = user.getLoginbyToken(service.getToken());

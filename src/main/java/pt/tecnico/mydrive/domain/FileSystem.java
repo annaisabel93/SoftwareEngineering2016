@@ -9,6 +9,8 @@ import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
+import pt.tecnico.mydrive.exception.InvalidPasswordException;
+import pt.tecnico.mydrive.exception.InvalidUsernameException;
 import pt.tecnico.mydrive.exception.RootCannotBeRemovedException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 
@@ -16,6 +18,7 @@ public class FileSystem extends FileSystem_Base {
     static final Logger log = LogManager.getRootLogger();
 
     public byte[] array = {0,0,0,0};    
+    public byte[] arrayGuest = {1,1,1,1};
    
     public boolean validateToken(long token){
     	for(User user1 : getUserSet()){ //Verifies if the given token is already in use by another login
@@ -41,7 +44,8 @@ public class FileSystem extends FileSystem_Base {
     private FileSystem() {
         setRoot(FenixFramework.getDomainRoot());
         setCounter(0);
-        new Root(this, "SuperUser","root", "***", array, "root");       		
+        new Root(this, "SuperUser","root", "***", array, "root"); 
+        new User(this, "Guest", "nobody", null, arrayGuest, "nobody"); //FIXME falta alterar tempo de login para este - o seu token nunca expira
     }
     
     public User getUserByUsername(String username) {
@@ -83,13 +87,10 @@ public class FileSystem extends FileSystem_Base {
     
     @Override
     public void addUser(User user){
-    	System.out.println("vai adicionar user" + user.getUserName());
     	if(hasUser(user.getUserName())){
-    		System.out.println("entro na funcao add user e verico que o user existe");
     		throw new UsernameAlreadyExistsException(user.getUserName());}
     	else {
     		if((Directory)getRootDir()==null){
-    			System.out.println("vai criar root dir\n\n\n\n\n\n");
     			Directory raiz =new Directory ("/",  user, Counter(),new DateTime());
     			setRootDir(raiz);
     			Directory home1 = new Directory (getRootDir(),"home",  user, Counter(),new DateTime());
@@ -100,7 +101,13 @@ public class FileSystem extends FileSystem_Base {
     		Directory home = (Directory)getRootDir().getByName("home");
     		Directory userHome = new Directory(home,  user.getUserName(), user, Counter(),new DateTime());
     		user.setHome(userHome);
-    		super.addUser(user);
+    		try {
+				super.addUser(user); //FIXME estes catches sao aqui?
+			} catch (InvalidPasswordException e) {
+				System.out.println("You cannot have that password! Please choose another, with at least 8 chars.");
+			} catch (InvalidUsernameException e){
+				System.out.println("You cannot have that username! Please choose another with at least 3 chars.");
+			}
     	}
     }
   

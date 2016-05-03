@@ -4,6 +4,7 @@ package pt.tecnico.mydrive.domain;
 import java.util.ArrayList;
 import org.jdom2.Element;
 
+import pt.tecnico.mydrive.exception.InvalidPasswordException;
 import pt.tecnico.mydrive.exception.InvalidUsernameException;
 
 
@@ -11,16 +12,18 @@ public class User extends User_Base {
 	
 	ArrayList<Directory> dirs = new ArrayList<Directory>();
     
-    public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir) {
-        super();
-        setName(name);
-        
-        if(username.length() > 2)
-        	setUserName(username);
-        else
-        	throw new InvalidUsernameException(username);
-        
-        setPassword(password);
+	public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir) {
+		super();
+		setName(name);
+		if(username.length() > 2)
+			setUserName(username);
+		else
+			throw new InvalidUsernameException(username);
+		if(password.length() > 7)
+			setPassword(password);
+		else
+			throw new InvalidPasswordException(password);
+
         setMask(mask);
         setHomeDir(homeDir);
         setSystem(filesystem);
@@ -54,7 +57,11 @@ public class User extends User_Base {
        
     public void xmlImport(Element userEl){
         	setUserName(new String(userEl.getAttribute("username").getValue()));
-        	setPassword(new String(userEl.getChild("password").getValue()));
+            if(((CharSequence) userEl.getChild("password")).length() > 7)
+            	setPassword(new String(userEl.getChild("password").getValue()));
+            else
+            	throw new InvalidPasswordException(userEl.getChild("password").toString());
+        	
         	setName(new String(userEl.getChild("name").getValue()));
         	setHomeDir(new String(userEl.getChild("home").getValue()));
         	//FIXME mask

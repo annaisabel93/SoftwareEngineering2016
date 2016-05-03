@@ -1,25 +1,15 @@
 package pt.tecnico.mydrive.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
-import java.util.logging.Logger;
 
 import pt.tecnico.mydrive.domain.App;
 import pt.tecnico.mydrive.domain.Directory;
-import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
-import pt.tecnico.mydrive.exception.AppDoesNotExistException;
-import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
-import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
-import pt.tecnico.mydrive.exception.LinkDoesNotExistException;
-import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 
 
 public class ListDirectoryTest extends AbstractServiceTest {
@@ -35,8 +25,8 @@ public class ListDirectoryTest extends AbstractServiceTest {
 	protected void populate(){
 		DateTime date = new DateTime();
 		FileSystem fs =FileSystem.getInstance();
-		User usr = new User(fs, "Luis", "luissantos", "luis", new byte[] {1,1,1,1} , "/home/luissantos");
-		LoginService service = new LoginService("luissantos", "luis");
+		User usr = new User(fs, "Luis", "luissantos", "luis1234", new byte[] {1,1,1,1} , "/home/luissantos");
+		LoginService service = new LoginService("luissantos", "luis1234");
 		service.execute();
 		this.token =  service.getToken();
 		Login login = usr.getLoginbyToken(service.getToken());
