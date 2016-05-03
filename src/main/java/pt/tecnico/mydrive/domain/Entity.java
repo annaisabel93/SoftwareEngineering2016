@@ -3,6 +3,8 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.InvalidPathLenghtException;
+
 public abstract class Entity extends Entity_Base {
     
 	//take filesystem off
@@ -46,12 +48,17 @@ public abstract class Entity extends Entity_Base {
 
 	public String getPath(String path_until_now){ //tem que se passar   "/nome_do_ficheiro" 
 		Directory parent = getParent();
-		if(parent.getParent() == parent){
-			return path_until_now;
+		String parents = parent.toString();
+		if(parents.getBytes().length < 1024){
+			if(parent.getParent() == parent){
+				return path_until_now;
+			}
+			else{
+				return parent.getPath("/"+parent.getFilename()+path_until_now);
+			}
 		}
-		else{
-			return parent.getPath("/"+parent.getFilename()+path_until_now);
-		}
+		else
+			throw new InvalidPathLenghtException(parents.getBytes().length);
 	}
 	
 	public boolean checkPermissions(Login login, String action){

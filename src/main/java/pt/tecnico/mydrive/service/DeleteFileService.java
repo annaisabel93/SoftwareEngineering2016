@@ -19,11 +19,9 @@ public class DeleteFileService extends FileSystemService {
 	}
 	
 	//executa o servico
+	
 	@Override
 	protected void dispatch() throws EntityDoesNotExistException{
-			if (login.getDirectory().getByName(filename) == null){
-				throw new EntityDoesNotExistException(this.filename);
-			}
 			try {
 				login.getDirectory().getByName(filename).delete();	
 			} catch(EntityDoesNotExistException e) {

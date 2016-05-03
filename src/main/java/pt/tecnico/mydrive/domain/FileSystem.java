@@ -75,6 +75,12 @@ public class FileSystem extends FileSystem_Base {
     	return getUserByUsername(username) != null;
     }
     
+    public static void deleteInvalidLogins(User user){ //Checks if user logins are still valid
+    	for(Login login : user.getLoginSet()){
+    		login.checkTimeout();
+    	}
+    }
+    
     @Override
     public void addUser(User user){
     	System.out.println("vai adicionar user" + user.getUserName());

@@ -4,6 +4,8 @@ package pt.tecnico.mydrive.domain;
 import java.util.ArrayList;
 import org.jdom2.Element;
 
+import pt.tecnico.mydrive.exception.InvalidUsernameException;
+
 
 public class User extends User_Base {
 	
@@ -12,7 +14,12 @@ public class User extends User_Base {
     public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir) {
         super();
         setName(name);
-        setUserName(username);
+        
+        if(username.length() > 3)
+        	setUserName(username);
+        else
+        	throw new InvalidUsernameException(username);
+        
         setPassword(password);
         setMask(mask);
         setHomeDir(homeDir);
