@@ -2,11 +2,7 @@ package pt.tecnico.mydrive.service;
 
 
 import pt.tecnico.mydrive.domain.Directory;
-
-import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.Login;
-import pt.tecnico.mydrive.domain.PlainFile;
-import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.DirectoryDoesNotExistWithinDirectoryException;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
 

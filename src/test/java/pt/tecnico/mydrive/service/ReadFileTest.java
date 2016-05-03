@@ -53,8 +53,8 @@ public class ReadFileTest extends AbstractServiceTest {
 		String name1 = "Reaper", 
 		       name2 = "Bunny" ;
 
-		String userName1 = "GR", 
-		       userName2 = "BB";
+		String userName1 = "GRA", 
+		       userName2 = "BBA";
 
 		String password = "***";
 

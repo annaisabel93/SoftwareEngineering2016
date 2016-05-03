@@ -2,7 +2,6 @@ package pt.tecnico.mydrive.service;
 
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
-import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 

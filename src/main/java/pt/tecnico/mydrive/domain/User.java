@@ -15,7 +15,7 @@ public class User extends User_Base {
         super();
         setName(name);
         
-        if(username.length() > 3)
+        if(username.length() > 2)
         	setUserName(username);
         else
         	throw new InvalidUsernameException(username);

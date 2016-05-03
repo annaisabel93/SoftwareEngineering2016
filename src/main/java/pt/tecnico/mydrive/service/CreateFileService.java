@@ -1,15 +1,12 @@
 package pt.tecnico.mydrive.service;
 
-import pt.tecnico.mydrive.domain.FileSystem;
-import pt.tecnico.mydrive.domain.Entity;
-import pt.tecnico.mydrive.domain.Directory;
-import pt.tecnico.mydrive.domain.PlainFile;
-import pt.tecnico.mydrive.domain.App;
-import pt.tecnico.mydrive.domain.Link;
-import pt.tecnico.mydrive.domain.User;
-
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.domain.App;
+import pt.tecnico.mydrive.domain.Directory;
+import pt.tecnico.mydrive.domain.Link;
+import pt.tecnico.mydrive.domain.PlainFile;
+import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
 import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
 import pt.tecnico.mydrive.exception.UnknownFileTypeException;

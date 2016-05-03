@@ -1,9 +1,8 @@
 package pt.tecnico.mydrive.service;
 
 import pt.tecnico.mydrive.domain.Login;
-import pt.tecnico.mydrive.exception.UnknownTokenException;
-import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
 
 
 public class DeleteFileService extends FileSystemService {
