@@ -8,10 +8,9 @@ import org.joda.time.DateTime;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
-import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
-import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
 
 public class Login extends Login_Base {
     
@@ -22,9 +21,10 @@ public class Login extends Login_Base {
 			throw new UsernameDoesntExistException("Username does not exist");
 		}
     	
-    	deleteInvalidLogins(user);
+    	FileSystem.deleteInvalidLogins(user);
+    	//FIXME
     	setDateCreated(new DateTime());
-    	long token = new BigInteger(64, new Random()).longValue();
+		long token = new BigInteger(64, new Random()).longValue();
     	while(user.getSystem().validateToken(token) == false){
     		token = new BigInteger(64, new Random()).longValue();
     	}
@@ -38,7 +38,7 @@ public class Login extends Login_Base {
     }
     
     
-    public void checkTimeout() throws LoginTimeExpiredException{ //Verifies if the login 
+    public void checkTimeout() throws LoginTimeExpiredException{ 
     	if((getDateCreated().getMillis() - new DateTime().getMillis()) > 720000){
     		setDirectory(null);
     		setUser(null);
@@ -56,11 +56,4 @@ public class Login extends Login_Base {
     		throw new UserHasInvalidPermissionsException();
     	return ((PlainFile) file).read(this);
     }
-    
-    public void deleteInvalidLogins(User user){ //Checks if user logins are still valid
-    	for(Login login : user.getLoginSet()){
-    		login.checkTimeout();
-    	}
-    }
-    
 }
