@@ -5,13 +5,15 @@ import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.InvalidPathLenghtException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class Directory extends Directory_Base {
 	
 	
 	public Directory(String filename, User user, long id,  DateTime lastModified) {
-		super();
+		super();		
 		init(this, filename, user, id, lastModified);
 	}
 	
@@ -21,7 +23,20 @@ public class Directory extends Directory_Base {
         init(dir, filename,user,id,lastModified);
     }
 
-    
+    public void checkCreate(User user, String newFile) throws UserHasInvalidPermissionsException, InvalidPathLenghtException{
+    	if((getPath("/"+ getFilename())+newFile).length() > 1024 ){
+    		throw new InvalidPathLenghtException((getPath("/"+ getFilename())+newFile).length());
+    	}
+    	if(user.getName().equals(getOwner().getName())){
+    		return;
+    	}
+    	else{
+    		if(getOwner().getMask()[0] == 0){
+    			throw new UserHasInvalidPermissionsException();
+    		}
+    		
+    	}
+    }
 	
     public Directory(User owner, Element xml){
     	xmlImport(xml);

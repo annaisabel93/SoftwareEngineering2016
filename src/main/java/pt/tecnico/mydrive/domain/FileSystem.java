@@ -45,7 +45,7 @@ public class FileSystem extends FileSystem_Base {
         setRoot(FenixFramework.getDomainRoot());
         setCounter(0);
         new Root(this, "SuperUser","root", "***", array, "root"); 
-        new User(this, "Guest", "nobody", null, arrayGuest, "nobody"); //FIXME falta alterar tempo de login para este - o seu token nunca expira
+       // new User(this, "Guest", "nobody", null, arrayGuest, "nobody"); //FIXME falta alterar tempo de login para este - o seu token nunca expira
     }
     
     public User getUserByUsername(String username) {
@@ -101,13 +101,13 @@ public class FileSystem extends FileSystem_Base {
     		Directory home = (Directory)getRootDir().getByName("home");
     		Directory userHome = new Directory(home,  user.getUserName(), user, Counter(),new DateTime());
     		user.setHome(userHome);
-    		try {
+    		//try {
 				super.addUser(user); //FIXME estes catches sao aqui?
-			} catch (InvalidPasswordException e) {
-				System.out.println("You cannot have that password! Please choose another, with at least 8 chars.");
-			} catch (InvalidUsernameException e){
-				System.out.println("You cannot have that username! Please choose another with at least 3 chars.");
-			}
+//			} catch (InvalidPasswordException e) {
+//				System.out.println("You cannot have that password! Please choose another, with at least 8 chars.");
+//			} catch (InvalidUsernameException e){
+//				System.out.println("You cannot have that username! Please choose another with at least 3 chars.");
+//			}
     	}
     }
   

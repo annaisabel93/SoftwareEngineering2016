@@ -1,5 +1,7 @@
 package pt.tecnico.mydrive.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -104,6 +106,8 @@ public class ListDirectoryTest extends AbstractServiceTest {
 //		expected[5] = "link "+PermissionsToString(this.link.getPermissions());
 //		expected[5] = expected[0] + " 0 luis" + Long.toString(this.login.getDirectory().getId())+ " ";
 //		expected[5] = expected[0] + "link";
+//		
+//		String[] result = listdir.getResult();
 //		
 //		assertEquals("Did not list what was expected", expected, result);      
 	}		

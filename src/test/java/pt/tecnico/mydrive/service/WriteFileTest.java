@@ -32,7 +32,7 @@ public class WriteFileTest extends AbstractServiceTest{
 		String username1 = "filipac";
 		String username2 = "filipaco";
 		String name = "ola";
-		String password = "password";
+		String password = "123456789";
 		String homeDir1 = "/home/" + username1;
 		String homeDir2 = "/home/" + username2;
 		User userWithPermissions = new User(fs, name, username1, password, mask1, homeDir1);

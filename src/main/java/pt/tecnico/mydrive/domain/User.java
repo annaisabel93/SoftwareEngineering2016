@@ -14,15 +14,15 @@ public class User extends User_Base {
     
 	public User(FileSystem filesystem, String name, String username, String password, byte[] mask, String homeDir) {
 		super();
-		setName(name);
-		if(username.length() > 2)
-			setUserName(username);
-		else
+		if(username.length() <= 2){
 			throw new InvalidUsernameException(username);
-		if(password.length() > 7)
-			setPassword(password);
-		else
+		}
+		if(password.length() <= 7){
 			throw new InvalidPasswordException(password);
+		}
+		setName(name);
+		setUserName(username);
+		setPassword(password);
 
         setMask(mask);
         setHomeDir(homeDir);

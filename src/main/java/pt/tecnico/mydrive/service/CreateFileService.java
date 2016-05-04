@@ -10,13 +10,15 @@ import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
 import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
 import pt.tecnico.mydrive.exception.UnknownFileTypeException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
 
 
 public class CreateFileService extends FileSystemService{
 
 	private long token;	
 	private String fileName;
-	private String type;	
+	private String type;
 	
 	private Directory workingDir;
 	private User user;
@@ -26,6 +28,7 @@ public class CreateFileService extends FileSystemService{
 
 	public CreateFileService(long token, String fileName, String type, String content){
 		this.token = token;
+		
 		this.fileName = fileName;
 		this.type = type;
 		this.user = this.getLogin(token).getUser();
@@ -35,9 +38,11 @@ public class CreateFileService extends FileSystemService{
 	}
 
 
-	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException{
+	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException{
+		this.workingDir.checkCreate(this.user, this.fileName);
 		switch(this.type) {
 			case "Directory":
+					
 					new Directory(this.workingDir, this.fileName, this.user, 3, this.lastModified);
 					break;
 			case "App":

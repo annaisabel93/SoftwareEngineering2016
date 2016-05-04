@@ -39,13 +39,13 @@ public class LoginTest extends AbstractServiceTest {
 
 	@Test(expected = UsernameDoesntExistException.class)
 	public void wrongusername(){
-		LoginService service = new LoginService("ana", "...");
+		LoginService service = new LoginService("ana", "12345678");
 		service.execute();
 	}
 	
 	@Test(expected = WrongPasswordException.class)
 	public void wrongpassword(){
-		LoginService service = new LoginService("chocolate!", "...");
+		LoginService service = new LoginService("chocolate!", "87654321");
 		service.execute();
 	}
 

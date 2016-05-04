@@ -14,6 +14,7 @@ public class ListDirectoryService extends FileSystemService {
 
     private Login login;
     private List<ListDirDto> dto;
+    private String[] result;
    
     private Directory workingDir;
 
@@ -27,17 +28,22 @@ public class ListDirectoryService extends FileSystemService {
 
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
-    	String[] result  = this.workingDir.list();
+    	String[] result1  = this.workingDir.list();
+    	this.result =  result1;
     	dto = new ArrayList<ListDirDto>();
-    	for(String line: result){
+    	for(String line: result1){
     		dto.add(new ListDirDto(line));
     	}
     	Collections.sort(this.dto);
     	
     }
     
-    public List<ListDirDto> getResult(){
+    public List<ListDirDto> getDto(){
     	return this.dto;
+    }
+    
+    public String[] getResult(){
+    	return this.result;
     }
     
     
