@@ -14,11 +14,15 @@ import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.domain.User;
 import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
+import pt.tecnico.mydrive.exception.InvalidPathLenghtException;
 import pt.tecnico.mydrive.exception.UnknownFileTypeException;
+import pt.tecnico.mydrive.exception.UnknownTokenException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class CreateFileTest extends AbstractServiceTest{
 	
 	private long token;
+	private long token2;
 	
 	protected void populate(){
 		DateTime date = new DateTime();
@@ -32,7 +36,8 @@ public class CreateFileTest extends AbstractServiceTest{
 		PlainFile file = new PlainFile(login.getDirectory(), "textfile", login.getUser(), 50, date, "hey");
 		App app = new App(login.getDirectory(), "apptest", login.getUser(), 51, date, "adeus ana");
 		Link link = new Link(login.getDirectory(), "linktest", login.getUser(), 51, date, "link");
-	
+		
+		User user2 = new User(fs, "Joana", "joana94", "joana1994", new byte[] {0,0,0,0}, "home/joana");
 	}
 	
 	@Test
@@ -78,7 +83,44 @@ public class CreateFileTest extends AbstractServiceTest{
 		CreateFileService service = new CreateFileService(this.token, "exemplo3", typefile, content);
 		service.execute();
 	}
+	/*
+	@Test(expected = UnknownTokenException.class)
+	public void createWithoutPermissionsFile(){
+		final String content = "Welcome to MyDrive Application";
+		final String typefile = "PlainFile";
+		CreateFileService service = new CreateFileService(this.token2, "MyDrive", typefile, content);
+		service.execute();
+	}*/
+	/*
+	@Test(expected = UserHasInvalidPermissionsException.class)
+	public void createWithoutPermissionsFile(){
+		
+	}*/
 	
+	@Test(expected = InvalidPathLenghtException.class)
+	public void createTooLongPathFile(){
+		final String fileName = "Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+				+ "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
+		final String content = "home/chocolate!/example";
+		final String typeFile = "Link";
+		CreateFileService service = new CreateFileService(this.token, fileName, typeFile, content);
+		service.execute();
+	}
+
 /*	@Test(expected = DirectoryCannotHaveContentException.class)
 	public void createNullDirectory(){
 		 final String content = "oi";
