@@ -8,6 +8,7 @@ public class ListDirDto implements Comparable<ListDirDto> {
 
     public ListDirDto(String list) {
     	this.info = list;
+    	System.out.println("recebeu: " + list);
     	String[] splited = list.split("\\s+");
     	this.name = splited[7];
     }

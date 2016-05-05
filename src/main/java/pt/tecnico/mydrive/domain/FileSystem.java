@@ -57,6 +57,9 @@ public class FileSystem extends FileSystem_Base {
         return null;
     }
     
+    
+
+    
     public Entity getDirectoryHome(String username){ //devolve uma entity no meio de todas criadas no file sistem
     	for (User user : getUserSet()) {
     		if(user.getUserName().equals(username)){

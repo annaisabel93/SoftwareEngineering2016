@@ -50,6 +50,9 @@ public class CreateFileService extends FileSystemService{
 			case "PlainFile":
 				new PlainFile(this.workingDir, this.fileName, this.user, 2, this.lastModified, content);
 			case "Link":
+				if((getLogin(this.token).checkExistance(content)) == false){ //susbtituir por excecao
+					System.out.println("link para coisa inexistente");
+				}
 				if (this.content == null) { throw new ContentCannotBeNullException(content); }
 				else{
 					new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);

@@ -89,33 +89,64 @@ public class Directory extends Directory_Base {
     
     
     public int getSize(){
-    	return getFileSet().size();
+    	int size =  0;
+    	size = getFileSet().size();
+    	if(getParent().equals(this)){
+    		size ++;
+    	}
+    	else{
+    		size = size +2;
+    	}
+    	return size;
+    	
     }
     
     public String[] list(){
     	int size = getFileSet().size() +1; //+1 por causa da propria diretoria
-    	
-    	if(getParent().equals(this)){ //se estivermos na raiz
+    	int is_root = 1;
+    	if((getParent().equals(this)) == false){ //se estivermos na raiz
     		size++;
+    		is_root = 0;
     	}
     	
     	String[] result = new String[size];
     	int count = 0;
     	for(Entity entity: getFileSet()) {
     		
-    		result[count] = result[count] + entity.checkType() + " ";
+    		result[count] = entity.checkType() + " ";
     		
     		byte[] array = entity.getOwner().getMask();
     		result[count] = result[count] + PermissionsToString(array) + " ";
 
     		result[count] = result[count] + entity.getSize()+ " ";
-    		result[count] = result[count] + getOwner().getUserName() + " ";
+    		result[count] = result[count] + entity.getOwner().getUserName() + " ";
     		result[count] = result[count] + entity.getId() + " ";
-    		result[count] = result[count] + DateToString(getLastModified()) + " ";
-    		result[count] = result[count] + getFilename();
+    		result[count] = result[count] + DateToString(entity.getLastModified()) + " ";
+    		result[count] = result[count] + entity.getFilename();
     	
     		count++;	
     	}
+    	//propria diretoria
+    	result[count] = "dir ";
+		result[count] = result[count] + PermissionsToString(getPermissions()) + " ";
+		result[count] = result[count] + getSize()+ " ";
+		result[count] = result[count] + getOwner().getUserName() + " ";
+		result[count] = result[count] + getId() + " ";
+		result[count] = result[count] + DateToString(getLastModified()) + " ";
+		result[count] = result[count] + getFilename();
+    	count++;
+		//diretoria mae, se nao for a raiz
+		if(is_root == 0){
+			result[count] = "dir ";
+			result[count] = result[count] + PermissionsToString(getParent().getPermissions()) + " ";
+			result[count] = result[count] + getParent().getSize()+ " ";
+			result[count] = result[count] + getParent().getOwner().getUserName() + " ";
+			result[count] = result[count] + getParent().getId() + " ";
+			result[count] = result[count] + DateToString(getParent().getLastModified()) + " ";
+			result[count] = result[count] + getParent().getFilename();
+		}
+		
+		
     	return result;
     }
     

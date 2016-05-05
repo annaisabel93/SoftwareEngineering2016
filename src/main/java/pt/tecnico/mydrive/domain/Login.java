@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
@@ -45,6 +46,25 @@ public class Login extends Login_Base {
     		throw new LoginTimeExpiredException();
     	}
     }
+    
+    
+    public boolean checkExistance(String absolutePath) throws ContentCannotBeNullException{ //ve se o ficheiro em questao existe
+    	Directory root = getUser().getSystem().getRootDir(); //Starts on rootDir
+    	if(absolutePath == null){
+    		throw new ContentCannotBeNullException("nulo");
+    	}
+    	String[] items= absolutePath.split("/"); //splits the full path into Directories
+    	
+    	for(int x = 1; x < items.length; x++){ // Goes to each array position to move 1 by 1 until the last position (destiny)
+    		Directory dir = (Directory) root.getByName(items[x]);
+    		if(dir == null){
+    			return false;
+    		}
+    		root = dir;
+    	}
+    	return true;
+    }
+    
     
     public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException, UserHasInvalidPermissionsException{
     	Entity file = getDirectory().getByName(filename);

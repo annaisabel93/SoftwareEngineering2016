@@ -35,6 +35,9 @@ public class ListDirectoryService extends FileSystemService {
     		dto.add(new ListDirDto(line));
     	}
     	Collections.sort(this.dto);
+    	for(ListDirDto dtosingle: dto){
+    		System.out.println(dtosingle.getList());
+    	}
     	
     }
     
