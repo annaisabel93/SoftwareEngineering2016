@@ -12,7 +12,7 @@ import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
 import pt.tecnico.mydrive.exception.UnknownFileTypeException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
-
+import pt.tecnico.mydrive.exception.InexistentPointerForLinkException;
 
 public class CreateFileService extends FileSystemService{
 
@@ -38,26 +38,31 @@ public class CreateFileService extends FileSystemService{
 	}
 
 
-	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException{
+	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
 		this.workingDir.checkCreate(this.user, this.fileName);
 		switch(this.type) {
 			case "Directory":
-					
-					new Directory(this.workingDir, this.fileName, this.user, 3, this.lastModified);
-					break;
+				new Directory(this.workingDir, this.fileName, this.user, 3, this.lastModified);
+				break;
 			case "App":
 				new App(this.workingDir, this.fileName, this.user, 5, this.lastModified, content);
 			case "PlainFile":
 				new PlainFile(this.workingDir, this.fileName, this.user, 2, this.lastModified, content);
 			case "Link":
-				if((getLogin(this.token).checkExistance(content)) == false){ //susbtituir por excecao
-					System.out.println("link para coisa inexistente");
+				try {
+					boolean validLink = getLogin(this.token).checkExistance(content);
+
+					if (this.content == null) { throw new ContentCannotBeNullException(content); }
+					else{
+						new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
+						break;
+					}
 				}
-				if (this.content == null) { throw new ContentCannotBeNullException(content); }
-				else{
-					new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
-					break;
+				catch (InexistentPointerForLinkException e) {
+					e.printStackTrace();
 				}
+
+
 			default:
 				throw new UnknownFileTypeException(type);
 		}
