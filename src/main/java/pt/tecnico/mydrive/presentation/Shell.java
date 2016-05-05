@@ -16,7 +16,7 @@ public abstract class Shell {
   public Shell(String n, Writer w, boolean flush) {
     name = n;
     out = new PrintWriter(w, flush);
-
+    
     
     
     new Command(this, "quit", "Quit the command interpreter") {
@@ -83,6 +83,7 @@ public abstract class Shell {
 	try {
 	  c.execute(Arrays.copyOfRange(arg, 1, arg.length));
 	} catch (RuntimeException e) {
+		System.out.println("errooooooooooooooo");
 	  System.err.println(arg[0]+": "+e);
 	  e.printStackTrace(); // debug
 	}

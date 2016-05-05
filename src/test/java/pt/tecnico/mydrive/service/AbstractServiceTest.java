@@ -19,7 +19,7 @@ public abstract class AbstractServiceTest {
 	
 	@BeforeClass
 	public static void setUpBeforeAll() throws Exception{
-//		Main.init();
+		Main.init();
 	}
 	
 	@Before
