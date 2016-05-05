@@ -97,7 +97,7 @@ public class Login extends Login_Base {
     	return true;
     }
     
-    
+    /*
     public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException, UserHasInvalidPermissionsException{
     	Entity file = getDirectory().getByName(filename);
     	if(file == null)
@@ -107,5 +107,5 @@ public class Login extends Login_Base {
     	if(file.checkPermissions(this, "read") == false)
     		throw new UserHasInvalidPermissionsException();
     	return ((PlainFile) file).read(this);
-    }
+    }*/
 }

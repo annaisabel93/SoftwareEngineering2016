@@ -108,7 +108,7 @@ public class ListDirectoryTest extends AbstractServiceTest {
 		expected[1] = expected[1] + "dir";
 		dto.add(new ListDirDto(expected[1]));
 		//plainFile created in working dir
-		expected[5] = "plainFile "+PermissionsToString(this.plain.getPermissions());
+		expected[5] = "PlainFile "+PermissionsToString(this.plain.getPermissions());
 		expected[5] = expected[5] + " 8 luissantos " + Long.toString(this.plain.getId())+ " ";
 		expected[5] = expected[5] + DateToString(this.plain.getLastModified()) + " ";
 		expected[5] = expected[5] + "text";
@@ -160,7 +160,7 @@ public class ListDirectoryTest extends AbstractServiceTest {
 		expected[1] = expected[1] + "dir";
 		dto.add(new ListDirDto(expected[1]));
 		//plainFile created in working dir
-		expected[4] = "plainFile "+PermissionsToString(this.plain.getPermissions());
+		expected[4] = "PlainFile "+PermissionsToString(this.plain.getPermissions());
 		expected[4] = expected[4] + " 8 luissantos " + Long.toString(this.plain.getId())+ " ";
 		expected[4] = expected[4] + DateToString(this.plain.getLastModified()) + " ";
 		expected[4] = expected[4] + "text";

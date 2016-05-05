@@ -8,6 +8,7 @@ import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.InvalidPathLenghtException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class Directory extends Directory_Base {
 	
@@ -178,6 +179,9 @@ public class Directory extends Directory_Base {
 		super.delete();
 	}
 
+	public String read(Login login) throws WrongFileTypeException{
+		throw new WrongFileTypeException();
+	}
 	
 	public Entity getByName(String name) throws EntityDoesNotExistException {
 		for(Entity e: getFileSet()){

@@ -46,22 +46,14 @@ public class CreateFileService extends FileSystemService{
 				break;
 			case "App":
 				new App(this.workingDir, this.fileName, this.user, 5, this.lastModified, content);
+				break;
 			case "PlainFile":
 				new PlainFile(this.workingDir, this.fileName, this.user, 2, this.lastModified, content);
+				break;
 			case "Link":
-				try {
-					boolean validLink = getLogin(this.token).checkExistance(content);
-
-					if (this.content == null) { throw new ContentCannotBeNullException(content); }
-					else{
-						new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
-						break;
-					}
-				}
-				catch (InexistentPointerForLinkException e) {
-					e.printStackTrace();
-				}
-
+				this.getLogin(this.token).checkExistance(content);
+				new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);	
+				break;
 
 			default:
 				throw new UnknownFileTypeException(type);
