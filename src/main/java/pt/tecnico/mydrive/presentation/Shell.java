@@ -17,7 +17,6 @@ public abstract class Shell {
     name = n;
     out = new PrintWriter(w, flush);
 
-//Cada command instanciado vai ser uma das coisas da apresentacao
     
     
     new Command(this, "quit", "Quit the command interpreter") {

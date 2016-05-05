@@ -3,12 +3,18 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
+
 public class Link extends Link_Base {
     
     public Link(Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
-        super();
-        init(dir, filename,user,id,lastModified);
-        setContent(content);
+	super();
+	if ( content != null ) {
+		init(dir, filename,user,id,lastModified);
+        	setContent(content);
+	} else {
+		throw new ContentCannotBeNullException(content); 
+	}
     }
 
     public Link(User owner, Element xml){

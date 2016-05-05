@@ -176,7 +176,7 @@
               </execution>
             </executions>
             <configuration>
-    	      <mainClass>pt.tecnico.mydrive.Main</mainClass> <!-- FIXME -->
+    	      <mainClass>pt.tecnico.mydrive.presentation.MyDriveShell</mainClass> <!-- FIXME -->
               <killAfter>-1</killAfter>
 				
 			</configuration>

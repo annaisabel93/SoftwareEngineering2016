@@ -25,60 +25,32 @@ public class ChangeDirectoryService extends FileSystemService {
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
     	if(directoryPath.equals(".")){ //Print current directory
-    		System.out.println(this.workingDir.getPath(""));
+    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	if(directoryPath.equals("..")) { //Goes to parent directory
     		if(this.workingDir.getParent() == this.workingDir){
-    			System.out.println(this.workingDir.getPath(""));
+    			System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     			return;
     		}
     		login.setDirectory(this.workingDir.getParent());
-    		System.out.println(this.workingDir.getPath(""));
+    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	String[] items= this.directoryPath.split("/");
     	if(items[0].equals("")){
-    		moveAbsolute(this.directoryPath);
+    		this.login.moveAbsolute(this.directoryPath);
+    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	else{
-    		moveRelative(this.directoryPath);
+    		this.login.moveRelative(this.directoryPath);
+    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	
     }
     
-    
-
-    	
-    
-    public void moveAbsolute(String absolutePath) throws DirectoryDoesNotExistWithinDirectoryException{ //Goes from rootDir until the desired Directory
-    	Directory root = fs.getRootDir(); //Starts on rootDir
-    	String[] items= absolutePath.split("/"); //splits the full path into Directories
-    	for(int x = 1; x < items.length; x++){ // Goes to each array position to move 1 by 1 until the last position (destiny)
-    		Directory dir = (Directory) root.getByName(items[x]);
-    		if(dir == null){
-    			throw new DirectoryDoesNotExistWithinDirectoryException(items[x]);
-    		}
-    		root = dir;
-    	}
-    	login.setDirectory(root);
-    }
-    
-    public void moveRelative(String relativePath){// igual, mas parte do current directory
-    	Directory root = this.login.getDirectory(); 
-    	String[] items = this.directoryPath.split("/"); 
-    	for(int x = 0; x < items.length; x++){
-    		Directory dir = (Directory) root.getByName(items[x]);
-    		if(dir == null){
-    			throw new DirectoryDoesNotExistWithinDirectoryException(items[x]);
-    		}
-    		root = dir;
-    	}
-    	login.setDirectory(root);
-    	System.out.println(root.getPath(""));
-    }
     
     
     
