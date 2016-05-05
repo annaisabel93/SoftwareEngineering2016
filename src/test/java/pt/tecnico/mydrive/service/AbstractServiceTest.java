@@ -13,13 +13,14 @@ import org.junit.BeforeClass;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.WriteOnReadError;
 import pt.tecnico.mydrive.Main;
+import pt.tecnico.mydrive.presentation.MyDriveShell;
 
 public abstract class AbstractServiceTest {
 	protected static final Logger log = LogManager.getRootLogger();
 	
 	@BeforeClass
 	public static void setUpBeforeAll() throws Exception{
-//		Main.init();
+		Main.init();
 	}
 	
 	@Before
