@@ -9,7 +9,8 @@ public class MyDriveShell extends Shell {
 
   public MyDriveShell() { // Adicionem aqui os comandos correspondentes a cada coisa da apresentacao
     super("MyDrive");
-    //new CreatePerson(this);
+    new LoginCommand(this);
+    new ChangeWorkingDirCommand(this);
     //new CreateContact(this);
     //new RemovePerson(this);
     //new RemoveContact(this);
