@@ -83,14 +83,7 @@ public class CreateFileTest extends AbstractServiceTest{
 		CreateFileService service = new CreateFileService(this.token, "exemplo3", typefile, content);
 		service.execute();
 	}
-	/*
-	@Test(expected = UnknownTokenException.class)
-	public void createWithoutPermissionsFile(){
-		final String content = "Welcome to MyDrive Application";
-		final String typefile = "PlainFile";
-		CreateFileService service = new CreateFileService(this.token2, "MyDrive", typefile, content);
-		service.execute();
-	}*/
+	
 	/*
 	@Test(expected = UserHasInvalidPermissionsException.class)
 	public void createWithoutPermissionsFile(){

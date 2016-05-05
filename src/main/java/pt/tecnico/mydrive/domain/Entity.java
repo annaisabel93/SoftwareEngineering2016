@@ -62,6 +62,7 @@ public abstract class Entity extends Entity_Base {
 		else
 			throw new InvalidPathLenghtException(parents.getBytes().length);
 	}
+	public abstract String read(Login login);
 	
 	public boolean checkPermissions(Login login, String action){
 		

@@ -3,7 +3,9 @@ package pt.tecnico.mydrive.domain;
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
+import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.WrongFileTypeException;
 
 public class PlainFile extends PlainFile_Base {
     
@@ -38,13 +40,29 @@ public class PlainFile extends PlainFile_Base {
 	public int getSize(){
 		return getContent().length();
 	}
-	
+	/*
 	public String read(Login login) throws UserHasInvalidPermissionsException{
 		if(!(checkPermissions(login, "read")))
 			throw new UserHasInvalidPermissionsException();
 		else{
 			return getContent();
 		}
+	}*/
+	/*
+	public PlainFile getFileByName(String filename) throws WrongFileTypeException{
+		Entity file = getParent().getByName(filename);
+		if(file instanceof PlainFile)
+			return (PlainFile) file;
+		else
+			throw new WrongFileTypeException();
+		
+	}*/
+	
+	public String read(Login login) throws UserHasInvalidPermissionsException, WrongFileTypeException, EntityDoesNotExistException{
+			
+		if(checkPermissions(login, "read") == false)
+			throw new UserHasInvalidPermissionsException();
+		return this.getContent();
 	}
 	
 	@Override
@@ -63,7 +81,7 @@ public class PlainFile extends PlainFile_Base {
 	
 	@Override
 	public String checkType(){
-		return "plainFile";
+		return "PlainFile";
 	}
 	
 	public Element xmlExport(){
