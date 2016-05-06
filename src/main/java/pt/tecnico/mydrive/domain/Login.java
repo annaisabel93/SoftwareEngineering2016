@@ -11,6 +11,7 @@ import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
 import pt.tecnico.mydrive.exception.LoginTimeExpiredException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 import pt.tecnico.mydrive.exception.UsernameDoesntExistException;
+import pt.tecnico.mydrive.exception.VariableDoesNotExistException;
 import pt.tecnico.mydrive.exception.WrongFileTypeException;
 import pt.tecnico.mydrive.exception.WrongPasswordException;
 import pt.tecnico.mydrive.exception.InexistentPointerForLinkException;
@@ -97,6 +98,13 @@ public class Login extends Login_Base {
     	return true;
     }
     
+    public Variable getVariableByName(String variableName) throws VariableDoesNotExistException{
+    	for(Variable variable : getVariableSet()){
+    		if(variable.getName().equals(variableName))
+    			return variable;
+    	}
+    	throw new VariableDoesNotExistException();
+    }
     /*
     public String read(String filename)throws EntityDoesNotExistException, WrongFileTypeException, UserHasInvalidPermissionsException{
     	Entity file = getDirectory().getByName(filename);

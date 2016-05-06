@@ -12,6 +12,7 @@ public class ChangeDirectoryService extends FileSystemService {
     private String directoryPath;
     private Directory workingDir;
     private FileSystem fs;
+    private String result;
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
     
@@ -22,6 +23,11 @@ public class ChangeDirectoryService extends FileSystemService {
         this.fs = getFileSystem();
     }
 
+    
+    public String getResult(){
+    	return this.result;
+    }
+    
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
     	if(directoryPath.equals(".")){ //Print current directory
@@ -45,6 +51,7 @@ public class ChangeDirectoryService extends FileSystemService {
     	}
     	else{
     		this.login.moveRelative(this.directoryPath);
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
     		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
