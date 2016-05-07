@@ -2,6 +2,7 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -60,13 +61,17 @@ public class User extends User_Base {
 		}
 		return null;    
     }
+ 
 
-    public void createCaseContent(long token, String fileName, DateTime lastModified, String content, String type) 
+   
+
+
+    public void createFile(long token, String fileName, DateTime lastModified, String content, String type) 
 		throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
 		
 		Directory userHome = this.getHome();
-		
 		userHome.checkCreate(this, fileName);
+		
 		switch(type) {
 			case "Directory":
 				new Directory(userHome, fileName, this, 3, lastModified);
@@ -85,7 +90,9 @@ public class User extends User_Base {
 			default:
 				throw new UnknownFileTypeException(type);
 		}
-	}
+    }
+
+	
 
       
     public void xmlImport(Element userEl){
