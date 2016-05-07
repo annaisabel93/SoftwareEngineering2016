@@ -38,7 +38,9 @@ public class CreateFileService extends FileSystemService{
 
 
 	private void createCaseContent() throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
-		this.workingDir.checkCreate(this.user, this.fileName);
+		this.user.createCaseContent(this.token, this.fileName, this.lastModified, this.content, this.type);
+/*	
+ *		this.workingDir.checkCreate(this.user, this.fileName);
 		switch(this.type) {
 			case "Directory":
 				new Directory(this.workingDir, this.fileName, this.user, 3, this.lastModified);
@@ -56,7 +58,7 @@ public class CreateFileService extends FileSystemService{
 
 			default:
 				throw new UnknownFileTypeException(type);
-		}
+		}*/
 	}
 
 		

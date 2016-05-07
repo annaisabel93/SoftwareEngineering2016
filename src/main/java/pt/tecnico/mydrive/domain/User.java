@@ -3,8 +3,15 @@ package pt.tecnico.mydrive.domain;
 
 import java.util.ArrayList;
 import org.jdom2.Element;
+import org.joda.time.DateTime;
 
 import pt.tecnico.mydrive.exception.InvalidPasswordException;
+import pt.tecnico.mydrive.exception.ContentCannotBeNullException;
+import pt.tecnico.mydrive.exception.DirectoryCannotHaveContentException;
+import pt.tecnico.mydrive.exception.UnknownFileTypeException;
+import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
+import pt.tecnico.mydrive.exception.UsernameAlreadyExistsException;
+import pt.tecnico.mydrive.exception.InexistentPointerForLinkException;
 import pt.tecnico.mydrive.exception.InvalidUsernameException;
 
 
@@ -54,7 +61,30 @@ public class User extends User_Base {
 		}
 		return null;    
     }
-       
+
+    public void createCaseContent(long token, String fileName, DateTime lastModified, String content, String type) throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
+		this.getHome().checkCreate(this, fileName);
+		switch(type) {
+			case "Directory":
+				new Directory(this.getHome(), fileName, this, 3, lastModified);
+				break;
+			case "App":
+				new App(this.getHome(), fileName, this, 5, lastModified, content);
+				break;
+			case "PlainFile":
+				new PlainFile(this.getHome(), fileName, this, 2, lastModified, content);
+				break;
+			case "Link":
+				this.getLoginbyToken(token).checkExistance(content);
+				new Link(this.getHome(), fileName, this, 1, lastModified, content);
+				break;
+
+			default:
+				throw new UnknownFileTypeException(type);
+		}
+	}
+
+      
     public void xmlImport(Element userEl){
         	setUserName(new String(userEl.getAttribute("username").getValue()));
             if(((CharSequence) userEl.getChild("password")).length() > 7)
