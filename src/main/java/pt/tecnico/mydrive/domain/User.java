@@ -2,6 +2,7 @@ package pt.tecnico.mydrive.domain;
 
 
 import java.util.ArrayList;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -36,8 +37,7 @@ public class User extends User_Base {
         setSystem(filesystem);
     }
     
-    protected User(){  	
-    }
+    protected User(){}
     
     public User(FileSystem filesystem, Element xml){
     	super();
@@ -61,28 +61,38 @@ public class User extends User_Base {
 		}
 		return null;    
     }
+ 
 
-    public void createCaseContent(long token, String fileName, DateTime lastModified, String content, String type) throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
-		this.getHome().checkCreate(this, fileName);
+   
+
+
+    public void createFile(long token, String fileName, DateTime lastModified, String content, String type) 
+		throws UnknownFileTypeException, DirectoryCannotHaveContentException, UserHasInvalidPermissionsException, InexistentPointerForLinkException {
+		
+		Directory userHome = this.getHome();
+		userHome.checkCreate(this, fileName);
+		
 		switch(type) {
 			case "Directory":
-				new Directory(this.getHome(), fileName, this, 3, lastModified);
+				new Directory(userHome, fileName, this, 3, lastModified);
 				break;
 			case "App":
-				new App(this.getHome(), fileName, this, 5, lastModified, content);
+				new App(userHome, fileName, this, 5, lastModified, content);
 				break;
 			case "PlainFile":
-				new PlainFile(this.getHome(), fileName, this, 2, lastModified, content);
+				new PlainFile(userHome, fileName, this, 2, lastModified, content);
 				break;
 			case "Link":
 				this.getLoginbyToken(token).checkExistance(content);
-				new Link(this.getHome(), fileName, this, 1, lastModified, content);
+				new Link(userHome, fileName, this, 1, lastModified, content);
 				break;
 
 			default:
 				throw new UnknownFileTypeException(type);
 		}
-	}
+    }
+
+	
 
       
     public void xmlImport(Element userEl){
