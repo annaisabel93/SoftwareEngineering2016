@@ -1,8 +1,8 @@
 package pt.tecnico.mydrive.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Set;
-
+import pt.tecnico.mydrive.domain.App;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
@@ -16,6 +16,8 @@ public class ExecuteFileService extends FileSystemService {
 	private String path_until_now;
 	private static final byte execute = login.getUser().getMask()[2];
 	private String result;
+	private String content;
+	private String[] args;
 
 
 	public void ExecuteFileService(long token, String path, List<Entity> arguments) {
@@ -29,7 +31,6 @@ public class ExecuteFileService extends FileSystemService {
 		return this.result;
 	}
 
-
 	@Override
 	protected void dispatch() throws UserHasInvalidPermissionsException{
 		if (execute == 1) {
@@ -39,19 +40,24 @@ public class ExecuteFileService extends FileSystemService {
 			for (Entity f : arguments){
 				Type = f.checkType();
 				String name = f.getFilename();
-				if(Type == "app"){
+				if(Type.equals("app")){
 					ReadFileService read = new ReadFileService(this.token, name);
 					read.execute();
-					//TODO
+					try {
+						App.run(content, args);
+					} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
+							| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+						System.out.println("Cannot run an App like that!");
+					}
 				}
 
-				if (Type == "plainFile"){
+				if (Type.equals("plainFile")){
 					ReadFileService read = new ReadFileService(this.token, name);
 					read.execute();
 					this.result = read.getResult();
 				}
 
-				if (Type == "link"){
+				if (Type.equals("link")){
 					String newPlace;
 					ReadFileService read = new ReadFileService(this.token, name);
 					read.execute();
