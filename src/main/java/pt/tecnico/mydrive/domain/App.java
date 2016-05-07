@@ -16,9 +16,12 @@ public class App extends App_Base {
 	public static void run(String content, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		Class<?> cls;
 		Method meth;
+		
+		String[] parts = content.split(".");
+		
 		try {
-			cls = Class.forName(content);
-			meth = cls.getMethod("main", String[].class);
+			cls = Class.forName(parts[parts.length - 2]);
+			meth = cls.getMethod(parts[parts.length - 2], String[].class);
 		} catch (ClassNotFoundException cnfe) { // name is a method
 			int pos;
 			if ((pos = content.lastIndexOf('.')) < 0) throw cnfe;
