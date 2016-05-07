@@ -13,8 +13,6 @@ public class App extends App_Base {
 		super();
 		init(dir, filename,user,id,lastModified);
 		setContent(content);
-		
-
 	}
 	
 	public static void run(String content, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
@@ -31,8 +29,6 @@ public class App extends App_Base {
 		}
 		meth.invoke(null, (Object)args);
 	}
-
-
 
 	public App(User owner, Element xml){
 		xmlImport(xml);

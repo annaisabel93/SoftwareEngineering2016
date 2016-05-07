@@ -30,7 +30,7 @@ public class ExecuteFileService extends FileSystemService {
 	public String getResult(){
 		return this.result;
 	}
-
+	//FIXME needs to receive content from presentation part
 	@Override
 	protected void dispatch() throws UserHasInvalidPermissionsException{
 		if (execute == 1) {

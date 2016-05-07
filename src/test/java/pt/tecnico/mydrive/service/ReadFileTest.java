@@ -34,8 +34,8 @@ public class ReadFileTest extends AbstractServiceTest {
 					null, 
 					"/home/bananas",  
 					"/home/peaches", 
-					"package.pt.tecnico.mydrive.domain.Directory", 
-					"package.pt.tecnico.mydrive.service.Link" };
+					"package.pt.tecnico.mydrive.domain", 
+					"package.pt.tecnico.mydrive.service" };
 
 	Login login1;
 	Login login2;

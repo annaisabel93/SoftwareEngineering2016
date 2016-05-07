@@ -34,7 +34,7 @@ public class CreateFileTest extends AbstractServiceTest{
 		Login login = user.getLoginbyToken(service.getToken());
 		Directory d = new Directory(login.getDirectory(), "exemplo", user, 20000, date); 
 		PlainFile file = new PlainFile(login.getDirectory(), "textfile", login.getUser(), 50, date, "hey");
-		App app = new App(login.getDirectory(), "apptest", login.getUser(), 51, date, "pt.tecnico.mydrive.domain.PlainFile");
+		App app = new App(login.getDirectory(), "apptest", login.getUser(), 51, date, "adeus ana");
 		Link link = new Link(login.getDirectory(), "linktest", login.getUser(), 51, date, "link");
 		
 		User user2 = new User(fs, "Joana", "joana94", "joana1994", new byte[] {0,0,0,0}, "home/joana");
