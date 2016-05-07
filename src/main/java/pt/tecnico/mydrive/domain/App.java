@@ -2,11 +2,9 @@ package pt.tecnico.mydrive.domain;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
-import pt.tecnico.mydrive.exception.InvalidAppException;
 public class App extends App_Base {
 
 	public App(Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
