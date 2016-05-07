@@ -28,7 +28,6 @@ public class CreateFileService extends FileSystemService{
 
 	public CreateFileService(long token, String fileName, String type, String content){
 		this.token = token;
-		
 		this.fileName = fileName;
 		this.type = type;
 		this.user = this.getLogin(token).getUser();
@@ -52,8 +51,7 @@ public class CreateFileService extends FileSystemService{
 				break;
 			case "Link":
 				this.getLogin(this.token).checkExistance(content);
-				Link l = new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
-				l.checkLink();	
+				new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
 				break;
 
 			default:

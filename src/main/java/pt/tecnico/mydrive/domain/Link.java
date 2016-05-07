@@ -10,7 +10,8 @@ public class Link extends Link_Base {
     public Link(Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
 	super();
 	init(dir, filename,user,id,lastModified);
-        setContent(content);
+        checkLink(content);
+	setContent(content);
     }
 
     public Link(User owner, Element xml){
@@ -26,8 +27,8 @@ public class Link extends Link_Base {
     	return "link";
     }
     
-    public void checkLink() {
-    	if ( getContent().equals(null) ) 
+    public void checkLink(String content) throws ContentCannotBeNullException {
+    	if ( content.equals(null) ) 
 		throw new ContentCannotBeNullException(getContent()); 
     }
 
