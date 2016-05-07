@@ -122,7 +122,8 @@ public abstract class Entity extends Entity_Base {
 		return perm;
 		
 	}
-	
+
+
 	public void xmlImport(Element filedoc){
 			setFilename(new String(filedoc.getChild("name").getValue()));
 			//setOwner(new String(filedoc.getChild("owner").getValue()));    agora e um objeto user

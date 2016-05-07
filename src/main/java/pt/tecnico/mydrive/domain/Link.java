@@ -9,12 +9,8 @@ public class Link extends Link_Base {
     
     public Link(Directory dir, String filename, User user, long id, DateTime lastModified, String content) {
 	super();
-	if ( content != null ) {
-		init(dir, filename,user,id,lastModified);
-        	setContent(content);
-	} else {
-		throw new ContentCannotBeNullException(content); 
-	}
+	init(dir, filename,user,id,lastModified);
+        setContent(content);
     }
 
     public Link(User owner, Element xml){
@@ -30,6 +26,11 @@ public class Link extends Link_Base {
     	return "link";
     }
     
+    public void checkLink() {
+    	if ( getContent().equals(null) ) 
+		throw new ContentCannotBeNullException(getContent()); 
+    }
+
     public void xmlImport(Element linkDoc){
     	super.xmlImport(linkDoc);
     	setContent(new String(linkDoc.getChild("content").getValue()));

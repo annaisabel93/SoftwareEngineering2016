@@ -52,7 +52,8 @@ public class CreateFileService extends FileSystemService{
 				break;
 			case "Link":
 				this.getLogin(this.token).checkExistance(content);
-				new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);	
+				Link l = new Link(this.workingDir, this.fileName, this.user, 1, this.lastModified, content);
+				l.checkLink();	
 				break;
 
 			default:
