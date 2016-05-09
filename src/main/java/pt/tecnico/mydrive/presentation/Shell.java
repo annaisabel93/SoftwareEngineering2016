@@ -25,6 +25,10 @@ public abstract class Shell {
 	private FileSystem filesystem;
 	
 	
+	public long getToken() {
+		return token;
+	}
+
 	public FileSystem getFilesystem() {
 		return filesystem;
 	}
