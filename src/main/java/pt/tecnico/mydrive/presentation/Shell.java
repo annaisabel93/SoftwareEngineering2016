@@ -4,12 +4,14 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.util.*;
 import java.lang.reflect.*;
+import pt.tecnico.mydrive.domain.Login;
 
 public abstract class Shell {
 	protected static final Logger log = LogManager.getRootLogger();
 	private Map<String,Command> coms = new TreeMap<String,Command>();
 	private PrintWriter out;
 	private String name;
+	private long token;
 	public Shell(String n) { this(n, new PrintWriter(System.out, true), true); }
 	public Shell(String n, Writer w) { this(n, w, true); }
 	public Shell(String n, Writer w, boolean flush) {
@@ -68,6 +70,14 @@ public abstract class Shell {
 		return Collections.unmodifiableCollection(coms.keySet());
 	}
 
+	public void setToken(long token1){
+		this.token = token1;
+	}
+	
+	public long getLogin(){
+		return this.token;
+	}
+	
 	public void execute() throws Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String str, prompt = null; // System.getenv().get("PS1");
