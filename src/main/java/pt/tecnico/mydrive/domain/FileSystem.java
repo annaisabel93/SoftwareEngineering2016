@@ -31,7 +31,7 @@ public class FileSystem extends FileSystem_Base {
     	return true;
     }     	
     
-    public static FileSystem getInstance(){ //esta sempre a inicar um novo
+    public static FileSystem getInstance(){ //esta sempre a iniciar um novo
     	FileSystem fs = FenixFramework.getDomainRoot().getFilesystem();
     	if(fs != null){
     		return fs;}
