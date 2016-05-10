@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import pt.tecnico.mydrive.domain.FileSystem;
-import pt.tecnico.mydrive.exception.MustLoginFirstException;
+
 
 public abstract class Shell {
 	protected static final Logger log = LogManager.getRootLogger();

@@ -3,7 +3,7 @@ package pt.tecnico.mydrive.presentation;
 import java.math.BigInteger;
 import java.util.Random;
 
-import pt.tecnico.mydrive.exception.MustLoginFirstException;
+
 import pt.tecnico.mydrive.service.ChangeDirectoryService;
 import pt.tecnico.mydrive.service.ListDirectoryService;
 
