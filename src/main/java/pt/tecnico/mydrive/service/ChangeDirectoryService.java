@@ -12,13 +12,13 @@ public class ChangeDirectoryService extends FileSystemService {
     private String directoryPath;
     private Directory workingDir;
     private String result;
+    private long token;
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
     
     public ChangeDirectoryService(long token, String dirpath) throws UnknownTokenException{
-    	this.login = getLogin(token);
+    	this.token = token;
         this.directoryPath = dirpath;
-        this.workingDir = this.login.getDirectory();
     }
 
     
@@ -28,6 +28,9 @@ public class ChangeDirectoryService extends FileSystemService {
     
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
+    	this.login = getLogin(this.token);
+        
+        this.workingDir = this.login.getDirectory();
     	if(directoryPath.equals(".")){ //Print current directory
     		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;

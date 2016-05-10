@@ -11,7 +11,7 @@ public class LoginService extends FileSystemService {
 
     private String username;
     private String password;
-    long token;
+    private long token;
     
     public LoginService(String username1, String password1){
         this.username = username1;

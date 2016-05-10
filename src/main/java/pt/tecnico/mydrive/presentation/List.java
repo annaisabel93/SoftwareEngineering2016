@@ -25,11 +25,12 @@ public class List extends Command {
 			service1.execute();
 			
 		} else if(args.length == 1) {
+			//falta guardar o valor da directoria actual
 			ChangeDirectoryService service2 = new ChangeDirectoryService(token, args[0]);
-			//service2.execute();
+			service2.execute();
 			
 			ListDirectoryService service3 = new ListDirectoryService(token);
-			//service3.execute();
+			service3.execute();
 		} else {
 			throw new RuntimeException("USAGE: [path]");
 		}
