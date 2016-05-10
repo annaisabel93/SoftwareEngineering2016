@@ -16,7 +16,7 @@ public class UnknownTokenException extends MyDriveException {
 	
 	@Override
 	public String getMessage(){
-		return "Token: " +getToken() + "is not being used by any Login session";
+		return "Token: " +getToken() + " is not being used by any Login session";
 	} 
 	
 }

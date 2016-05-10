@@ -16,6 +16,11 @@ public class AddVariableService extends FileSystemService{
 	private String variableName;
 	private String value;
 	private List<VariableDto> environmentVars;
+
+	public AddVariableService(long token) throws UnknownTokenException{
+		this.login = getLogin(token);
+		this.token = token;
+	}
 	
 	public AddVariableService(long token, String variableName, String value) throws UnknownTokenException{
 		this.login = getLogin(token);

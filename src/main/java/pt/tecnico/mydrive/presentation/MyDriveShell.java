@@ -26,6 +26,6 @@ public class MyDriveShell extends Shell {
 	    new WriteCommand(this);
 	    //new KeyCommand(this);
 	    //new ExecuteCommand(this);
-	    //new EnvironmentCommand(this);
+	    new EnvironmentCommand(this);
   }
 }
