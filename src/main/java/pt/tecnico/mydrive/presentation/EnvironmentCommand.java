@@ -21,18 +21,23 @@ public class EnvironmentCommand extends MyDriveCommand {
 		if (args.length < 1) {
 			service = new AddVariableService(token);
 			service.execute();
-			for ( VariableDto v : service.result() ) {
+			for ( VariableDto v : service.result() ) 
 				System.out.println(v.getName() + " = " + v.getValue());
-			}
-		}	
+			
+		}
+		else if (args.length == 1) {
+			service = new AddVariableService(token, args[0]);
+			service.execute();
+			System.out.println(args[0] + " = " + service.getAssociatedValue());	
+		}
+		else /* (args.length == 2)*/ {
+			new AddVariableService(token, args[0], args[1]).execute();
+			System.out.println(args[0] + " = " + args[1]);
+		}
+		//necessario lancar alguma excepcao?	
 						
 	}
 	
-
-
-
-
-
 
 
 
