@@ -11,7 +11,6 @@ public class ChangeDirectoryService extends FileSystemService {
     private Login login;
     private String directoryPath;
     private Directory workingDir;
-    private FileSystem fs;
     private String result;
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
@@ -20,7 +19,6 @@ public class ChangeDirectoryService extends FileSystemService {
     	this.login = getLogin(token);
         this.directoryPath = dirpath;
         this.workingDir = this.login.getDirectory();
-        this.fs = getFileSystem();
     }
 
     
