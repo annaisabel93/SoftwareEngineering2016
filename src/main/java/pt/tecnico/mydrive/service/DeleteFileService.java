@@ -14,7 +14,7 @@ public class DeleteFileService extends FileSystemService {
 		this.login = getLogin(token1);
 		this.filename = filename;
 		
-		login.getDirectory().getByName(filename).checkPermissions(login, "delete");
+		login.getDirectory().getByName(filename).checkPermissions(this.login.getUser(), "delete");
 	}
 	
 	//executa o servico

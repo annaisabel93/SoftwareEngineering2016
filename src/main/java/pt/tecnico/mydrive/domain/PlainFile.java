@@ -28,8 +28,8 @@ public class PlainFile extends PlainFile_Base {
 		xmlImport(xml);
 		setOwner(owner);
 	}
-	public void addContent(Login login, String content){
-		if (checkPermissions(login, "write") == false)	
+	public void addContent(User user, String content){
+		if (checkPermissions(user, "write") == false)	
 			throw new UserHasInvalidPermissionsException();
 		setContent(content);
 		setLastModified(new DateTime());
@@ -58,9 +58,9 @@ public class PlainFile extends PlainFile_Base {
 		
 	}*/
 	
-	public String read(Login login) throws UserHasInvalidPermissionsException, WrongFileTypeException, EntityDoesNotExistException{
+	public String read(User user) throws UserHasInvalidPermissionsException, WrongFileTypeException, EntityDoesNotExistException{
 			
-		if(checkPermissions(login, "read") == false)
+		if(checkPermissions(user, "read") == false)
 			throw new UserHasInvalidPermissionsException();
 		return this.getContent();
 	}

@@ -16,7 +16,7 @@ public class WriteFileService extends FileSystemService {
     	this.login = getLogin(token);
         this.fileName = fileName;
         this.content = content;
-        login.getDirectory().getByName(fileName).checkPermissions(login, "write");
+        login.getDirectory().getByName(fileName).checkPermissions(this.login.getUser(), "write");
     }
 
 
@@ -29,6 +29,6 @@ public class WriteFileService extends FileSystemService {
 		if(text == null ){
         	throw new TexFileDoesNotExistException(this.fileName);
         }
-        text.addContent(login, content);
+        text.addContent(this.login.getUser(), content);
     }
 }

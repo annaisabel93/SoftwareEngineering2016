@@ -35,8 +35,8 @@ public abstract class Entity extends Entity_Base {
 	
 	public abstract String checkType();
 	
-	public void checkDelete(Login login){
-		checkPermissions(login, "delete");
+	public void checkDelete(User user){
+		checkPermissions(user, "delete");
 		delete();
 	}
 	
@@ -62,11 +62,10 @@ public abstract class Entity extends Entity_Base {
 		else
 			throw new InvalidPathLenghtException(parents.getBytes().length);
 	}
-	public abstract String read(Login login);
+	public abstract String read(User user);
 	
-	public boolean checkPermissions(Login login, String action){
+	public boolean checkPermissions(User loggedUser, String action){
 		
-		User loggedUser = login.getUser();	
 		User owner = getOwner();
 		
 		if (loggedUser.equals(owner)) {

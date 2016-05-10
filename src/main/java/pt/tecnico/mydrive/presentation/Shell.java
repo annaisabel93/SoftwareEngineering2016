@@ -22,20 +22,20 @@ public abstract class Shell {
 	private PrintWriter out;
 	private String name;
 	private long token;
-	private FileSystem filesystem;
+//	private FileSystem filesystem;
 	
 	
 	public long getToken() {
 		return token;
 	}
 
-	public FileSystem getFilesystem() {
-		return filesystem;
-	}
-
-	public void setFilesystem(FileSystem filesystem) {
-		this.filesystem = filesystem;
-	}
+//	public FileSystem getFilesystem() {
+//		return filesystem;
+//	}
+//
+//	public void setFilesystem(FileSystem filesystem) {
+//		this.filesystem = filesystem;
+//	}
 
 	public Shell(String n) { 
 		this(n, new PrintWriter(System.out, true), true);

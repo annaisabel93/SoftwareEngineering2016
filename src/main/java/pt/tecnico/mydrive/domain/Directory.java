@@ -156,10 +156,10 @@ public class Directory extends Directory_Base {
 		addFile(dir);
 	}
 	
-	public void WriteToFile(String content, String filename)throws TexFileDoesNotExistException{
+	public void WriteToFile(User user, String content, String filename)throws TexFileDoesNotExistException{
 		for (Entity entidade : getFileSet()) {
    		 if(entidade.getFilename().equals(filename) && (entidade instanceof PlainFile)){
-   			 ((PlainFile) entidade).addContent(getLogin(), content); //cast para poder executar o metodo
+   			 ((PlainFile) entidade).addContent(user, content); //cast para poder executar o metodo
    			 return;
    		 }
    	 }
@@ -174,12 +174,12 @@ public class Directory extends Directory_Base {
     		entity.delete();
     		removeFile(entity);
 		}
-		setLogin(null);
+		getLoginSet().clear();
 		
 		super.delete();
 	}
 
-	public String read(Login login) throws WrongFileTypeException{
+	public String read(User user) throws WrongFileTypeException{
 		throw new WrongFileTypeException();
 	}
 	

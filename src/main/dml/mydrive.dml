@@ -108,7 +108,7 @@ relation UserhasHomeDir{
 
 relation LoginhasDirectory{
 	Login playsRole login{
-		multiplicity 0..1;
+		multiplicity 0..*;
 	}
 	Directory playsRole directory{
 		multiplicity 1..1;

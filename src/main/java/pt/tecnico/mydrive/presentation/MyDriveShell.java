@@ -15,11 +15,11 @@ public class MyDriveShell extends Shell {
 
   public MyDriveShell() { // Adicionem aqui os comandos correspondentes a cada coisa da apresentacao
 	    super("MyDrive");
-	    try {
-			FenixFramework.getTransactionManager().begin(false);
-		} catch (WriteOnReadError | NotSupportedException | SystemException e) {
-			e.printStackTrace();
-		}
+//	    try {
+//			FenixFramework.getTransactionManager().begin(false);
+//		} catch (WriteOnReadError | NotSupportedException | SystemException e) {
+//			e.printStackTrace();
+//		}
 	    new LoginCommand(this);
 	    new ChangeWorkingDirCommand(this);
 	    new List(this);

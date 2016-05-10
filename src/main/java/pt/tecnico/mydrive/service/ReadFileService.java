@@ -32,7 +32,7 @@ public class ReadFileService extends FileSystemService{
 	public final void dispatch() throws UserHasInvalidPermissionsException, EntityDoesNotExistException, WrongFileTypeException{
 
 		Entity file = this.login.getDirectory().getByName(getFilename());
-		this.result = file.read(this.login);
+		this.result = file.read(this.login.getUser());
 		
 		
 	
