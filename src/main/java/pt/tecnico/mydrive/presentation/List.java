@@ -3,6 +3,7 @@ package pt.tecnico.mydrive.presentation;
 import java.math.BigInteger;
 import java.util.Random;
 
+import pt.tecnico.mydrive.exception.MustLoginFirstException;
 import pt.tecnico.mydrive.service.ChangeDirectoryService;
 import pt.tecnico.mydrive.service.ListDirectoryService;
 
@@ -20,13 +21,15 @@ public class List extends Command {
 		long token = sh.getToken();  //token bem feito
 		
 		if (args.length == 0) {
-			ListDirectoryService lds = new ListDirectoryService(token);
-			//lds.execute();
+			ListDirectoryService service1 = new ListDirectoryService(token);
+			service1.execute();
+			
 		} else if(args.length == 1) {
-			ChangeDirectoryService cds = new ChangeDirectoryService(token, args[0]);
-			//cds.execute();
-			ListDirectoryService lds = new ListDirectoryService(token);
-			//lds.execute();
+			ChangeDirectoryService service2 = new ChangeDirectoryService(token, args[0]);
+			//service2.execute();
+			
+			ListDirectoryService service3 = new ListDirectoryService(token);
+			//service3.execute();
 		} else {
 			throw new RuntimeException("USAGE: [path]");
 		}
