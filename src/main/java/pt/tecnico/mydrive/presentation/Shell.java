@@ -16,16 +16,21 @@ import org.apache.logging.log4j.Logger;
 
 import pt.tecnico.mydrive.domain.FileSystem;
 
+
 public abstract class Shell {
 	protected static final Logger log = LogManager.getRootLogger();
 	private Map<String,Command> coms = new TreeMap<String,Command>();
 	private PrintWriter out;
 	private String name;
 	private long token;
+	private boolean validLogin;
 //	private FileSystem filesystem;
 	
 	
 	public long getToken() {
+		if (validLogin == false){
+			System.out.println("You must Login first!");
+		}
 		return token;
 	}
 
@@ -47,6 +52,7 @@ public abstract class Shell {
 	
 	public Shell(String n, Writer w, boolean flush) {
 		name = n;
+		this.validLogin = false;
 		out = new PrintWriter(w, flush);
 
 
@@ -102,6 +108,7 @@ public abstract class Shell {
 	}
 
 	public void setToken(long token1){
+		this.validLogin = true;
 		this.token = token1;
 	}
 	

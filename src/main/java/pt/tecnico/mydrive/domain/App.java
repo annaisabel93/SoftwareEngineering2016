@@ -20,8 +20,15 @@ public class App extends App_Base {
 		String[] parts = content.split(".");
 		
 		try {
-			cls = Class.forName(parts[parts.length - 2]);
-			meth = cls.getMethod(parts[parts.length - 2], String[].class);
+			if( parts[parts.length -2] != null){
+				cls = Class.forName(parts[parts.length - 2]);
+				meth = cls.getMethod(parts[parts.length - 1], String[].class);
+			}
+			else{
+				cls = Class.forName(parts[parts.length - 1]);
+				meth = cls.getMethod("main", String[].class);
+			}
+			
 		} catch (ClassNotFoundException cnfe) { // name is a method
 			int pos;
 			if ((pos = content.lastIndexOf('.')) < 0) throw cnfe;
