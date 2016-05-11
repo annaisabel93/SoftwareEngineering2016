@@ -84,7 +84,7 @@ public class ReadFileTest extends AbstractServiceTest {
 
 		Directory d1 = new Directory(log2.getDirectory(), "Xena", u2, 8, new DateTime());
 		PlainFile p3 = new PlainFile(log2.getDirectory(), "Slack", u2, 10, new DateTime(), this.contents[0] );
-		
+		PlainFile p4 = new PlainFile(log2.getDirectory(), "banana", u2, 11, new DateTime(), this.contents[0]);		
 
 			
 	}
@@ -161,6 +161,11 @@ public class ReadFileTest extends AbstractServiceTest {
 		service.execute();
 	}
 
+	@Test
+	public void readLink() {
+		ReadFileService service = new ReadFileService(this.uToken2, "banana");
+		service.execute();	
+	}
 
 }
 
