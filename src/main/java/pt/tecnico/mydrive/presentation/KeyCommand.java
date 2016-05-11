@@ -1,5 +1,8 @@
 package pt.tecnico.mydrive.presentation;
 
+import pt.tecnico.mydrive.service.ChangeDirectoryService;
+import pt.tecnico.mydrive.service.ListDirectoryService;
+
 public class KeyCommand extends Command {
 	
 	private Shell sh;
@@ -10,7 +13,17 @@ public class KeyCommand extends Command {
     }
 	
 	public void execute(String[] args) {
+
+		long token = sh.getToken();  //token bem feito
 		
+		//imprime o valor do token e o username do utilizador atual
+		if (args.length == 0) {
+			
+		} else if(args.length == 1) {      //altera o utilizador atual, atualiza o token ativo e imprime o seu valor
+			
+		} else {
+			throw new RuntimeException("USAGE: [username]");
+		}
 		
 	}
 

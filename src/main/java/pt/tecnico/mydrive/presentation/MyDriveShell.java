@@ -24,8 +24,8 @@ public class MyDriveShell extends Shell {
 	    new ChangeWorkingDirCommand(this);
 	    new List(this);
 	    new WriteCommand(this);
-	    //new KeyCommand(this);
-	    //new ExecuteCommand(this);
+	    new KeyCommand(this);
+	    new ExecuteCommand(this);
 	    new EnvironmentCommand(this);
   }
 }
