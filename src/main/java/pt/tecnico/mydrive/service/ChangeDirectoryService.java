@@ -29,28 +29,32 @@ public class ChangeDirectoryService extends FileSystemService {
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
     	if(directoryPath.equals(".")){ //Print current directory
-    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	if(directoryPath.equals("..")) { //Goes to parent directory
     		if(this.workingDir.getParent() == this.workingDir){
-    			System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    			this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    			//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     			return;
     		}
     		login.setDirectory(this.workingDir.getParent());
-    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	String[] items= this.directoryPath.split("/");
     	if(items[0].equals("")){
     		this.login.moveAbsolute(this.directoryPath);
-    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	else{
     		this.login.moveRelative(this.directoryPath);
     		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
-    		System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
     	
