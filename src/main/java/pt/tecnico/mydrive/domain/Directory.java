@@ -105,15 +105,22 @@ public class Directory extends Directory_Base {
     public String[] list(){
     	int size = getFileSet().size() +1; //+1 por causa da propria diretoria
     	int is_root = 1;
-    	if((getParent().equals(this)) == false){ //se estivermos na raiz
+    	if((getParent().equals(this)) == false){ //se nao estivermos na raiz
     		size++;
     		is_root = 0;
     	}
-    	
+    	if(is_root == 1){
+    		size = size-1;
+    	}
+    	int check = 0;
     	String[] result = new String[size];
     	int count = 0;
     	for(Entity entity: getFileSet()) {
-    		
+    		if(is_root == 1 && getParent().getFilename().equals(entity.getFilename())){
+    			check =1;
+    			//count++;
+    			continue;
+    		}
     		result[count] = entity.checkType() + " ";
     		
     		byte[] array = entity.getOwner().getMask();

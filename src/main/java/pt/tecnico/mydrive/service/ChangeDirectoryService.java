@@ -47,6 +47,12 @@ public class ChangeDirectoryService extends FileSystemService {
     		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
     	}
+    	if(this.directoryPath.equals("/")){
+    		this.login.moveAbsolute(this.directoryPath);
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		return;
+    	}
     	String[] items= this.directoryPath.split("/");
     	if(items[0].equals("")){
     		this.login.moveAbsolute(this.directoryPath);
