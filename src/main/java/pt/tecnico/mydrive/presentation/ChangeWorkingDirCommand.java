@@ -6,14 +6,14 @@ public class ChangeWorkingDirCommand extends MyDriveCommand {
 	private Shell shell;
 
     public ChangeWorkingDirCommand(Shell sh){
-    	super(sh, "add", "Change Working Directory");
+    	super(sh, "cwd", "Change Working Directory");
     	this.shell = sh;
     }
     public void execute(String[] args) {
 		if (args.length < 1 || args.length > 1){
 		    throw new RuntimeException("USAGE: "+name()+" <path> ");
 		}
-		if (args.length == 0){
+		else{
 		   ChangeDirectoryService changing = new ChangeDirectoryService(shell.getToken(), args[0]);
 		   changing .execute();
 		   String actualPath = changing.getResult();
