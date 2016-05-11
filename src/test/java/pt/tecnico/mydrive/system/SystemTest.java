@@ -3,6 +3,7 @@ package pt.tecnico.mydrive.system;
 import org.junit.Test;
 
 import pt.tecnico.mydrive.domain.Login;
+import pt.tecnico.mydrive.presentation.LoginCommand;
 import pt.tecnico.mydrive.presentation.MyDriveShell;
 import pt.tecnico.mydrive.service.AbstractServiceTest;
 
@@ -16,6 +17,6 @@ public class SystemTest extends AbstractServiceTest{
 	}
 	 @Test
 	 public void sucess(){
-		 //new Login(sh).execute(new String[] { "Ana"}, new String[] { "12345678"});
+		 new LoginCommand(sh).execute(new String[] { "Ana"});
 	 }
 }
