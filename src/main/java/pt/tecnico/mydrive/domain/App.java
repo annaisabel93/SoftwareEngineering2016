@@ -13,7 +13,7 @@ public class App extends App_Base {
 		setContent(content);
 	}
 	
-	  public static void run(String name, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	  public static void execute(String name, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		    Class<?> cls;
 		    Method meth;
 		    try { // name is a class: call main()

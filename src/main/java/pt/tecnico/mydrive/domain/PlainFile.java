@@ -21,9 +21,9 @@ public class PlainFile extends PlainFile_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
-    public String run(){
-    	return getContent();
-    }
+//    public String execute(){
+//    	return getContent();
+//    }
 	
 	
 	public PlainFile(User owner, Element xml){

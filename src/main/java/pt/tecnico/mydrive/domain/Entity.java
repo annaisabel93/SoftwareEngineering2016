@@ -135,8 +135,5 @@ public abstract class Entity extends Entity_Base {
 			return element;    
 	}
 	
-	public String execute() {
-		return "just entity";
-		
-	}   
+	public abstract String execute();   
 }
