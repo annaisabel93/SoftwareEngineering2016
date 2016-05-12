@@ -5,6 +5,7 @@ import org.jdom2.Element;
 import org.joda.time.DateTime;
 
 import pt.tecnico.mydrive.exception.EntityDoesNotExistException;
+import pt.tecnico.mydrive.exception.InvalidOperationException;
 import pt.tecnico.mydrive.exception.InvalidPathLenghtException;
 import pt.tecnico.mydrive.exception.TexFileDoesNotExistException;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
@@ -243,6 +244,12 @@ public class Directory extends Directory_Base {
 //		
 //		}
 		return element;
+	}
+
+
+	@Override
+	public String execute() {
+		throw new InvalidOperationException();
 	}
 	
 }

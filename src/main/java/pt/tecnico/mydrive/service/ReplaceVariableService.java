@@ -1,5 +1,8 @@
 package pt.tecnico.mydrive.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pt.tecnico.mydrive.domain.FileSystem;
 import pt.tecnico.mydrive.domain.Link;
 import pt.tecnico.mydrive.domain.Login;
@@ -15,11 +18,12 @@ public class ReplaceVariableService extends FileSystemService{
 	private FileSystem fs;
 	private String content;
 	private String[] result;
+	private List<String> out = new ArrayList<String>();
 
 	
 	public ReplaceVariableService (long token, Link link, Variable var){
 		
-		this.login = getLogin(token);
+		//this.login = getLogin(token);
 		this.value = var.getValue();
 		this.variable = var;
 		this.link = link;
@@ -41,7 +45,11 @@ public class ReplaceVariableService extends FileSystemService{
 		
 	}
 	
-    public String[] getResult(){
-    	return this.result;
+    public List<String> getResult(){
+    	for (int i = 0; i < result.length; i++) {
+			out.add(result[i]);
+		}
+    	return out;
     }
+    
 }

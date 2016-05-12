@@ -49,7 +49,7 @@ public class ExecuteFileService extends FileSystemService {
 
 					if(f.execute().getClass().equals("App")){
 						try {
-							App.exeute(content, args);
+							App.execute(content, args);
 						} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
 								| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 							System.out.println("Cannot run an App like that!");
