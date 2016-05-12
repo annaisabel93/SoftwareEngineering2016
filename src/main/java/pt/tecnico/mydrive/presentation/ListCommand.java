@@ -9,12 +9,12 @@ import pt.tecnico.mydrive.service.ListDirectoryService;
 import pt.tecnico.mydrive.service.FileSystemService;
 import pt.tecnico.mydrive.domain.Login;
 
-public class List extends Command {
+public class ListCommand extends Command {
 
 	private Shell sh;
 	String originalPath;
 	
-	public List(Shell sh) {
+	public ListCommand(Shell sh) {
     	super(sh, "ls", "lists the files on the current directory, or, if given the path of the directory, lists the files in that directory");
     	this.sh = sh;
     }

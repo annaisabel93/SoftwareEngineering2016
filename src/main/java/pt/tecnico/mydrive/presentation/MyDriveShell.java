@@ -22,7 +22,7 @@ public class MyDriveShell extends Shell {
 //		}
 	    new LoginCommand(this);
 	    new ChangeWorkingDirCommand(this);
-	    new List(this);
+	    new ListCommand(this);
 	    new WriteCommand(this);
 	    new KeyCommand(this);
 	    new ExecuteCommand(this);
