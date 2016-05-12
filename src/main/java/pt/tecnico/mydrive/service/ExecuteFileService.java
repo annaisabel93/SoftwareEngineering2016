@@ -5,6 +5,7 @@ import java.util.List;
 import pt.tecnico.mydrive.domain.App;
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.Login;
+import pt.tecnico.mydrive.domain.PlainFile;
 import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class ExecuteFileService extends FileSystemService {
@@ -40,31 +41,42 @@ public class ExecuteFileService extends FileSystemService {
 			for (Entity f : arguments){
 				Type = f.checkType();
 				String name = f.getFilename();
-				if(Type.equals("app")){
-					ReadFileService read = new ReadFileService(this.token, name);
-					read.execute();
-					try {
-						App.run(content, args);
-					} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
-							| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-						System.out.println("Cannot run an App like that!");
+					String newf = f.execute();
+					//é aqui dentro que sºao as cenas
+
+					//file f = getFile("/home/ana/file")
+					//f.execute
+
+					if(f.execute().getClass().equals("App")){
+						try {
+							App.execute(content, args);
+						} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
+								| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+							System.out.println("Cannot run an App like that!");
+						}
 					}
-				}
 
-				if (Type.equals("plainFile")){
-					ReadFileService read = new ReadFileService(this.token, name);
-					read.execute();
-					this.result = read.getResult();
-				}
+					if (f.execute().getClass().equals("Link")){
+						ReadFileService read = new ReadFileService(this.token, name);
+						read.execute();
+						this.result = read.getResult();
+						//é aqui dentro que sºao as cenas
 
-				if (Type.equals("link")){
-					String newPlace;
-					ReadFileService read = new ReadFileService(this.token, name);
-					read.execute();
-					newPlace = read.getResult();
-					ChangeDirectoryService change = new ChangeDirectoryService(this.token, newPlace);
-					change.execute();
-				}
+						//file f = getFile("/home/ana/file")
+						//f.execute
+					}
+					
+					if (Type.equals("link")){
+						String newPlace;
+						ReadFileService read = new ReadFileService(this.token, name);
+						read.execute();
+						newPlace = read.getResult();
+						ChangeDirectoryService change = new ChangeDirectoryService(this.token, newPlace);
+						change.execute();
+					}
+				
+
+
 			}
 
 		}

@@ -11,7 +11,7 @@ public class Link extends Link_Base {
 	super();
 	init(dir, filename,user,id,lastModified);
         checkLink(content);
-	setContent(content);
+        setContent(content);
     }
 
     public Link(User owner, Element xml){
@@ -25,6 +25,10 @@ public class Link extends Link_Base {
     
     public String checkType(){
     	return "link";
+    }
+    
+    public String execute(){
+    	return getContent();
     }
     
     public void checkLink(String content) throws ContentCannotBeNullException {

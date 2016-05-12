@@ -133,5 +133,7 @@ public abstract class Entity extends Entity_Base {
 	public Element xmlExport(){	
 			Element element = new Element("entity");
 			return element;    
-	}   
+	}
+	
+	public abstract String execute();   
 }

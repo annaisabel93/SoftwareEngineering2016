@@ -13,31 +13,22 @@ public class App extends App_Base {
 		setContent(content);
 	}
 	
-	public static void run(String content, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Class<?> cls;
-		Method meth;
-		
-		String[] parts = content.split(".");
-		
-		try {
-			if( parts[parts.length -2] != null){
-				cls = Class.forName(parts[parts.length - 2]);
-				meth = cls.getMethod(parts[parts.length - 1], String[].class);
-			}
-			else{
-				cls = Class.forName(parts[parts.length - 1]);
-				meth = cls.getMethod("main", String[].class);
-			}
-			
-		} catch (ClassNotFoundException cnfe) { // name is a method
-			int pos;
-			if ((pos = content.lastIndexOf('.')) < 0) throw cnfe;
-			cls = Class.forName(content.substring(0, pos));
-			meth = cls.getMethod(content.substring(pos+1), String[].class);
-		}
-		meth.invoke(null, (Object)args);
-	}
+	  public static void execute(String name, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		    Class<?> cls;
+		    Method meth;
+		    try { // name is a class: call main()
+		      cls = Class.forName(name);
+		      meth = cls.getMethod("main", String[].class);
+		    } catch (ClassNotFoundException cnfe) { // name is a method
+		      int pos;
+		      if ((pos = name.lastIndexOf('.')) < 0) throw cnfe;
+		      cls = Class.forName(name.substring(0, pos));
+		      meth = cls.getMethod(name.substring(pos+1), String[].class);
+		    }
+		    meth.invoke(null, (Object)args); // static method (ignore return)
+		  }
 
+	
 	public App(User owner, Element xml){
 		xmlImport(xml);
 		setOwner(owner);

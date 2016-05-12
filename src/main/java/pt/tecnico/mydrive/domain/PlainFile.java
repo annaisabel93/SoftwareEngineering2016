@@ -21,7 +21,9 @@ public class PlainFile extends PlainFile_Base {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+//    public String execute(){
+//    	return getContent();
+//    }
 	
 	
 	public PlainFile(User owner, Element xml){
@@ -101,5 +103,11 @@ public class PlainFile extends PlainFile_Base {
 //			element.addContent(new Element("perm").setText(getPermissions().toString()));
 		
 		return element;
+	}
+
+
+	public String execute() {
+		return getContent();
+		
 	}
 }
