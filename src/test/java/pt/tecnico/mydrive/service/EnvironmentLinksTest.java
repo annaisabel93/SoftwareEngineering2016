@@ -40,8 +40,8 @@ public class EnvironmentLinksTest extends AbstractServiceTest {
 		
 		fs = FileSystem.getInstance();
 		
-		User user = new User(fs, "Ana", "anna", "12345678", new byte[] {1,1,1,1}, "/home/ana");
-		LoginService service = new LoginService("anna", "12345678");
+		User user = new User(fs, "Ana", "ana", "12345678", new byte[] {1,1,1,1}, "/home/ana");
+		LoginService service = new LoginService("ana", "12345678");
 		service.execute();
 		
 		this.token = service.getToken();	
@@ -50,7 +50,7 @@ public class EnvironmentLinksTest extends AbstractServiceTest {
 		
 
 		//Directory dir = new Directory("dir", login.getUser(), 20000, date);
-		Link link = new Link(login.getDirectory(), "link", user, id, lastModified, content);
+		Link link = new Link(login.getDirectory(), "link", user, id, lastModified, "/home/ana");
 		Variable var = new Variable(login, name, value);
 		this.variable = var;
 		this.link = link;

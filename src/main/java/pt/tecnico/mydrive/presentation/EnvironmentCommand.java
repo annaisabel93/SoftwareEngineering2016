@@ -30,11 +30,10 @@ public class EnvironmentCommand extends MyDriveCommand {
 			service.execute();
 			System.out.println(args[0] + " = " + service.getAssociatedValue());	
 		}
-		else /* (args.length == 2)*/ {
+		else {
 			new AddVariableService(token, args[0], args[1]).execute();
 			System.out.println(args[0] + " = " + args[1]);
 		}
-		//necessario lancar alguma excepcao?	
 						
 	}
 	

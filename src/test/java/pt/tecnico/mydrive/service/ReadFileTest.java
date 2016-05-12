@@ -32,8 +32,8 @@ public class ReadFileTest extends AbstractServiceTest {
 		
 	final String[] contents = {	"Sweet Child O Mine", 
 					null, 
-					"/home/bananas",  
-					"/home/peaches", 
+					"/home/GRA",  
+					"/home/GRA", 
 					"package.pt.tecnico.mydrive.domain", 
 					"package.pt.tecnico.mydrive.service" };
 
@@ -69,8 +69,8 @@ public class ReadFileTest extends AbstractServiceTest {
 
 		PlainFile p1 = new PlainFile(log1.getDirectory(), this.fileNames[0], u1, 1, new DateTime(), this.contents[0] );
 		PlainFile p2 = new PlainFile(log1.getDirectory(), this.fileNames[1], u1, 2, new DateTime(),this.contents[1]);
-		Link l1 = new Link(log1.getDirectory(), this.fileNames[2], u1, 3, new DateTime(), this.contents[2]);
-		Link l2 = new Link(log1.getDirectory(), this.fileNames[3], u1, 4, new DateTime(), this.contents[3]);
+		Link l1 = new Link(log1.getDirectory(), this.fileNames[2], u1, 3, new DateTime(), homeDir1);
+		Link l2 = new Link(log1.getDirectory(), this.fileNames[3], u1, 4, new DateTime(), homeDir1);
 		App a1 = new App(log1.getDirectory(), this.fileNames[4], u1, 5, new DateTime(), this.contents[4]);
 		App a2 = new App(log1.getDirectory(), this.fileNames[5], u1, 6, new DateTime(), this.contents[5]);
 
@@ -84,9 +84,14 @@ public class ReadFileTest extends AbstractServiceTest {
 
 		Directory d1 = new Directory(log2.getDirectory(), "Xena", u2, 8, new DateTime());
 		PlainFile p3 = new PlainFile(log2.getDirectory(), "Slack", u2, 10, new DateTime(), this.contents[0] );
-		PlainFile p4 = new PlainFile(log2.getDirectory(), "banana", u2, 11, new DateTime(), this.contents[0]);		
-
-			
+		
+		//Testing links
+//		Directory d2 = new Directory(log2.getDirectory(), "Caker", u2, 12, new DateTime());
+//		PlainFile p4 = new PlainFile(log2.getDirectory(), "banana", u2, 11, new DateTime(), "hypes");		
+//		Link l5 = new Link(log2.getDirectory(), "Sona", u2, 13, new DateTime(),"/" + d2.getFilename() + "/" + p4.getFilename());
+//		Link l7 = new Link(log2.getDirectory(), "Sez", u2, 14, new DateTime(), "/" + d2.getFilename() + "/" + "meps");
+		 
+		
 	}
 
 	public void initializeReadFileServices( ReadFileService[] rfsArray) throws WrongFileTypeException {
@@ -161,12 +166,17 @@ public class ReadFileTest extends AbstractServiceTest {
 		service.execute();
 	}
 
-	@Test
+/*	@Test
 	public void readLink() {
-		ReadFileService service = new ReadFileService(this.uToken2, "banana");
+		ReadFileService service = new ReadFileService(this.uToken2, "Sona");
 		service.execute();	
 	}
 
+	@Test
+	public void readInexistentLink() {
+		ReadFileService service = new ReadFileService(this.uToken2, "Sez");
+		service.execute();
+	}*/
 }
 
 
