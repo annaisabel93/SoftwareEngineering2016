@@ -13,6 +13,7 @@ public class ChangeDirectoryService extends FileSystemService {
     private Directory workingDir;
     private String result;
     private long token;
+    private String origin;
 
 //Tem que ir buscar um login, para saber a diretoria de trabalho
     
@@ -26,11 +27,17 @@ public class ChangeDirectoryService extends FileSystemService {
     	return this.result;
     }
     
+    
+    public String getOrigin(){
+    	return this.origin;
+    }
+    
     @Override
     public final void dispatch() throws DirectoryDoesNotExistWithinDirectoryException {
     	this.login = getLogin(this.token);
         
         this.workingDir = this.login.getDirectory();
+        this.origin = this.workingDir.getPath("/"+this.workingDir.getFilename());
     	if(directoryPath.equals(".")){ //Print current directory
     		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
     		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
@@ -43,6 +50,12 @@ public class ChangeDirectoryService extends FileSystemService {
     			return;
     		}
     		login.setDirectory(this.workingDir.getParent());
+    		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
+    		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
+    		return;
+    	}
+    	if(this.directoryPath.equals("/")){
+    		this.login.moveAbsolute(this.directoryPath);
     		this.result = this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename());
     		//System.out.println(this.login.getDirectory().getPath("/"+this.login.getDirectory().getFilename()));
     		return;
