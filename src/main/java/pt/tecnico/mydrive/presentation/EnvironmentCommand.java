@@ -19,16 +19,16 @@ public class EnvironmentCommand extends MyDriveCommand {
 		long token = sh.getToken();
 		AddVariableService service;
 		if (args.length < 1) {
-			service = new AddVariableService(token);
+			service = new AddVariableService(token, null, null);
 			service.execute();
 			for ( VariableDto v : service.result() ) 
 				System.out.println(v.getName() + " = " + v.getValue());
 			
 		}
 		else if (args.length == 1) {
-			service = new AddVariableService(token, args[0]);
+			service = new AddVariableService(token, args[0], null);
 			service.execute();
-			System.out.println(args[0] + " = " + service.getAssociatedValue());	
+			//System.out.println(args[0] + " = " + service.getAssociatedValue());	
 		}
 		else {
 			new AddVariableService(token, args[0], args[1]).execute();
