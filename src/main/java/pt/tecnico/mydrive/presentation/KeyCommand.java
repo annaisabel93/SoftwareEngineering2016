@@ -23,7 +23,9 @@ public class KeyCommand extends Command {
 			KeyService gus = new KeyService(token);
 			gus.execute();
 			System.out.println("Token: " + gus.getToken() + "; Username : " + gus.getUsername());
-		} else if(args.length == 1) {      //altera o utilizador atual, atualiza o token ativo e imprime o seu valor
+			
+		//altera o utilizador atual, atualiza o token ativo e imprime o seu valor
+		} else if(args.length == 1) {      
 			KeyService gus = new KeyService(token);
 			gus.execute();
 			LoginService ls = new LoginService(args[0], gus.getPassword());
