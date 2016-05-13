@@ -8,6 +8,7 @@ import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.Variable;
 import pt.tecnico.mydrive.exception.UnknownTokenException;
 import pt.tecnico.mydrive.service.dto.VariableDto;
+import pt.tecnico.mydrive.domain.FileSystem;
 
 public class AddVariableService extends FileSystemService{
 	
@@ -18,7 +19,7 @@ public class AddVariableService extends FileSystemService{
 	private List<VariableDto> environmentVars;
 
 	public AddVariableService(long token, String variableName, String value) throws UnknownTokenException{
-		this.login = getLogin(token);
+		//this.login = getLogin(token);
 		this.token = token;
 		this.variableName = variableName;
 		this.value=value;
@@ -38,7 +39,7 @@ public class AddVariableService extends FileSystemService{
 		
 		environmentVars = new ArrayList<VariableDto>();
 		
-		for(Variable variable : this.login.getVariableSet())	
+		for(Variable variable : getLogin(this.token).getVariableSet())	
 			environmentVars.add(new VariableDto(variable.getLogin(), variable.getName(), variable.getValue()));
 		
 		Collections.sort(environmentVars);
