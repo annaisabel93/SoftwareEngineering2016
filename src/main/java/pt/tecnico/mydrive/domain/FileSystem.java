@@ -45,7 +45,7 @@ public class FileSystem extends FileSystem_Base {
         setRoot(FenixFramework.getDomainRoot());
         setCounter(0);
         new Root(this, "SuperUser","root", "***", array, "root"); 
-       // new User(this, "Guest", "nobody", null, arrayGuest, "nobody"); //FIXME falta alterar tempo de login para este - o seu token nunca expira
+        //new User(this, "Guest", "nobody", null, arrayGuest, "nobody"); //FIXME falta alterar tempo de login para este - o seu token nunca expira
     }
     
     public User getUserByUsername(String username) {

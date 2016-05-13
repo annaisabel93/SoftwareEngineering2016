@@ -1,13 +1,11 @@
 package pt.tecnico.mydrive.presentation;
 
-
+import java.util.List;
 import pt.tecnico.mydrive.domain.Login;
 import pt.tecnico.mydrive.domain.Variable;
 import pt.tecnico.mydrive.service.dto.VariableDto;
 import pt.tecnico.mydrive.service.AddVariableService;
 import pt.tecnico.mydrive.service.ListVariableService;
-
-import java.util.List;
 
 public class EnvironmentCommand extends MyDriveCommand {
 
@@ -21,32 +19,30 @@ public class EnvironmentCommand extends MyDriveCommand {
 	public void execute (String[] args) {
 		long token = sh.getToken();
 		AddVariableService service;
-		ListVariableService serviceList;
+		
 		if (args.length == 0) {
-			//service = new AddVariableService(sh.getToken(), null, null);
-			//service.execute();
-			serviceList = new ListVariableService(sh.getToken(), null, null);
-			serviceList.execute();
-			//System.out.println("Bys");
-			
-		}
-/*		else if (args.length == 1) {
-			service = new AddVariableService(sh.getToken(), args[0], null);
+			service = new AddVariableService(token, null, null);
 			service.execute();
-			serviceList = new ListVariableService(sh.getToken(), args[0], null);
-			serviceList.execute();
+			for ( VariableDto v : service.result()) { 
+				System.out.println(v.getName() + " = " + v.getValue()); 
+			} 
+		}
+		else if (args.length == 1) {
+			service = new AddVariableService(token, args[0], null);
+			service.execute();
 			
+			for ( VariableDto v : service.result() ) {
+				if ( v.getName().equals(args[0]) ) 
+					System.out.println(v.getName() + " = " + v.getValue()); 
+			} 
 
-			//System.out.println(args[0] + " = " + service.getAssociatedValue());	
 		}
 		else if ( args.length == 2) {
-			new AddVariableService(sh.getToken(), args[0], args[1]).execute();
-			serviceList = new ListVariableService(sh.getToken(),args[0], args[1]);
-			serviceList.execute();
+			service = new AddVariableService(sh.getToken(), args[0], args[1]);
+			service.execute();
 			
-
-			//System.out.println(args[0] + " = " + args[1]);
-		}*/
+			System.out.println(args[0] + " = " + args[1]);
+		}
 						
 	}
 	
