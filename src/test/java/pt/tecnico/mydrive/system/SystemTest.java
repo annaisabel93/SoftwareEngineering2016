@@ -24,11 +24,11 @@ public class SystemTest extends AbstractServiceTest{
 		
 	}
 	 @Test
-	 public void sucess(){
+	 public void success(){
 		 new LoginCommand(sh).execute(new String[] { "root", "***"});
 	     new ListCommand(sh).execute(new String[] { "/home" } );
 	     new ChangeWorkingDirCommand(sh).execute(new String[] { "/home" } );
-	    //new ExecuteCommand(sh).execute(new String[] { "/home/ana/chocolate/" , ""} );
+	    new ExecuteCommand(sh).execute(new String[] { "/home/ana/chocolate/" , "cafe"} );
 	     
 	     //ver como se coloca o file
 //	     new WriteCommand(sh).execute(new String[] {"/home/file", "ola" } );
