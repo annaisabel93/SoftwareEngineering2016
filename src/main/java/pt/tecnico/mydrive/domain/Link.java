@@ -49,9 +49,7 @@ public class Link extends Link_Base {
     }
     
     @Override
-    public String execute(){
-    	String s = getContent();
-    	s.split("/");
+    public String execute(String name, String[] args){
     	return getContent();
     }
     

@@ -1,87 +1,63 @@
 package pt.tecnico.mydrive.service;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import pt.tecnico.mydrive.domain.App;
+
 import pt.tecnico.mydrive.domain.Entity;
 import pt.tecnico.mydrive.domain.Login;
-import pt.tecnico.mydrive.domain.PlainFile;
-import pt.tecnico.mydrive.exception.UserHasInvalidPermissionsException;
 
 public class ExecuteFileService extends FileSystemService {
 
-	private static Login login;
 	private long token;
 	private String path;
-	private List<Entity> arguments;
 	private String path_until_now;
-	private static final byte execute = login.getUser().getMask()[2];
+	private byte execute;
 	private String result;
-	private String content;
 	private String[] args;
+	private Login login;
 
 
-	public void ExecuteFileService(long token, String path, List<Entity> arguments) {
+	public ExecuteFileService(long token, String path, String[] args) {
 		this.login = getLogin(token);
 		this.path = login.getDirectory().getPath(path_until_now);
-		this.arguments = arguments;
+		this.args = args;
 		this.token = token;
+		this.execute = login.getUser().getMask()[2];
 	}
 
 	public String getResult(){
 		return this.result;
 	}
 	//FIXME needs to receive content from presentation part
+
 	@Override
-	protected void dispatch() throws UserHasInvalidPermissionsException{
+	protected void dispatch(){
 		if (execute == 1) {
-			List<Entity> arguments = this.arguments;
-			String Type = null;
+			String newpath = null;
+			String fn = null;
 
-			for (Entity f : arguments){
-				Type = f.checkType();
-				String name = f.getFilename();
-					String newf = f.execute();
-					//é aqui dentro que sºao as cenas
+			String[] split = path.split("/");
 
-					//file f = getFile("/home/ana/file")
-					//f.execute
+			for (int i = 0; i < split.length - 1; i++) {
+				newpath = newpath + "/" + split[i];
+			}
 
-					if(f.getClass().equals("App")){
-						try {
-							App.execute(content, args);
-						} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
-								| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-							System.out.println("Cannot run an App like that!");
-						}
-					}
-
-					if (f.getClass().equals("Link")){
-						f.execute();
-						//é aqui dentro que sºao as cenas
-
-						//file f = getFile("/home/ana/file")
-						//f.execute
-					}
-					
-					if (Type.equals("link")){
-						String newPlace;
-						ReadFileService read = new ReadFileService(this.token, name);
-						read.execute();
-						newPlace = read.getResult();
-						ChangeDirectoryService change = new ChangeDirectoryService(this.token, newPlace);
-						change.execute();
-					}
-				
+			fn = split[split.length - 1];
 
 
+			ChangeDirectoryService change = new ChangeDirectoryService(this.token, newpath);
+			Entity file = this.login.getDirectory().getByName(fn);
+			//é aqui dentro que são as cenas
+
+			//file f = getFile("/home/ana/file")
+			//f.execute
+			try {
+				file.execute(fn, args);
+			} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
+					| IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			}
 
 		}
-		
-		else throw new UserHasInvalidPermissionsException();
 
 	}
-
-
 }
+

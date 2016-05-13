@@ -1,5 +1,7 @@
 package pt.tecnico.mydrive.domain;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -135,5 +137,5 @@ public abstract class Entity extends Entity_Base {
 			return element;    
 	}
 	
-	public abstract String execute();   
+	public abstract String execute(String name, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException;   
 }

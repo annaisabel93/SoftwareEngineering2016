@@ -1,5 +1,7 @@
 package pt.tecnico.mydrive.domain;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -105,9 +107,8 @@ public class PlainFile extends PlainFile_Base {
 		return element;
 	}
 
-
-	public String execute() {
+	@Override
+	public String execute(String name, String[] args) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		return getContent();
-		
 	}
 }
