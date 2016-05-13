@@ -28,11 +28,11 @@ public class SystemTest extends AbstractServiceTest{
 		 new LoginCommand(sh).execute(new String[] { "root", "***"});
 	     new ListCommand(sh).execute(new String[] { "/home" } );
 	     new ChangeWorkingDirCommand(sh).execute(new String[] { "/home" } );
-	     //new ExecuteCommand(sh).execute(new String[] { "Xico" } );
+	    //new ExecuteCommand(sh).execute(new String[] { "/home/ana/chocolate/" , ""} );
 	     
 	     //ver como se coloca o file
-	    // new WriteCommand(sh).execute(new String[] {"/home/file", "ola" } );
-	     //new EnvironmentCommand(sh).execute(new String[] { "Sofia" } );
-	     //new KeyCommand(sh).execute(new String[] { } );
+//	     new WriteCommand(sh).execute(new String[] {"/home/file", "ola" } );
+//	     new EnvironmentCommand(sh).execute(new String[] { "Sofia" } );
+//	     new KeyCommand(sh).execute(new String[] { } );
 	 }
 }

@@ -11,6 +11,8 @@ import mockit.integration.junit4.JMockit;
 @RunWith(JMockit.class)
 
 public class EnvironmentLinksTest {
+	
+	//pretend to solve things
 	@Test
 	public void resolve() {
 		new MockUp<ResolveVariableService>() {
@@ -22,4 +24,5 @@ public class EnvironmentLinksTest {
 
 		ResolveVariableService r = new ResolveVariableService("/home/$USER/chocolate");
 		assertEquals("Resolved", r.convert("/home/$USER/chocolate"), "/home/Ana/chocolate");
-	} }
+	} 
+}
