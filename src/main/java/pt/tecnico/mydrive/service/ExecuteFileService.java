@@ -17,11 +17,9 @@ public class ExecuteFileService extends FileSystemService {
 
 
 	public ExecuteFileService(long token, String path, String[] args) {
-		this.login = getLogin(token);
-		this.path = login.getDirectory().getPath(path_until_now);
 		this.args = args;
 		this.token = token;
-		this.execute = login.getUser().getMask()[2];
+
 	}
 
 	public String getResult(){
@@ -31,6 +29,10 @@ public class ExecuteFileService extends FileSystemService {
 
 	@Override
 	protected void dispatch(){
+		this.login = getLogin(token);
+		this.path = login.getDirectory().getPath(path_until_now);
+		this.execute = login.getUser().getMask()[2];
+		
 		if (execute == 1) {
 			String newpath = null;
 			String fn = null;
