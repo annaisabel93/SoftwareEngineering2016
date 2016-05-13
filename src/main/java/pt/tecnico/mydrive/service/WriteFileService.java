@@ -13,19 +13,18 @@ public class WriteFileService extends FileSystemService {
 	
     public WriteFileService(long token, String fileName, String content) {
     	this.token = token;
-    	this.login = getLogin(token);
-        this.fileName = fileName;
+    	this.fileName = fileName;
         this.content = content;
-        login.getDirectory().getByName(fileName).checkPermissions(this.login.getUser(), "write");
     }
 
 
 
 	@Override
     public final void dispatch() throws TexFileDoesNotExistException, UserHasInvalidPermissionsException{
-    	
+		this.login = getLogin(token);
+        login.getDirectory().getByName(fileName).checkPermissions(this.login.getUser(), "write");
         Login login = getLogin(token);
-        PlainFile text = (PlainFile) login.getDirectory().getByName(this.fileName);
+        PlainFile text = (PlainFile) this.login.getDirectory().getByName(this.fileName);
 		if(text == null ){
         	throw new TexFileDoesNotExistException(this.fileName);
         }

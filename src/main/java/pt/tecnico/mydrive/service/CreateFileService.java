@@ -30,8 +30,6 @@ public class CreateFileService extends FileSystemService{
 		this.token = token;
 		this.fileName = fileName;
 		this.type = type;
-		this.user = this.getLogin(token).getUser();
-		this.workingDir = this.getLogin(token).getDirectory();
 		this.lastModified = new DateTime();
 		this.content = content;
 	}
@@ -43,7 +41,9 @@ public class CreateFileService extends FileSystemService{
 
 		
 	@Override
-	public final void dispatch(){	
+	public final void dispatch() {	
+		this.user = this.getLogin(token).getUser();
+		this.workingDir = this.getLogin(token).getDirectory();
 		this.createCaseContent();
 	}
 

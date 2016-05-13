@@ -1,5 +1,4 @@
 package pt.tecnico.mydrive.presentation;
-//imports missing
 
 import pt.tecnico.mydrive.service.CreateFileService;
 import pt.tecnico.mydrive.service.WriteFileService;
@@ -25,13 +24,13 @@ public class WriteCommand extends Command {
 			int filenameIndex = tokens.length - 1;
 			String filename = tokens[filenameIndex];
 			
-			// Creates the file
-//			CreateFileService cfs = new CreateFileService(token, filename, "PlainFile", "old");
-//			cfs.execute();
+			//Creates the file
+			CreateFileService cfs = new CreateFileService(token, filename, "PlainFile", "old");
+			cfs.execute();
 			
 			// Then tries to update its content
-//			WriteFileService wfs = new WriteFileService(token, args[0], args[1]);
-//			wfs.execute();
+			WriteFileService wfs = new WriteFileService(token, args[0], args[1]);
+			wfs.execute();
 			
 		} else {
 			throw new RuntimeException("USAGE: <update> <path> <text>");
