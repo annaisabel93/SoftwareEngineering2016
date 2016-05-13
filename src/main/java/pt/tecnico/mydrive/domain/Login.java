@@ -76,6 +76,15 @@ public class Login extends Login_Base {
     		setUser(null);
     		throw new LoginTimeExpiredException();
     	}
+    	if ((getDateCreated().getMillis() - new DateTime().getMillis()) > 600000){
+    		if (getUser().getUserName().equals("root")){
+        		setDirectory(null);
+        		setUser(null);
+        		throw new LoginTimeExpiredException();
+    		}
+    		
+    	}
+    	
     }
     
     
