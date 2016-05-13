@@ -47,7 +47,7 @@ public class ExecuteFileService extends FileSystemService {
 					//file f = getFile("/home/ana/file")
 					//f.execute
 
-					if(f.execute().getClass().equals("App")){
+					if(f.getClass().equals("App")){
 						try {
 							App.execute(content, args);
 						} catch (ClassNotFoundException | SecurityException | NoSuchMethodException
@@ -56,10 +56,8 @@ public class ExecuteFileService extends FileSystemService {
 						}
 					}
 
-					if (f.execute().getClass().equals("Link")){
-						ReadFileService read = new ReadFileService(this.token, name);
-						read.execute();
-						this.result = read.getResult();
+					if (f.getClass().equals("Link")){
+						f.execute();
 						//é aqui dentro que sºao as cenas
 
 						//file f = getFile("/home/ana/file")
