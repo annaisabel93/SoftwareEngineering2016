@@ -1,6 +1,8 @@
 package pt.tecnico.mydrive.domain;
 
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.jdom2.Element;
 import org.joda.time.DateTime;
 
@@ -254,8 +256,11 @@ public class Directory extends Directory_Base {
 	}
 
 
+
+
 	@Override
-	public String execute() {
+	public String execute(String name, String[] args) throws ClassNotFoundException, SecurityException,
+			NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		throw new InvalidOperationException();
 	}
 	
